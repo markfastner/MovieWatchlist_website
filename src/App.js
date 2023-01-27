@@ -25,7 +25,7 @@ return (
         <button onClick={Push}>PUSH</button>
         </center>
 	</div>
-);
+        );
 }
 
 export default App;
