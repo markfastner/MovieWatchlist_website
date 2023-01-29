@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Login(){
+export default function SignUp(){
     return(
         <div>
             <div class="container">
@@ -28,7 +28,7 @@ export default function Login(){
                     <br></br>
                     <button type="submit" style={{background: 'black', color : 'white'}} class="btn btn-primary">Submit</button>
                     <br></br>
-                    <a href='/login'>Already have an account? Sign In.</a>
+                    <a href='/LandingPage'>Already have an account? Sign In.</a>
                 </form>
             </div>
         </div>
