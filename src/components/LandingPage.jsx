@@ -24,7 +24,7 @@ export default function LandingPage(){
                         <p>Forget Password?</p>
                     </div>
                     <div>
-                        <p>Don't have an account? <a href="/register">Sign Up</a></p>
+                        <p>Don't have an account? <a href="/">Sign Up</a></p>
                     </div>
                     <button>Sign in</button>
                 </form>
