@@ -36,16 +36,16 @@ export function NavBar() {
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Home</a>
+                <a href="javascript:void(0)">Watchlists</a>
               </li>
               <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Blog</a>
+                <a href="javascript:void(0)">Forum</a>
               </li>
               <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">About US</a>
+                <a href="javascript:void(0)">Friends</a>
               </li>
               <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Contact US</a>
+                <a href="javascript:void(0)">My Profile</a>
               </li>
             </ul>
 
