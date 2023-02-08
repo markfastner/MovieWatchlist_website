@@ -1,12 +1,14 @@
 import React from 'react'
 import '../App.css'
+// import '../LandingPage.css';
 
-//import LoginImg from '../assets/HomeLoginImages.jpg'
 
-function LandingPage(){
-    return(
-        <div><h1>hey</h1></div>
-    )
+
+function LandingPage() {
+    return <div className="min-h-screen bg-no-repeat w-full bg-cover 
+        bg-[url('/public/images/HomeLoginImages.jpg')]">
+        <h1 className=''>Landing Page</h1>
+    </div>
 }
 
 export default LandingPage;
