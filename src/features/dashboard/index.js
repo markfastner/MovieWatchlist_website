@@ -1,1 +1,1 @@
-export * from './dashboard';
+import Dashboard from './dashboard';

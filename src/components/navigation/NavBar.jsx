@@ -1,85 +1,72 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react';
+import { Button } from '../Button.js';
 import { Link } from 'react-router-dom';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import './Navbar.css';
+import '../../App.css'
 
-import { useState } from "react";
+function Navbar() {
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
 
-export function NavBar() {
-  const [navbar, setNavbar] = useState(false);
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  const showbutton = () => {
+    if(window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+
+  useEffect(() => {
+    showbutton();
+  }, []);
+
+  window.addEventListener('resize', showbutton);
 
   return (
-    <nav className="w-full bg-blue-900 shadow">
-      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-        <div>
-          <div className="flex items-center justify-between py-3 md:py-5 md:block">
-            <a href="javascript:void(0)">
-              <h2 className="text-2xl font-bold text-white">RUNTIME</h2>
-            </a>
-            <div className="md:hidden">
-              <button
-                className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
-                onClick={() => setNavbar(!navbar)}
-              >
-                {navbar ? (
-                  <XMarkIcon className='w-6 h-6 text-white' />
-                ) : (
-                  <Bars3Icon className='w-6 h-6 text-white' />
-                )}
-              </button>
-            </div>
-          </div>
+    <>
+    <nav className='navbar'>
+      <div className='navbar-container'>
+        <Link to='/' className="navbar-logo" onClick={closeMobileMenu}>
+          RT <i className="fa-thin fa-camera-movie" />
+        </Link>
+        <div className="menu-icon" onClick={handleClick}>
+          <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
         </div>
-        <div>
-          <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? "block" : "hidden"
-              }`}
-          >
-            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Watchlists</a>
-              </li>
-              <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Forum</a>
-              </li>
-              <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">Friends</a>
-              </li>
-              <li className="text-white hover:text-indigo-200">
-                <a href="javascript:void(0)">My Profile</a>
-              </li>
-            </ul>
-
-            <div className="mt-3 space-y-2 lg:hidden md:inline-block">
-              <a
-                href="javascript:void(0)"
-                className="inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
-              >
-                Sign in
-              </a>
-              <a
-                href="javascript:void(0)"
-                className="inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
-              >
-                Sign up
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="hidden space-x-2 md:inline-block">
-          <a
-            href="javascript:void(0)"
-            className="px-4 py-2 text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
-          >
-            Sign in
-          </a>
-          <a
-            href="javascript:void(0)"
-            className="px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
-          >
-            Sign up
-          </a>
-        </div>
+        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          <li className='nav-item'>
+            <Link to='/dashboard' className='nav-links' onClick={closeMobileMenu}>
+              Dashboard
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link to='/watchlist' className='nav-links' onClick={closeMobileMenu}>
+              Watchlist
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link to='/friends' className='nav-links' onClick={closeMobileMenu}>
+              Friends
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link to='/account' className='nav-links' onClick={closeMobileMenu}>
+              Account
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
+              Sign Up
+            </Link>
+          </li>
+        </ul>
+        {button && <Button buttonStyle='btn--outline'>sign up</Button>}
       </div>
     </nav>
-  );
+    </>
+  )
 }
+
+export default Navbar
