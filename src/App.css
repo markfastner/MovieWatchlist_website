@@ -21,7 +21,7 @@
   }
   
   .friends {
-    background-image: url('');
+    /* background-image: url(''); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@
   }
   
   .account {
-    background-image: url('');
+    /* background-image: url(''); */
     background-position: center;
     background-size: fill;
     background-repeat: no-repeat;
@@ -39,7 +39,7 @@
   }
   
   .sign-up {
-    background-image: url('');
+    /* background-image: url(''); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

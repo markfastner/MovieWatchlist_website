@@ -8,7 +8,7 @@ import Friends from './pages/FriendsPage'
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Routes>
         <Route exact path='/'  element={<LandingPage/>} />
         <Route path='/friends'  element={<Friends/>}/>
