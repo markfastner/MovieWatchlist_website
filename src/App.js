@@ -9,8 +9,7 @@ function App() {
   return (
     <>
     <Router>
-      <Navbar />
-      <LandingPage />
+      <Navbar/>
       <Routes>
         <Route exact path='/'  element={<LandingPage/>} />
         <Route path='/friends'  element={<FriendsPage/>}/>
