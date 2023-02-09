@@ -2,19 +2,19 @@ import React from 'react';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
-import Friends from './pages/FriendsPage'
 
 
 function App() {
   return (
+    <>
     <Router>
-      <Navbar/>
+      <Navbar />
+      <LandingPage />
       <Routes>
-        <Route exact path='/'  element={<LandingPage/>} />
-        <Route path='/friends'  element={<Friends/>}/>
-
+        <Route path='/' exact component={LandingPage} />
       </Routes>
     </Router>
+    </>
   );
 }
 
