@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
+import FriendsPage from './pages/FriendsPage'
 
 
 function App() {
@@ -11,7 +12,9 @@ function App() {
       <Navbar />
       <LandingPage />
       <Routes>
-        <Route path='/' exact component={LandingPage} />
+        <Route exact path='/'  element={<LandingPage/>} />
+        <Route path='/friends'  element={<FriendsPage/>}/>
+
       </Routes>
     </Router>
     </>
