@@ -24,9 +24,9 @@ class Friends extends React.Component {
   componentDidMount() {
     // Initialize Firebase
     firebase.initializeApp({
-      apiKey: 'YOUR_API_KEY',
-      authDomain: 'YOUR_AUTH_DOMAIN',
-      databaseURL: 'YOUR_DATABASE_URL',
+      apiKey: 'AIzaSyBOecR0DnBMO1XOhltUWyf7k439Fh-E43E',
+      authDomain: 'runtimedb-a3bac.firebaseapp.com',
+      databaseURL: 'https://console.firebase.google.com/u/0/project/runtimedb-a3bac/database/runtimedb-a3bac-default-rtdb/data/~2F',
     });
 
     // Listen for changes to the user's authentication state
