@@ -5,7 +5,7 @@ import '../App.css'
 
 
 function LandingPage() {
-    return <div className="min-h-screen bg-no-repeat w-full bg-cover 
+    return (<div className="min-h-screen bg-no-repeat w-full bg-cover 
         bg-[url('/public/images/HomeLoginImages.jpg')]">
 
         <div class="w-full max-w-xs">
@@ -39,7 +39,7 @@ function LandingPage() {
         </p>
         </div>
     </div>
-    
+    )
 }
 
 export default LandingPage;
