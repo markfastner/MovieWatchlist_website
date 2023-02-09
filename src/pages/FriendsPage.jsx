@@ -9,6 +9,18 @@ class Friends extends React.Component {
     user: null
   };
 
+   Friends() {
+    return (
+      <div>
+        {/* Render the friends list */}
+        <h1>
+        HELLO JAKE
+            
+        </h1>
+      </div>
+    );
+  }
+
   componentDidMount() {
     // Initialize Firebase
     firebase.initializeApp({
@@ -73,17 +85,12 @@ class Friends extends React.Component {
       alert('Please sign in to edit a friend.');
     }
   };
-
-  render() {
-    return (
-      <div>
-        {/* Render the friends list */}
-      </div>
-    );
-  }
 }
 
-export default class Friends();
+export default Friends;
+  
+
+
 
 
 
