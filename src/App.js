@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
-import Friends from './pages/FriendsPage'
+import FriendsPage from './pages/FriendsPage'
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route exact path='/'  element={<LandingPage/>} />
-        <Route path='/friends'  element={<Friends/>}/>
+        <Route path='/friends'  element={<FriendsPage/>}/>
 
       </Routes>
     </Router>
