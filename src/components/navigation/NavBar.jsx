@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import '../../App.css'
 
-const NavBarLinks = ["Dashboard","Watchlist", "Friends", "Profile", "Hello"," mushroom"]
+const NavBarLinks = ["Dashboard","Watchlist", "Friends", "Profile"]
 
 export const Navbar=()=>{
   return(<nav className="flex justify-between px-8 py-4 bg-blue-900">
@@ -24,11 +24,11 @@ export const Navbar=()=>{
       }
     </ul>
     <div className="space-x-2">
-      <button className="px-4 py-0.5 bg-white rounded ">
-        Sign Up
-      </button>
-      <button className="px-4 py-0.5 bg-white rounded ">
+      <button className="px-4 py-0.5 bg-white hover:bg-blue-200 rounded duration-500 ">
         Sign In
+      </button>
+      <button className="px-4 py-0.5 bg-white hover:bg-blue-200 rounded duration-500">
+        Sign Up
       </button>
     </div>
     </div>
