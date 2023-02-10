@@ -1,14 +1,19 @@
 import React from "react";
+//import { useNavigate } from "react-router";
 import "../App.css";
 // import '../LandingPage.css';
 
+
 function LandingPage() {
+  function signIn() { // GET 
+
+  }
   return (
     <div
       className="flex justify-end items-center relative min-h-screen bg-no-repeat w-full bg-cover 
         bg-[url('/public/images/HomeLoginImages.jpg')]"
     >
-        <form class="relative right-[15%] bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="/auth/login" method="GET" class="relative right-[15%] bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
@@ -51,7 +56,7 @@ function LandingPage() {
             >
               I agree with the{" "}
               <a
-                href="#"
+                href="/terms-and-conditions"
                 class="text-blue-600 dark:text-blue-500 hover:underline"
               >
                 terms and conditions
@@ -62,9 +67,9 @@ function LandingPage() {
               
             </div>
           </div>
-          <button 
-                class="my-2 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+          <button type="submit"
+                onClick={signIn}
+                class="my-2 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
               >
                 Sign In
               </button>

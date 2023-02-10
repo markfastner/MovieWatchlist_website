@@ -28,7 +28,7 @@ export default function SignUp(){
                     <br></br>
                     <button type="submit" style={{background: 'black', color : 'white'}} class="btn btn-primary">Submit</button>
                     <br></br>
-                    <a href='/LandingPage'>Already have an account? Sign In.</a>
+                    <a href='/signin'>Already have an account? Sign In.</a>
                 </form>
             </div>
         </div>

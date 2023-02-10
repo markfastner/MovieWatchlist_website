@@ -13,7 +13,7 @@ import SignUpPage from './pages/auth/components/SignUp'
 
 function App() {
   return (
-    <>
+    <> 
     <Router>
       <Navbar/>
       <Routes>
