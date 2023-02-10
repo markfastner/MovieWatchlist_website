@@ -6,7 +6,7 @@ export default function SignInPage() {
         <div>
             <div class="container">
         <div class="card">            
-            <div class="card-header" style={{fontWeight:'bold'}}>Sign Up</div>    
+            <div class="card-header" style={{fontWeight:'bold'}}>Sign In</div>    
             <div class="card-body">
                 <form action="/auth/login" method="GET">    
                         <label for="email-reg" class="form-label">Email</label>
@@ -25,6 +25,6 @@ export default function SignInPage() {
             </div>
         </div>
     </div>
-        </div>
+</div>
     )
 }

@@ -23,7 +23,7 @@ export const Navbar=()=>{
         })
       }
     </ul>
-    <div className="space-x-2">
+    <div>
       <LoginButtons/>
     </div>
     </div>
