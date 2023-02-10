@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './components/navigation/NavBar';
+import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
 import FriendsPage from './pages/FriendsPage'
