@@ -1,10 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { Button } from '../Button.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import '../../App.css'
 
 const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends", "Profile"]
+
+function signUpButton() {
+  let navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate.push("/signin");
+  };
+
+  return (
+    <button onClick={handleClick} className="px-4 py-0.5 bg-white hover:bg-blue-200 rounded duration-500 ">Sign In</button>
+  );
+}
 
 export const Navbar=()=>{
   return(<nav className="flex justify-between px-8 py-4 bg-blue-900">
@@ -24,9 +36,7 @@ export const Navbar=()=>{
       }
     </ul>
     <div className="space-x-2">
-      <button className="px-4 py-0.5 bg-white hover:bg-blue-200 rounded duration-500 ">
-        Sign In
-      </button>
+      <signUpButton/>
       <button className="px-4 py-0.5 bg-white hover:bg-blue-200 rounded duration-500">
         Sign Up
       </button>
