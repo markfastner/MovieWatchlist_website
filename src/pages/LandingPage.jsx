@@ -75,7 +75,7 @@ function LandingPage() {
               </button>
           <p class="text-center text-gray-500 text-xs">
           &copy;491B Runtime Group
-        </p>
+          </p>
         </form>
       </div>
 
