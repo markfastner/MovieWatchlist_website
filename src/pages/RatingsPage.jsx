@@ -1,23 +1,22 @@
-import "../features/ratingspage/ratings.css";
-
-function RatingsPage() {
+export default function Ratingpage() {
   return (
-  <div class="comments">
-    <h1 class="header">
-      Comments and Reactions
-    </h1>
-    
-    <form id="add-comment-form">
-      <h2 class="comment-container"> 
-      <textarea id="new-comment" rows="4" cols="50"></textarea>
-      </h2>
-      <div class="submit-button">
-      <button type="submit">Add Comment</button>
-      </div>
-    </form>
+  <div class="bg-blue-300"> 
 
+  <div class="container mx-auto p-6">
+    <h3 class="text-lg font-medium mb-4">Comments and Reactions</h3>
+    <ul class="list-disc pl-5">
+
+    </ul>
+
+    <form class="mt-6">
+      <textarea class="resize-none border border-gray-400 rounded w-1/3 py-2 px-3" rows="3"></textarea>
+      <ul class="pl-3">
+        
+      </ul>
+      <button class="bg-blue-500 text-white py-2 px-4 rounded mt-3 hover:bg-blue-600">Add Comment</button>
+    </form>
   </div>
-  );
+  </div>
+  )
 }
 
-export default RatingsPage;
