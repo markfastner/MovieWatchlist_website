@@ -3,6 +3,9 @@ import React from 'react'
 export default function SignUp(){
     return(
         <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
+            <div className="">
+                <h1>Signup</h1>
+            </div>
             <form action="/auth/signup" method="POST" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">
                 <div className="mb-4">
                     <label
@@ -43,7 +46,9 @@ export default function SignUp(){
                         placeholder="Password">
                     </input>
                 </div>
-            
+                <button type="submit" class="btn btn-primary my-2 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Sign Up</button>
+                <br></br>
+                <a className="m-4" href='/signin'>Already have an account? Sign In.</a>
             </form>
         </div>
     )
