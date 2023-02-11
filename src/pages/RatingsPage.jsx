@@ -2,7 +2,6 @@ import "../features/ratingspage/ratings.css";
 
 function RatingsPage() {
   return (
-    
   <div class="comments">
     <h1 class="header">
       Comments and Reactions
