@@ -1,3 +1,4 @@
+/* Style for the container of the comment section */
 .comment-container{
     background-color: #396cae;
     text-align: center;
@@ -10,6 +11,7 @@
     
 }
 
+/* Style for the submit button*/
 .submit-button {
     background-color: #0c5b75;
     font-weight: normal;
@@ -22,6 +24,7 @@
     height: 40px;
 }
 
+/* Style for the header */
 .header{
     background-color: #8dd8f1;
     height: 50px;
