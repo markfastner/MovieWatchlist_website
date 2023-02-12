@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import '../../App.css'
 
+
 const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends", "Profile"]
 
 export const Navbar=()=>{
   return(<nav className="flex justify-between px-8 py-4 bg-blue-900">
-    <div>
-      <Link to='/' className="text-white tracking-wide">
-        RT <i className="fa-thin fa-camera-movie text-white" />
+    <div >
+      <Link to='/' className="text-white tracking-wide px-8 py-4">
+        Runtime <i className="fa-thin fa-camera-movie text-white" />
       </Link>
     </div>
     <div className="flex justify-center items-center space-x-8">

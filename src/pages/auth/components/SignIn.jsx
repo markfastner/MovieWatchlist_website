@@ -6,7 +6,7 @@ export default function SignInPage() {
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
         <form action="/auth/login" method="GET" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
             <div className="flex justify-center">
-                <img src="[url('/public/images/Logo.png')]" alt="Logo" className="w-14 h-14"></img>
+                <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
             </div>
             <div className="mb-4">
                 <label
@@ -35,12 +35,12 @@ export default function SignInPage() {
                 </input>
             </div>
 
-            <button type="submit" class="btn btn-primary my-2 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >Sign In</button>
+            <button type="submit" class="btn btn-primary my-2 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Sign In</button>
             <br></br>
-            <a href='/signup' className="text-black">Don't have an account? Sign Up!</a>
-            <p class="text-center text-gray-500 text-xs">
+            <a href='/signup' className="text-black h-2">Don't have an account? Sign Up!</a>
+            {/* <p class="text-center text-gray-500 text-xs">
             &copy;Runtime Group
-            </p>
+            </p> */}
         </form>
     </div>    
     )
