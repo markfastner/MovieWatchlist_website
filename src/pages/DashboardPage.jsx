@@ -1,6 +1,9 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
+// Displaying the dashboard page
+// Dashboard page currently has the activity status card
+
 function DashboardPage() {
     return (
       <div className="flex justify-start bg-blue-200 min-h-screen">
