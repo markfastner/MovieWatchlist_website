@@ -1,7 +1,7 @@
 import React from "react";
 // import "../App.css";
 
-export default function SignInPage() {
+export default function SignIn() {
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
         <form action="/auth/login" method="GET" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
