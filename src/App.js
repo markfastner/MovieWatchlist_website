@@ -9,28 +9,34 @@ import ProfilePage from './pages/ProfilePage'
 import WatchListPage from './pages/WatchListPage'
 import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
-import { AuthProvider } from './pages/auth/contexts/AuthContext';
-import { Container } from 'react-bootstrap';
+import AuthProvider from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 
-
+// App component which runs the whole application
 function App() {
+
+  // Returns the app component which handles the routing of the application
   return (
     <>
         <Router>
-          
+          {/* <AuthProvider> */}
           <Navbar/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
-            <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
+            {/* <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
             <Route path='/profile' element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
             <Route path='/watchlist' element={<PrivateRoute><WatchListPage/></PrivateRoute>}/>
             <Route path='/dashboard' element={<PrivateRoute><DashboardPage/></PrivateRoute>}/>
-            <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/>
+            <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/> */}
+            <Route path='/friends'  element={<FriendsPage/>}/>
+            <Route path='/profile' element={<ProfilePage/>}/>
+            <Route path='/watchlist' element={<WatchListPage/>}/>
+            <Route path='/dashboard' element={<DashboardPage/>}/>
+            <Route path='/ratings' element={<RatingsPage/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
           </Routes>
-        
+          {/* </AuthProvider> */}
         </Router>
     </>      
   );

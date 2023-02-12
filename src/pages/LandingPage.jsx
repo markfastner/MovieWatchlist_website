@@ -3,11 +3,8 @@ import React from "react";
 import "../App.css";
 // import '../LandingPage.css';
 
-
+// Landing page component export function
 function LandingPage() {
-  function signIn() { // GET 
-
-  }
   return (
     <div
       className="flex justify-end items-center relative min-h-screen bg-no-repeat w-full bg-cover 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import '../../App.css'
 
-
+// The Navigation bar which links to each component's url extension
 const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends", "Profile"]
 
 export const Navbar=()=>{

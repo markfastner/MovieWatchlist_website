@@ -1,8 +1,8 @@
 import React from "react";
-
 import {  Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
+// The private route component which hides routes from unathenticated users
 export default function PrivateRoute({ children }) {
   const { currentUser } = useAuth();
 

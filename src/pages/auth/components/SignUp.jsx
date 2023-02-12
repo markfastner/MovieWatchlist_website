@@ -3,16 +3,17 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
+//Export function to sign users up
 export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const nameRef = useRef()
     const signup  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useNavigate()
 
+    // Submission handler
     async function handleSubmit(e) {
     e.preventDefault()
 
@@ -32,6 +33,7 @@ export default function SignUp() {
     setLoading(false)
     }
 
+    // return the component
     return (
     <>
         <div className="flex justify-center items-center bg-blue-200 min-h-screen w-full bg-no-repeat bg-cover">
