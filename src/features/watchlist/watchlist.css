@@ -1,4 +1,9 @@
-
+/*
+This is the styling page for the Watchlist page
+This page contains styling for the movie list, individual movies, 
+the remove button, the h1 tag, the add movie button, and the search bar
+This page defines coloring placements and other styling for the watchlist page
+*/
 .watchlist-container{
     background-color: #8dd8f1;
 }

@@ -30,7 +30,8 @@ function WatchlistPage() {
       // the watchlist page will be a list of movies that the user has added to their watchlist
 
       // create a template in js for the watchlist page
-        
+      //template includs a header, a list of movies, and a search bar to add movies
+      //each components has been put into a div for styling
       <div class="watchlist-container">
         {/* Render the friends list */}
         <h1 class="header">
