@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import auth from 'firebase'
-import { getSpaceUntilMaxLength } from '@testing-library/user-event/dist/utils'
+
 
 // Initialize Authentication Context
 const AuthContext = React.createContext() 
