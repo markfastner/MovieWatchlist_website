@@ -18,6 +18,8 @@ function LandingPage() {
 }
 
 export default LandingPage;
+// card name for the activity status card or tutorial card
+
 
 {/* <Card className="w-full max-w-sm p-4 bg-blue-200 border-blue-400 shadow sm:p-6 md:p-100">
           <Card.Body>

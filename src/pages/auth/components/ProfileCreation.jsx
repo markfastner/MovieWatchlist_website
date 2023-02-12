@@ -1,5 +1,9 @@
 import React from "react";
 
+// profile creation page from the sign in page
+// rerouting from the sign in page to the profile creation page
+// the user will be able to add their first name, last name, username, and their favorite genre before heading to their profile page
+
 export default function ProfileCreation() {
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">

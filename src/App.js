@@ -11,6 +11,7 @@ import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
 import AuthProvider from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
+import ProfileSignup from './pages/auth/components/ProfileCreation';
 
 // App component which runs the whole application
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='/ratings' element={<RatingsPage/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
+            <Route path='/profilecreation' element={<ProfileSignup/>}/>
           </Routes>
           {/* </AuthProvider> */}
         </Router>
