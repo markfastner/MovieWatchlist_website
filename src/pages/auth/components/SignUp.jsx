@@ -41,6 +41,7 @@ export default function SignUp() {
             <Card.Body className="card-body">
                 <div></div>
                 <h2 className="card-header flex text-center mb-4" style={{fontWeight:'bold'}}>Sign Up</h2>
+                
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className="block text-gray-700 text-sm font-bold mb-2">

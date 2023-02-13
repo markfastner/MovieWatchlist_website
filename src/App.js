@@ -9,38 +9,39 @@ import ProfilePage from './pages/ProfilePage'
 import WatchListPage from './pages/WatchListPage'
 import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
-import AuthProvider from './pages/auth/contexts/AuthContext';
+import {AuthProvider} from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import ProfileSignup from './pages/auth/components/ProfileCreation';
+import ProfileCreation from './pages/auth/components/ProfileCreation';
 
 // App component which runs the whole application
 function App() {
 
   // Returns the app component which handles the routing of the application
   return (
+    <AuthProvider>
     <>
         <Router>
-          {/* <AuthProvider> */}
           <Navbar/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
-            {/* <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
+            <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
             <Route path='/profile' element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
             <Route path='/watchlist' element={<PrivateRoute><WatchListPage/></PrivateRoute>}/>
             <Route path='/dashboard' element={<PrivateRoute><DashboardPage/></PrivateRoute>}/>
-            <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/> */}
-            <Route path='/friends'  element={<FriendsPage/>}/>
-            <Route path='/profile' element={<ProfilePage/>}/>
-            <Route path='/watchlist' element={<WatchListPage/>}/>
-            <Route path='/dashboard' element={<DashboardPage/>}/>
-            <Route path='/ratings' element={<RatingsPage/>}/>
+            <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/>
+            {/* <Route path='/friends'  element={<FriendsPage/>}/> */}
+            {/* <Route path='/profile' element={<ProfilePage/>}/> */}
+            {/* <Route path='/watchlist' element={<WatchListPage/>}/> */}
+            {/* <Route path='/dashboard' element={<DashboardPage/>}/> */}
+            {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
-            <Route path='/profilecreation' element={<ProfileSignup/>}/>
+            <Route path='/profilecreation' element={<PrivateRoute><ProfileCreation/></PrivateRoute>}/>
           </Routes>
-          {/* </AuthProvider> */}
         </Router>
     </>      
+    </AuthProvider>
   );
 }
 
