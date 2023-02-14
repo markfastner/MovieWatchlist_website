@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -10,8 +10,8 @@ import { Link, useNavigate } from "react-router-dom"
 export default function SetProfile() {
 
     const emailRef = useRef()
-    const passwordRef = useRef()
-    const nameRef = useRef()
+    // const passwordRef = useRef()
+    // const nameRef = useRef()
     const {currentUser, updateEmail} = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
