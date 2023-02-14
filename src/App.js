@@ -12,6 +12,7 @@ import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider} from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
+import ForgotPassword from './pages/ForgotPassword';
 
 // App component which runs the whole application
 function App() {
@@ -36,7 +37,8 @@ function App() {
             {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
-            <Route path='/setprofile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
+            <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
+            <Route path='/forgot-password' element={<ForgotPassword/>}/>
           </Routes>
           </AuthProvider>
         </Router>

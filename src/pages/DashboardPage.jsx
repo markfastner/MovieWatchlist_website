@@ -11,10 +11,10 @@ function DashboardPage() {
   const {currentUser, signout} = useAuth()
   const navigate = useNavigate()
   
-  function handleLogout(){
+  async function handleLogout(){
     setError('')
     try {
-      signout()
+      await signout()
       navigate('/')
     } catch {
       setError = 'Logout not executed.'
@@ -30,7 +30,7 @@ function DashboardPage() {
             {error && <Alert variant="danger">{error}</Alert>}
             <strong>Email: </strong>{currentUser.email}
             <div>
-            <Link to="/setprofile">Update Profile</Link>
+            <Link to="/set-profile">Update Profile</Link>
 
             </div>
           </Card.Body>
