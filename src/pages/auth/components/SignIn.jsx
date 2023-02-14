@@ -9,9 +9,8 @@ export default function SignIn() {
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
     const nameRef = useRef()
-    const signin = useAuth()
+    const {signin} = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useNavigate()
@@ -20,17 +19,13 @@ export default function SignIn() {
     async function handleSubmit(e) {
     e.preventDefault()
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-        return setError("Passwords do not match")
-    }
-
     try {
         setError("")
         setLoading(true)
         await signin(emailRef.current.value, passwordRef.current.value)
-        history.push("/")
+        history("/dashboard")
     } catch {
-        setError("Failed to create an account")
+        setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")
     }
 
     setLoading(false)
@@ -65,6 +60,7 @@ export default function SignIn() {
                     type="password" 
                     ref={passwordRef} required />
                 </Form.Group>
+                <Link to="/forgot-password">Forgot Password?</Link>
                 <Button 
                 className="btn btn-primary my-2 w-full duration-500 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
                 disabled={loading}      
@@ -73,7 +69,7 @@ export default function SignIn() {
                 </Button>
                 </Form>
                 <div className="w-100 text-center mt-2">
-                Don't have an account? <Link to="/signup" className="text-blue-500 hover:underline hover:text-blue-700">Sign Up</Link>
+                <Link to="/signup" className="text-blue-500 hover:underline hover:text-blue-700">Don't have an account? Sign Up</Link>
                 </div>
             </Card.Body>
             </Card>         

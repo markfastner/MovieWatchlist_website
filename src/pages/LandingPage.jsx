@@ -11,8 +11,9 @@ function LandingPage() {
       className="flex relative min-h-screen bg-no-repeat w-full bg-cover 
         bg-[url('/public/images/HomeLoginImages.jpg')]">
         
-      
-        
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Pryj0g7DUDo?start=108" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
   );
 }

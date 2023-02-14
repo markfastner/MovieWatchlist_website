@@ -8,7 +8,7 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const signup  = useAuth()
+    const {signup}  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useNavigate()
@@ -25,7 +25,7 @@ export default function SignUp() {
         setError("")
         setLoading(true)
         await signup(emailRef.current.value, passwordRef.current.value)
-        history.push("/")
+        history("/setprofile")
     } catch {
         setError("Failed to create an account")
     }
@@ -41,7 +41,6 @@ export default function SignUp() {
             <Card.Body className="card-body">
                 <div></div>
                 <h2 className="card-header flex text-center mb-4" style={{fontWeight:'bold'}}>Sign Up</h2>
-                
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className="block text-gray-700 text-sm font-bold mb-2">
@@ -81,7 +80,7 @@ export default function SignUp() {
                 </Button>
                 </Form>
                 <div className="w-100 text-center mt-2">
-                Already have an account? <Link to="/signin" className="text-blue-500 hover:underline hover:text-blue-700">Sign In</Link>
+                <Link to="/signin" className="text-blue-500 hover:underline hover:text-blue-700">Already have an account? Sign In</Link>
                 </div>
             </Card.Body>
             </Card>         

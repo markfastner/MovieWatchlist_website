@@ -11,17 +11,16 @@ import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider} from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
-import ProfileSignup from './pages/auth/components/ProfileCreation';
-import ProfileCreation from './pages/auth/components/ProfileCreation';
+import SetProfile from './pages/auth/components/SetProfile';
 
 // App component which runs the whole application
 function App() {
 
   // Returns the app component which handles the routing of the application
   return (
-    <AuthProvider>
     <>
         <Router>
+          <AuthProvider> 
           <Navbar/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
@@ -37,11 +36,11 @@ function App() {
             {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
-            <Route path='/profilecreation' element={<PrivateRoute><ProfileCreation/></PrivateRoute>}/>
+            <Route path='/setprofile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
           </Routes>
+          </AuthProvider>
         </Router>
     </>      
-    </AuthProvider>
   );
 }
 

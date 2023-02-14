@@ -1,13 +1,21 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom"
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
 // the user will be able to add their first name, last name, username, and their favorite genre before heading to their profile page
 
-export default function ProfileCreation() {
+export default function SetProfile() {
+
+    const navigate = useNavigate()
+    function handleSubmit(){
+        navigate('/dashboard')
+        // pass all account creation details here
+    }
+
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
-        <form action="/auth/profilecreation" method="GET" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
+        <form action="/auth/setprofile" method="GET" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
             {/* <div className="flex justify-center">
                 <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
             </div> */}
@@ -73,7 +81,7 @@ export default function ProfileCreation() {
 
             </select>
         </div>
-            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
+            <button type="submit" onClick={handleSubmit} class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
             <br></br>
             {/* <p class="text-center text-gray-500 text-xs">
             &copy;Runtime Group

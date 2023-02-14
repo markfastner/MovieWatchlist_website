@@ -5,7 +5,7 @@ import './Navbar.css';
 import '../../App.css'
 
 // The Navigation bar which links to each component's url extension
-const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends", "ProfileCreation"]
+const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends"]
 
 export const Navbar=()=>{
   return(<nav className="flex justify-between px-8 py-4 bg-blue-900">
