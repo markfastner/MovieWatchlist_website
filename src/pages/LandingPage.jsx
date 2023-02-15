@@ -10,6 +10,7 @@ function LandingPage() {
     <div
       className="flex relative min-h-screen bg-no-repeat w-full bg-cover 
         bg-[url('/public/images/HomeLoginImages.jpg')]">
+       
       </div>
   );
 }
