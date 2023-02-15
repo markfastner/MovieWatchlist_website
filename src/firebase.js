@@ -1,5 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth"
+import {getDatabase} from "firebase/database"
+
 
 // Initializes a connection with team's Firebase project
 const app = firebase.initializeApp({
