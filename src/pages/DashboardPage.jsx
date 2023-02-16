@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "./auth/contexts/AuthContext";
+import {database} from "../firebase"
 
 
 // Displaying the dashboard page

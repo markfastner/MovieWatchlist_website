@@ -1,5 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth"
+import "firebase/firestore"
+
 
 // Initializes a connection with team's Firebase project
 const app = firebase.initializeApp({
@@ -12,5 +14,14 @@ const app = firebase.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 })
 
+//authentication
 export const auth = app.auth()
+//realtime db
+const database = app.firestore()
+export const db = {
+  users: database.collection('users'),
+  movies: database.collection('movies'),
+  watchlists: database.collection('watchlists'),
+  chats: database.collection('chats')
+}
 export default app

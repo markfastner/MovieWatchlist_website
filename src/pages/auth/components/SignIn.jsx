@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import {db} from "../../../firebase"
 
 
 // Export function to sign users in
@@ -10,7 +11,7 @@ export default function SignIn() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const nameRef = useRef()
-    const {signin} = useAuth()
+    const {signin, currentUser} = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useNavigate()
@@ -20,9 +21,14 @@ export default function SignIn() {
     e.preventDefault()
 
     try {
+        db.users.add({
+            name: emailRef.current.value,
+
+        })
         setError("")
         setLoading(true)
         await signin(emailRef.current.value, passwordRef.current.value)
+        
         history("/dashboard")
     } catch {
         setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")

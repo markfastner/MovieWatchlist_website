@@ -12,7 +12,7 @@ import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider} from './pages/auth/contexts/AuthContext';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
-import ForgotPassword from './pages/ForgotPassword';
+import ForgotPassword from './pages/auth/components/ForgotPassword';
 
 // App component which runs the whole application
 function App() {
