@@ -9,18 +9,9 @@ import {database} from "../firebase"
 // Dashboard page currently has the activity status card
 function DashboardPage() {
   const [error, setError] = useState("")
-  const {currentUser, signout} = useAuth()
-  const navigate = useNavigate()
+  const {currentUser} = useAuth()
   
-  async function handleLogout(){
-    setError('')
-    try {
-      await signout()
-      navigate('/')
-    } catch {
-      setError = 'Logout not executed.'
-    }
-  }
+  
 
 
     return (
@@ -36,7 +27,6 @@ function DashboardPage() {
             </div>
           </Card.Body>
         </Card>
-        <Button variant="link" onClick={handleLogout}>Log Out</Button>
       </div>
     );
 }

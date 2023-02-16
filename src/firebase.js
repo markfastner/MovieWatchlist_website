@@ -1,3 +1,4 @@
+import { data } from "autoprefixer"
 import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
@@ -21,6 +22,9 @@ export const db = {
   users: database.collection('users'),
   movies: database.collection('movies'),
   watchlists: database.collection('watchlists'),
-  chats: database.collection('chats')
+  chats: database.collection('chats'),
+  ratings: database.collection('ratings'),
+  comments: database.collection('comments'),
+  profiles: database.collection('profiles')
 }
 export default app
