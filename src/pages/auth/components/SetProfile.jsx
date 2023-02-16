@@ -125,7 +125,7 @@ export default function SetProfile() {
         </div>
             <button type="submit" onClick={handleSubmit} class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
             <div className="mb-4 text-center mt-2">
-                <Link to="/">Cancel</Link>
+                <Link to="/dashboard">Cancel</Link>
             </div>
             <br></br>
             {/* <p class="text-center text-gray-500 text-xs">

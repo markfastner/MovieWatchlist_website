@@ -2,7 +2,6 @@ import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 
-
 // Initializes a connection with team's Firebase project
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
