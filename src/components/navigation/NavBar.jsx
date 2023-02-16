@@ -18,7 +18,6 @@ export const Navbar=()=>{
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  //setIsLoggedIn = currentUser ? true : false
   
   
   async function handleLogout(){
