@@ -11,7 +11,7 @@ export default function SignUp() {
     const {signup}  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
-    const history = useNavigate()
+    const navigation = useNavigate()
 
     // Submission handler
     async function handleSubmit(e) {
@@ -25,7 +25,7 @@ export default function SignUp() {
         setError("")
         setLoading(true)
         await signup(emailRef.current.value, passwordRef.current.value)
-        history("/set-profile")
+        navigation("/set-profile")
     } catch {
         setError("Failed to create an account")
     }
