@@ -1,17 +1,26 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
+import { db } from "../../../firebase"
 import { Link, useNavigate } from "react-router-dom"
 
 //Export function to sign users up
 export default function SignUp() {
+    
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
+    const firstNameRef = useRef()
+    const lastNameRef = useRef()
+    const usernameRef = useRef()
+    const genreRef = useRef()
+    const dataIdRef = useRef()
+
     const {signup}  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigation = useNavigate()
+
 
     // Submission handler
     async function handleSubmit(e) {

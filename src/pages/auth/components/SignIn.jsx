@@ -21,14 +21,9 @@ export default function SignIn() {
     e.preventDefault()
 
     try {
-        db.users.add({
-            name: emailRef.current.value,
-
-        })
         setError("")
         setLoading(true)
-        await signin(emailRef.current.value, passwordRef.current.value)
-        
+        await signin(emailRef.current.value, passwordRef.current.value)        
         history("/dashboard")
     } catch {
         setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")

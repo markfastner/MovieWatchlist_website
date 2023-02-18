@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import { db } from "../../../firebase"
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -9,13 +10,17 @@ import { Link, useNavigate } from "react-router-dom"
 
 export default function SetProfile() {
 
-    const emailRef = useRef()
-    // const passwordRef = useRef()
-    // const nameRef = useRef()
     const {currentUser, updateEmail} = useAuth()
+    const navigate = useNavigate()
+
+    const emailRef = useRef()
+    const firstNameRef = useRef()
+    const lastNameRef = useRef()
+    const usernameRef = useRef()
+    const genreRef = useRef()
+
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
 
     // Submission handler
     function handleSubmit(e) {
@@ -28,6 +33,16 @@ export default function SetProfile() {
     if(emailRef.current.value !== currentUser.email) {
         promises.push(updateEmail(emailRef.current.value))
     }
+
+    db.users.doc
+
+    // db.users.update({
+    //     email: emailRef.current.value,
+    //     firstName: firstNameRef.current.value,
+    //     lastName: lastNameRef.current.value,
+    //     username: usernameRef.current.value,
+    //     genre: genreRef.current.value,
+    // })
 
     Promise.all(promises).then(() => {
         navigate('/dashboard')
@@ -72,7 +87,9 @@ export default function SetProfile() {
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="first name"
                     type="text"
-                    placeholder="First name">
+                    placeholder="First name"
+                    ref={firstNameRef}
+                    defaultValue={currentUser.firstName}>
                 </input>
             </div>
             <div class="mb-4">
@@ -85,7 +102,9 @@ export default function SetProfile() {
                     class="shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="last name"
                     type="text"
-                    placeholder="Last name">
+                    placeholder="Last name"
+                    ref={lastNameRef}
+                    defaultValue={currentUser.lastName}>
                 </input>
             </div>
             <div class="mb-4">
@@ -98,7 +117,9 @@ export default function SetProfile() {
                     class="shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="username"
                     type="text"
-                    placeholder="Username">
+                    placeholder="Username"
+                    ref={usernameRef}
+                    defaultValue={currentUser.username}>
                 </input>
             </div>
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
@@ -108,7 +129,8 @@ export default function SetProfile() {
                 for="movie genre">
                 Favorite Movie Genre
                 </label>
-            <select className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none focus:shadow-outline appearance-none focus:border-indigo-600">
+            <select className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none focus:shadow-outline appearance-none focus:border-indigo-600"
+            ref={genreRef}>
                 <option>None</option>
                 <option>Action</option>
                 <option>Horror</option>
