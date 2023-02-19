@@ -34,7 +34,7 @@ export default function SetProfile() {
         promises.push(updateEmail(emailRef.current.value))
     }
 
-    db.users.doc
+    // db.users.doc
 
     // db.users.update({
     //     email: emailRef.current.value,
