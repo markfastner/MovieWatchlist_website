@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
-import { db } from "../../../firebase"
+import { auth, db } from "../../../firebase"
+
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -12,6 +13,8 @@ export default function SetProfile() {
 
     const {currentUser, updateEmail} = useAuth()
     const navigate = useNavigate()
+
+    const user = auth.currentUser;
 
     const emailRef = useRef()
     const firstNameRef = useRef()
@@ -33,18 +36,17 @@ export default function SetProfile() {
     if(emailRef.current.value !== currentUser.email) {
         promises.push(updateEmail(emailRef.current.value))
     }
-
-    // db.users.doc
-
-    // db.users.update({
-    //     email: emailRef.current.value,
-    //     firstName: firstNameRef.current.value,
-    //     lastName: lastNameRef.current.value,
-    //     username: usernameRef.current.value,
-    //     genre: genreRef.current.value,
-    // })
-
+    
+    
     Promise.all(promises).then(() => {
+        db.users.doc(user.uid).set({
+            email: emailRef.current.value,
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            username: usernameRef.current.value,
+            genre: genreRef.current.value,
+            userId: user.uid
+        })
         navigate('/dashboard')
     }).catch(() => {
         setError('Failed to update acccount')
@@ -60,13 +62,14 @@ export default function SetProfile() {
             {/* <div className="flex justify-center">
                 <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
             </div> */}
-            <h1>Additional Information</h1>
+                <h1>Additional Information</h1>
             {error && <Alert variant="danger">{error}</Alert>}
             <div className="mb-4">
                 <label
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="email address">
-                Email
+                    
+                Email {user.uid}
                 </label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -74,6 +77,7 @@ export default function SetProfile() {
                     type="text"
                     placeholder="Email Address"
                     ref={emailRef} required
+
                     defaultValue={currentUser.email}>
                 </input>
             </div>
@@ -88,7 +92,7 @@ export default function SetProfile() {
                     id="first name"
                     type="text"
                     placeholder="First name"
-                    ref={firstNameRef}
+                    ref={firstNameRef} required
                     defaultValue={currentUser.firstName}>
                 </input>
             </div>
@@ -103,7 +107,7 @@ export default function SetProfile() {
                     id="last name"
                     type="text"
                     placeholder="Last name"
-                    ref={lastNameRef}
+                    ref={lastNameRef} required
                     defaultValue={currentUser.lastName}>
                 </input>
             </div>
@@ -118,7 +122,7 @@ export default function SetProfile() {
                     id="username"
                     type="text"
                     placeholder="Username"
-                    ref={usernameRef}
+                    ref={usernameRef} required
                     defaultValue={currentUser.username}>
                 </input>
             </div>
@@ -146,9 +150,9 @@ export default function SetProfile() {
             </select>
         </div>
             <button type="submit" onClick={handleSubmit} class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
-            <div className="mb-4 text-center mt-2">
+            {/* <div className="mb-4 text-center mt-2">
                 <Link to="/dashboard">Cancel</Link>
-            </div>
+            </div> */}
             <br></br>
             {/* <p class="text-center text-gray-500 text-xs">
             &copy;Runtime Group
