@@ -24,7 +24,6 @@ function App() {
         <Router>
           <AuthProvider> 
           <Navbar/>
-          <Footer/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
             <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
@@ -43,6 +42,7 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
           </Routes>
           </AuthProvider>
+          <Footer/>
         </Router>
     </>      
   );
