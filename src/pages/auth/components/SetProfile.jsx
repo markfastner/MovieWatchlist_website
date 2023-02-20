@@ -68,14 +68,14 @@ export default function SetProfile() {
     }
     
     
-    userRef.set({
+    promises.push(userRef.update({
         email: emailRef.current.value,
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         username: usernameRef.current.value,
         genre: genreRef.current.value,
         uid: user.uid
-    })
+    }))
 
     Promise.all(promises).then(() => {
         navigate('/dashboard')
@@ -89,7 +89,7 @@ export default function SetProfile() {
 
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
-        <form action="/auth/setprofile" method="GET" className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
+        <form onSubmit={handleSubmit} className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
             {/* <div className="flex justify-center">
                 <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
             </div> */}
@@ -124,7 +124,8 @@ export default function SetProfile() {
                     type="text"
                     placeholder="First name"
                     ref={firstNameRef}
-                    defaultValue={firstName}>
+                    defaultValue={firstName}
+                    required>
                 </input>
             </div>
             <div class="mb-4">
@@ -139,7 +140,8 @@ export default function SetProfile() {
                     type="text"
                     placeholder="Last name"
                     ref={lastNameRef}
-                    defaultValue={lastName}>
+                    defaultValue={lastName}
+                    required>
                 </input>
             </div>
             <div class="mb-4">
@@ -154,7 +156,8 @@ export default function SetProfile() {
                     type="text"
                     placeholder="Username"
                     ref={usernameRef}
-                    defaultValue={username}>
+                    defaultValue={username}
+                    required>
                 </input>
             </div>
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
@@ -181,7 +184,7 @@ export default function SetProfile() {
 
             </select>
         </div>
-            <button type="submit" onClick={handleSubmit} class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
+            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
             {/* <div className="mb-4 text-center mt-2">
                 <Link to="/dashboard">Cancel</Link>
             </div> */}
