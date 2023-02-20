@@ -24,6 +24,7 @@ function App() {
         <Router>
           <AuthProvider> 
           <Navbar/>
+          <Footer/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
             <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
