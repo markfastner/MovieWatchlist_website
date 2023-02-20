@@ -3,6 +3,8 @@ import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import { auth, db } from "../../../firebase"
+import "firebase/firestore"
+import firebase from "firebase"
 
 
 // profile creation page from the sign in page
@@ -15,15 +17,43 @@ export default function SetProfile() {
     const navigate = useNavigate()
 
     const user = auth.currentUser;
+    const userRef = db.users.doc(user.uid)
 
     const emailRef = useRef()
+    const [email, setEmail] = useState()
+
     const firstNameRef = useRef()
+    const [firstName, setFirstName] = useState()
+
     const lastNameRef = useRef()
+    const [lastName, setLastName] = useState()
+    
     const usernameRef = useRef()
+    const [username, setUsername] = useState()
+
     const genreRef = useRef()
+     const [genre, setGenre] = useState()
 
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    
+    userRef.get().then((doc) => {
+        if(doc.exists) {
+            console.log("Document data:", doc.data());
+            setEmail(doc.data().email)
+            setFirstName(doc.data().firstName)
+            setLastName(doc.data().lastName)
+            setUsername(doc.data().username)
+            setGenre(doc.data().genre)
+            
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+    
 
     // Submission handler
     function handleSubmit(e) {
@@ -38,15 +68,16 @@ export default function SetProfile() {
     }
     
     
+    userRef.set({
+        email: emailRef.current.value,
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        username: usernameRef.current.value,
+        genre: genreRef.current.value,
+        uid: user.uid
+    })
+
     Promise.all(promises).then(() => {
-        db.users.doc(user.uid).set({
-            email: emailRef.current.value,
-            firstName: firstNameRef.current.value,
-            lastName: lastNameRef.current.value,
-            username: usernameRef.current.value,
-            genre: genreRef.current.value,
-            userId: user.uid
-        })
         navigate('/dashboard')
     }).catch(() => {
         setError('Failed to update acccount')
@@ -77,7 +108,6 @@ export default function SetProfile() {
                     type="text"
                     placeholder="Email Address"
                     ref={emailRef} required
-
                     defaultValue={currentUser.email}>
                 </input>
             </div>
@@ -86,14 +116,15 @@ export default function SetProfile() {
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="first name">
                 First Name
+                {/* {db.users.doc(user.uid).get({source: 'cache'})} */}
                 </label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="first name"
                     type="text"
                     placeholder="First name"
-                    ref={firstNameRef} required
-                    defaultValue={currentUser.firstName}>
+                    ref={firstNameRef}
+                    defaultValue={firstName}>
                 </input>
             </div>
             <div class="mb-4">
@@ -107,8 +138,8 @@ export default function SetProfile() {
                     id="last name"
                     type="text"
                     placeholder="Last name"
-                    ref={lastNameRef} required
-                    defaultValue={currentUser.lastName}>
+                    ref={lastNameRef}
+                    defaultValue={lastName}>
                 </input>
             </div>
             <div class="mb-4">
@@ -122,8 +153,8 @@ export default function SetProfile() {
                     id="username"
                     type="text"
                     placeholder="Username"
-                    ref={usernameRef} required
-                    defaultValue={currentUser.username}>
+                    ref={usernameRef}
+                    defaultValue={username}>
                 </input>
             </div>
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
@@ -135,17 +166,18 @@ export default function SetProfile() {
                 </label>
             <select className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none focus:shadow-outline appearance-none focus:border-indigo-600"
             ref={genreRef}>
+                <option selected disabled hidden>{genre} </option>
                 <option>None</option>
                 <option>Action</option>
-                <option>Horror</option>
-                <option>Drama</option>
-                <option>Thriller</option>
-                <option>Comedy</option>
-                <option>Sci-Fi</option>
-                <option>Romance</option>
                 <option>Adventure</option>
+                <option>Comedy</option>
                 <option>Documentary</option>
+                <option>Drama</option>
+                <option>Horror</option>
                 <option>Mystery</option>
+                <option>Romance</option>
+                <option>Sci-Fi</option>
+                <option>Thriller</option>
 
             </select>
         </div>

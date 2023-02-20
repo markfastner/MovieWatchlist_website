@@ -14,7 +14,6 @@ export default function SignUp() {
     const lastNameRef = useRef()
     const usernameRef = useRef()
     const genreRef = useRef()
-    const dataIdRef = useRef()
 
     const {signup}  = useAuth()
     const [error, setError] = useState("")
