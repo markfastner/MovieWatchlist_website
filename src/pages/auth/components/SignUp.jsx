@@ -31,14 +31,20 @@ export default function SignUp() {
             await signup(emailRef.current.value, passwordRef.current.value)
             const user = auth.currentUser
             const userRef = db.users.doc(user.uid)
-        userRef.set({
-            email: emailRef.current.value,
-            firstName: "",
-            lastName: "",
-            username: "",
-            genre: "",
-            uid: ""
-        })
+            const friendRef = db.friends.doc(user.uid)
+            
+            friendRef.set({
+                friend_uid: user.uid
+            })
+
+            userRef.set({
+                email: emailRef.current.value,
+                firstName: "",
+                lastName: "",
+                username: "",
+                genre: "",
+                uid: user.uid
+            })
         navigation("/set-profile")
     } catch {
         setError("Failed to create an account")

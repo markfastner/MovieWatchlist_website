@@ -100,7 +100,7 @@ export default function SetProfile() {
                 class="block text-gray-700 text-sm font-bold mb-2"
                 for="email address">
                     
-                Email {user.uid}
+                Email 
                 </label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -169,8 +169,9 @@ export default function SetProfile() {
                 </label>
             <select className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none focus:shadow-outline appearance-none focus:border-indigo-600"
             ref={genreRef}>
-                <option selected disabled hidden>{genre} </option>
-                <option>None</option>
+                {genre !="" ? <option selected disabled>{genre} </option>
+                :
+                <option selected>None</option>}
                 <option>Action</option>
                 <option>Adventure</option>
                 <option>Comedy</option>
@@ -181,7 +182,6 @@ export default function SetProfile() {
                 <option>Romance</option>
                 <option>Sci-Fi</option>
                 <option>Thriller</option>
-
             </select>
         </div>
             <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
