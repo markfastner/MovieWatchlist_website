@@ -42,6 +42,7 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
           </Routes>
           </AuthProvider>
+          <Footer/>
         </Router>
     </>      
   );

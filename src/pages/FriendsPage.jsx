@@ -3,6 +3,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import React from 'react';
 import '../App.css'
+import { db } from '../firebase';
 
 function FriendsPage() {
  return (
