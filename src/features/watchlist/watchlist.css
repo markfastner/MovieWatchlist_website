@@ -6,7 +6,7 @@ This page defines coloring placements and other styling for the watchlist page
 */
 
 h2{
-    font-size: 100px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -20,7 +20,7 @@ h2{
     height: 50%;
     width: 50%;
     position: relative;
-    top: -530px;
+    top: -550px;
     border: 10px solid black;
 }
 
