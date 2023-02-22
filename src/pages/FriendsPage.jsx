@@ -4,6 +4,7 @@ import 'firebase/auth';
 import React, { useRef, useState } from 'react';
 import '../App.css'
 import { db } from '../firebase';
+import Read from '../Read';
 
 export default function FriendsPage() {
   
@@ -56,6 +57,7 @@ export default function FriendsPage() {
     <h1>
     Friends
     </h1>
+    <Read/>
     <div>
       <form onSubmit={handleAddFriend}>
         <button type='submit' onClick={handleClearClick} class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Add Friends</button>
