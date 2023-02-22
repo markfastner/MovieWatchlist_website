@@ -77,7 +77,7 @@ function FriendsPage() {
       }
     }
   }
-
+ 
     return (
       <div>
     {/* Render the friends list */}
