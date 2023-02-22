@@ -12,6 +12,8 @@ import '../../App.css';
 export const Footer=()=>{
     const FooterLinks = ["About", "Terms and Conditions", "Support", "Contact Us"]
 
+    
+
     return(
         
         <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-blue-900">

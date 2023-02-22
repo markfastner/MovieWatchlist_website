@@ -2,12 +2,12 @@ import { CirclePicker } from "react-color";
 
 function ProfilePage() {
     return (
-      <div>
+      <div className ="bg-red-400">
         {/* Render the friends list */}
         <h1>
-        Profile page
-            
+        Profile Customization
         </h1>
+        
         <CirclePicker />
       </div>
     );
