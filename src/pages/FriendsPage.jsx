@@ -1,82 +1,54 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import '../App.css'
 import { db } from '../firebase';
 
-function FriendsPage() {
-  class Friends extends React.Component {
-    state = {
-      friends: [],
-      user: null
-    };
+export default function FriendsPage() {
   
-    componentDidMount() {
-      // Initialize Firebase
-      firebase.initializeApp({
-        apiKey: 'YOUR_API_KEY',
-        authDomain: 'YOUR_AUTH_DOMAIN',
-        databaseURL: 'YOUR_DATABASE_URL',
-      });
-  
-      // Listen for changes to the user's authentication state
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.setState({ user });
-        } else {
-          this.setState({ user: null });
-        }
-      });
-  
-      // Listen for changes to the friends list
-      firebase
-        .database()
-        .ref('friends')
-        .on('value', (snapshot) => {
-          this.setState({ friends: snapshot.val() });
-        });
-    }
-  
-    handleAddFriend = (friend) => {
-      // Check if the user is authenticated
-      if (this.state.user) {
-        // Add a new friend to the Firebase database
-        firebase
-          .database()
-          .ref('friends')
-          .push(friend);
-      } else {
-        alert('Please sign in to add a friend.');
-      }
-    };
-  
-    handleDeleteFriend = (id) => {
-      // Check if the user is authenticated
-      if (this.state.user) {
-        // Remove a friend from the Firebase database
-        firebase
-          .database()
-          .ref(`friends/${id}`)
-          .remove();
-      } else {
-        alert('Please sign in to delete a friend.');
-      }
-    };
-  
-    handleEditFriend = (id, name) => {
-      // Check if the user is authenticated
-      if (this.state.user) {
-        // Update a friend in the Firebase database
-        firebase
-          .database()
-          .ref(`friends/${id}`)
-          .update({ name });
-      } else {
-        alert('Please sign in to edit a friend.');
-      }
-    }
+  const usernameRef = useRef()
+  const [inputValue, setInputValue] = useState('')
+
+  const handleClearClick = () =>
+  {
+    setInputValue('')
   }
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  
+  function handleAddFriend(e) {
+    e.preventDefault()
+    const username = usernameRef
+    // Check if the user is authenticated
+    // if (this.state.user) {
+    //   // Add a new friend to the Firebase database
+    //   firebase
+    //     .database()
+    //     .ref('friends')
+    //     .push(friend);
+    // } else {
+    //   alert('Please sign in to add a friend.');
+    // }
+  };
+
+  
+    
+  
+   function handleRemoveFriend() {
+      // Check if the user is authenticated
+      // if (this.state.user) {
+      //   // Remove a friend from the Firebase database
+      //   firebase
+      //     .database()
+      //     .ref(`friends/${id}`)
+      //     .remove();
+      // } else {
+      //   alert('Please sign in to delete a friend.');
+      // }
+    };
  
     return (
       <div>
@@ -85,10 +57,10 @@ function FriendsPage() {
     Friends
     </h1>
     <div>
-    <button class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" type='button' onClick={FriendsPage.handleAddFriend}>Add Friends</button>
+      <form onSubmit={handleAddFriend}>
+        <button type='submit' onClick={handleClearClick} class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Add Friends</button>
+        <input type='text' ref={usernameRef} onChange={handleInputChange} value={inputValue} placeholder="Friend's Username"></input>
+      </form>
     </div>
   </div>
-  );
-};
-
-export default FriendsPage;
+  );}
