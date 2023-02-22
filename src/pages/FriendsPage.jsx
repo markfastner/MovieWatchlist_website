@@ -84,7 +84,7 @@ function FriendsPage() {
     <h1>
     Friends
     </h1>
-    <div>
+    <div className = "flex relative">
     <button class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" type='button' onClick={FriendsPage.handleAddFriend}>Add Friends</button>
     </div>
   </div>

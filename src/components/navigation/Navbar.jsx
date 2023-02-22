@@ -9,7 +9,7 @@ import { useAuth } from '../../pages/auth/contexts/AuthContext.js';
 
 export const Navbar=()=>{
   // The Navigation bar which links to each component's url extension
-  const NavBarLinks = ["Dashboard","Watchlist", "Ratings", "Friends"]
+  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"]
   const emailRef = useRef()
   const passwordRef = useRef()
   const nameRef = useRef()

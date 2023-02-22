@@ -1,3 +1,5 @@
+import { CirclePicker } from "react-color";
+
 function ProfilePage() {
     return (
       <div>
@@ -6,6 +8,7 @@ function ProfilePage() {
         Profile page
             
         </h1>
+        <CirclePicker />
       </div>
     );
 }

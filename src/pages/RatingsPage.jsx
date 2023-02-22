@@ -1,7 +1,7 @@
 // export function to display the comment box and button for submission
 export default function Ratingpage() {
   return (
-  <div class="bg-blue-300"> 
+  <div class="bg-blue-300 flex relative min-h-screen"> 
   {/* This creates the background for the selected are for the comment section*/}
   <div class="container mx-auto p-6">
     <h3 class="text-lg font-normal mb-4">Comments and Reactions</h3>
