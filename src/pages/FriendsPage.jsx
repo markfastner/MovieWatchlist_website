@@ -3,14 +3,18 @@ import 'firebase/database';
 import 'firebase/auth';
 import React, { useRef, useState } from 'react';
 import '../App.css'
-import { db } from '../firebase';
+import { useAuth } from "./auth/contexts/AuthContext"
+import { auth, db } from '../firebase';
 import Read from '../Read';
 
 export default function FriendsPage() {
   
   const usernameRef = useRef()
+  const {currentUser} = useAuth()
   const [inputValue, setInputValue] = useState('')
   const [addFriendError, setAddFriendError] = useState('')
+  const user = auth.currentUser;
+  const friendRef = db.friends.doc(user.uid)
 
   const [error, setError] = useState('')
 
@@ -27,9 +31,12 @@ export default function FriendsPage() {
     e.preventDefault()
     const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
     if(!(snapshot.empty)) {
-      
+      let friendRequest = {}
+      friendRequest[usernameRef.current.value] = "pending"
+      friendRef.update(friendRequest)
+      setAddFriendError("Friend request sent.")
     } else {
-      setAddFriendError("User does not exist")
+      setAddFriendError("User does not exist.")
     }
     // Check if the user is authenticated
     // if (this.state.user) {
