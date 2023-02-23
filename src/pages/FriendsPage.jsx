@@ -10,8 +10,9 @@ export default function FriendsPage() {
   
   const usernameRef = useRef()
   const [inputValue, setInputValue] = useState('')
+  const [addFriendError, setAddFriendError] = useState('')
 
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
 
   const handleClearClick = () =>
   {
@@ -22,9 +23,14 @@ export default function FriendsPage() {
     setInputValue(event.target.value);
   };
   
-  function handleAddFriend(e) {
+  async function handleAddFriend(e) {
     e.preventDefault()
-    const username = usernameRef
+    const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
+    if(!(snapshot.empty)) {
+      
+    } else {
+      setAddFriendError("User does not exist")
+    }
     // Check if the user is authenticated
     // if (this.state.user) {
     //   // Add a new friend to the Firebase database
@@ -61,9 +67,10 @@ export default function FriendsPage() {
     </h1>
     <Read/>
     <div>
+        {addFriendError}
       <form onSubmit={handleAddFriend}>
-        <button type='submit' onClick={handleClearClick} class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Add Friends</button>
         <input type='text' ref={usernameRef} onChange={handleInputChange} value={inputValue} placeholder="Friend's Username"></input>
+        <button type='submit'  class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Add Friends</button>
       </form>
     </div>
   </div>

@@ -36,6 +36,11 @@ export default function SetProfile() {
 
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const [usernameError, setUsernameError] = useState("")
+
+    function isAlphanumeric(str) {
+        return /^[a-zA-Z0-9]+$/.test(str);
+      }      
     
     userRef.get().then((doc) => {
         if(doc.exists) {
@@ -56,7 +61,7 @@ export default function SetProfile() {
     
 
     // Submission handler
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
     e.preventDefault()
 
     const promises = []
@@ -67,23 +72,31 @@ export default function SetProfile() {
         promises.push(updateEmail(emailRef.current.value))
     }
     
-    
-    promises.push(userRef.update({
-        email: emailRef.current.value,
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        username: usernameRef.current.value,
-        genre: genreRef.current.value,
-        uid: user.uid
-    }))
+    const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
+   if(isAlphanumeric(usernameRef.current.value)) {
+       if(snapshot.empty || usernameRef.current.value == username) {
+           promises.push(userRef.update({
+               email: emailRef.current.value,
+               firstName: firstNameRef.current.value,
+               lastName: lastNameRef.current.value,
+               username: usernameRef.current.value,
+               genre: genreRef.current.value,
+               uid: user.uid
+           }))
+           Promise.all(promises).then(() => {
+               navigate('/dashboard')
+           }).catch(() => {
+               setError('Failed to update acccount')
+           }).finally(() =>  {
+               setLoading(false)
+           })
+       } else {
+           setUsernameError("Username taken")
+       }
+   } else {
+    setUsernameError("Username must consist of letters and numbers only (no spaces).")
+   }
 
-    Promise.all(promises).then(() => {
-        navigate('/dashboard')
-    }).catch(() => {
-        setError('Failed to update acccount')
-    }).finally(() =>  {
-        setLoading(false)
-    })
     
     }
 
@@ -159,6 +172,7 @@ export default function SetProfile() {
                     defaultValue={username}
                     required>
                 </input>
+                {usernameError && <Alert variant="danger">{usernameError}</Alert>}
             </div>
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
             <div className="relative w-full lg:max-w-sm">
