@@ -14,6 +14,10 @@ import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
 import Footer from './components/navigation/Footer';
+import Support from './pages/SupportPage';
+import TermsAndConditions from './pages/TermsAndConditionsPage';
+import About from './pages/AboutMePage';
+import Contact from './pages/ContactPage';
 
 // App component which runs the whole application
 function App() {
@@ -36,6 +40,10 @@ function App() {
             {/* <Route path='/watchlist' element={<WatchListPage/>}/> */}
             {/* <Route path='/dashboard' element={<DashboardPage/>}/> */}
             {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
+            <Route path='/support' element={<Support/>}/>
+            <Route path='/terms-and-conditions' element={<TermsAndConditions/>}/>
+            <Route path='/about' element={<About/>}/>
+            <Route path='/contact' element={<Contact/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>

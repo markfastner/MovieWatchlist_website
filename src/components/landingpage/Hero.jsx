@@ -5,9 +5,9 @@ import WebFont from 'webfontloader';
 
 
 const Hero = () => (
-    <section id="home" className = "flex md:flex-row flex-col font-title">
+    <section id="home" className = "flex md:flex-row flex-col font-title ">
         <div
-            className="flex relative min-h-screen bg-no-repeat w-full bg-cover brightness-10
+            className="flex relative min-h-screen bg-no-repeat w-full bg-cover 
             bg-[url('/public/images/HomeLoginImages.jpg')]">
             <div className="flex relative mx-auto items-center flex-col space-y-4 justify-center">
                 <h1 className="text-blue-500 text-9xl font-serif font-bold">Entertainment Awaits</h1>

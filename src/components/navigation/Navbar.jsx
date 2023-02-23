@@ -45,7 +45,7 @@ export const Navbar=()=>{
       {
         NavBarLinks.map(link => {
           return <li>
-            <Link to={`/${link}`} className="text-white tracking-wider">{link}</Link>
+            <Link to={`/${link}`} className="text-white tracking-wider hover:underline hover:text-blue-400">{link}</Link>
           </li>
         })
       }

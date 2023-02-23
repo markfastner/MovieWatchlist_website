@@ -18,7 +18,7 @@ function DashboardPage() {
       <div className="flex justify-start bg-blue-200 min-h-screen">
         <Card className="w-full max-w-sm p-4 bg-blue-100 border-blue-400 shadow sm:p-6 md:p-100">
           <Card.Body>
-            <h2 className="text-center mb-4 text-black">Activity status</h2>
+            <h2 className="text-center mb-4 text-black">Friend Activity</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <strong>Email: </strong>{currentUser.email}
             <div>
