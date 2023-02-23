@@ -10,6 +10,8 @@ export default function FriendsPage() {
   const usernameRef = useRef()
   const [inputValue, setInputValue] = useState('')
 
+  const [error, setError] = useState("")
+
   const handleClearClick = () =>
   {
     setInputValue('')
