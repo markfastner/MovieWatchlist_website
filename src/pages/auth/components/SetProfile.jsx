@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { auth, db } from "../../../firebase"
 import "firebase/firestore"
 import firebase from "firebase"
+import ProfileUpload from "../../../features/profile/components/ProfileUpload"
 
 
 // profile creation page from the sign in page
@@ -193,6 +194,7 @@ export default function SetProfile() {
             &copy;Runtime Group
             </p> */}
         </form>
+        <ProfileUpload/>
     </div>    
     )
 }

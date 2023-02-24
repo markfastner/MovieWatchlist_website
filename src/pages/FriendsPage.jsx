@@ -79,15 +79,47 @@ function FriendsPage() {
   }
 
     return (
-      <div>
-    {/* Render the friends list */}
-    <h1>
-    Friends
-    </h1>
-    <div className = "flex relative">
-    <button class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" type='button' onClick={FriendsPage.handleAddFriend}>Add Friends</button>
+    <div>
+      {/* Render the friends list */}
+      <div className = "flex-col justify-center items-center relative bg-blue-200 min-h-screen">
+        <div className = "flex bg-green-400 py-10">
+          <ul className ="text-white px-10 space-x-[5px]">
+            Friends
+            Online
+            All 
+            Pending
+          </ul>
+          
+        </div>
+        <div>
+        <form className="max-w-5xl px-10">
+              <div className="relative">
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                  >
+                      <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                  </svg>
+                  <input
+                      type="text"
+                      placeholder="Search for friends"
+                      className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+                  />
+              </div>
+          </form>
+
+        </div>
+      
+      </div>
     </div>
-  </div>
   );
 };
 
