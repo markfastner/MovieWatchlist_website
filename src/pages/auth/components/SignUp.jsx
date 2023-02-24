@@ -34,7 +34,7 @@ export default function SignUp() {
             const friendRef = db.friends.doc(user.uid)
             
             friendRef.set({
-                uid : currentUser.uid
+                user_uid : currentUser.uid
             })
 
             userRef.set({
