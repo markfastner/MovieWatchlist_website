@@ -12,7 +12,7 @@ export default function SignUp() {
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     
-    const {signup, currentUser}  = useAuth()
+    const {signup, signin, currentUser}  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigation = useNavigate()
@@ -29,12 +29,13 @@ export default function SignUp() {
             setError("")
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
+            await signin(emailRef.current.value, passwordRef.current.value)
             const user = auth.currentUser
             const userRef = db.users.doc(user.uid)
             const friendRef = db.friends.doc(user.uid)
             
             friendRef.set({
-                uid : currentUser.uid
+                uid : user.uid
             })
 
             userRef.set({
