@@ -6,7 +6,7 @@ import { auth, db } from "../../../firebase"
 import "firebase/firestore"
 import firebase from "firebase"
 import ProfileUpload from "../../../features/profile/components/ProfileUpload"
-
+import { CirclePicker } from "react-color";
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -194,7 +194,20 @@ export default function SetProfile() {
             &copy;Runtime Group
             </p> */}
         </form>
-        <ProfileUpload/>
+        
+
+        <section>
+            <div>
+                <ProfileUpload/>
+            </div>
+        </section>
+
+        <section className="bg-green-400 py-3 px-5 rounded-xl">
+            <div>
+                <CirclePicker/>
+            </div>
+        </section>
+        
     </div>    
     )
 }

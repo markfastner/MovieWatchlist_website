@@ -1,6 +1,8 @@
 import { CirclePicker } from "react-color";
 
 function ProfilePage() {
+
+  
     return (
       <div className ="bg-green-400 flex-col relative min-h-screen">
         {/* Render the friends list */}
@@ -11,9 +13,6 @@ function ProfilePage() {
         
         <div className="flex relative justify-center">
           <form className="bg-blue-200">
-            <label className="">
-              Color Picker
-            </label>
             <CirclePicker />
           </form>
         </div>

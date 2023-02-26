@@ -15,14 +15,15 @@ const ProfileUpload = () => (
                                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                             <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                                Attach a file</p>
+                                Attach a file
+                            </p>
                         </div>
                         <input type="file" class="opacity-0" />
                     </label>
                 </div>
             </div>
             <div class="flex justify-center p-2">
-                <button class="w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl">Create</button>
+                <button class="w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl">Upload</button>
             </div>
         </div>
     </div> 
