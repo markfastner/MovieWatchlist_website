@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { auth, db } from "../../../firebase"
 import "firebase/firestore"
 import firebase from "firebase"
-
+import ProfileUpload from "../../../features/profile/components/ProfileUpload"
+import { CirclePicker } from "react-color";
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -34,7 +35,7 @@ export default function SetProfile() {
     const [username, setUsername] = useState()
 
     const genreRef = useRef()
-     const [genre, setGenre] = useState()
+    const [genre, setGenre] = useState()
 
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -213,7 +214,7 @@ export default function SetProfile() {
                 <option>Thriller</option>
             </select>
         </div>
-            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
+            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Set Profile</button>
             {/* <div className="mb-4 text-center mt-2">
                 <Link to="/dashboard">Cancel</Link>
             </div> */}
@@ -222,6 +223,20 @@ export default function SetProfile() {
             &copy;Runtime Group
             </p> */}
         </form>
+        
+
+        <section>
+            <div>
+                <ProfileUpload/>
+            </div>
+        </section>
+
+        <section className="bg-green-400 py-3 px-5 rounded-xl">
+            <div>
+                <CirclePicker/>
+            </div>
+        </section>
+        
     </div>    
     )
 }
