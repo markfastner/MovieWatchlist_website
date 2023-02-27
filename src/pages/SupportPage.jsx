@@ -17,8 +17,16 @@ function SupportPage(){
   };
 
   return (
-    <div>
-    <form ref={form} onSubmit={sendEmail} className="bg-gray-100 p-6 rounded-lg">
+    <div className="flex-row relative min-h-screen flex-col bg-blue-400">
+      <div className="flex flex-col w-1/2 p-6 bg-gray-100 rounded-lg">
+        <h2 className="text-lg font-bold mb-2">Contact Information</h2>
+        <p className="text-gray-700 mb-2">1250 Bellflower Blvd.</p>
+        <p className="text-gray-700 mb-2">Long Beach, CA 90840</p>
+        <p className="text-gray-700 mb-2">Phone: (562) 985-4111</p>
+        <p className="text-gray-700 mb-2">Email: runtime.live@outlook.com</p>
+      </div>
+
+    <form ref={form} onSubmit={sendEmail} className="w-1/2 p-6 bg-blue-300 p-6 rounded-lg">
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="name">Name</label>
         <input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="user_name" />
