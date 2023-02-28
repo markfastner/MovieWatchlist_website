@@ -7,6 +7,7 @@ import { useAuth } from "./auth/contexts/AuthContext"
 import { auth, db } from '../firebase';
 import Read from '../Read';
 
+
 export default function FriendsPage() {
   
   const usernameRef = useRef()
@@ -50,6 +51,16 @@ export default function FriendsPage() {
     // }
   };
 
+  async function readFriendsList() {
+    const friendsRef = db.collection("friends").doc("friendsList");
+    const doc = await friendsRef.get();
+    if (!doc.exists) {
+      console.log('No such document');
+    } else {
+      console.log('Document data:', doc.data());
+    }
+  }
+
   
     
   
@@ -72,7 +83,7 @@ export default function FriendsPage() {
     <h1>
     Friends
     </h1>
-    <Read/>
+    <button type='show' class='' onClick={readFriendsList}>Show Friends List</button>
     <div>
         {addFriendError}
       <form onSubmit={handleAddFriend}>
