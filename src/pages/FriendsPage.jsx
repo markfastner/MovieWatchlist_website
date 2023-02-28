@@ -8,6 +8,7 @@ import { auth, db } from '../firebase';
 import Chat from './Chat';
 
 
+
 export default function FriendsPage() {
   
   const usernameRef = useRef()
