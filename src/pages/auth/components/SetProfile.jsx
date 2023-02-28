@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react"
-import { Alert } from "react-bootstrap"
+import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
-import { auth, db } from "../../../firebase"
+import { auth, db, storage } from "../../../firebase"
+import {ref, uploadBytes, getDownloadURL} from "../../../firebase"
 import "firebase/firestore"
 import firebase from "firebase"
 import ProfileUpload from "../../../features/profile/components/ProfileUpload"
 import { CirclePicker } from "react-color";
+import {Switch} from "@headlessui/react"
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -43,7 +45,7 @@ export default function SetProfile() {
 
     function isAlphanumeric(str) {
         return /^[a-zA-Z0-9]+$/.test(str);
-      }      
+    }      
     
     userRef.get().then((doc) => {
         if(doc.exists) {
@@ -89,35 +91,64 @@ export default function SetProfile() {
     }
     
     const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
-   if(isAlphanumeric(usernameRef.current.value)) {
-       if(snapshot.empty || usernameRef.current.value == username) {
-           promises.push(userRef.update({
-               email: emailRef.current.value,
-               firstName: firstNameRef.current.value,
-               lastName: lastNameRef.current.value,
-               username: usernameRef.current.value,
-               genre: genreRef.current.value,
-               uid: user.uid
-           }))
-           Promise.all(promises).then(() => {
-               navigate('/dashboard')
-           }).catch(() => {
-               setError('Failed to update acccount')
-           }).finally(() =>  {
-               setLoading(false)
-           })
-       } else {
-           setUsernameError("Username taken")
-       }
-   } else {
+    if(isAlphanumeric(usernameRef.current.value)) {
+        if(snapshot.empty || usernameRef.current.value == username) {
+            promises.push(userRef.update({
+                email: emailRef.current.value,
+                firstName: firstNameRef.current.value,
+                lastName: lastNameRef.current.value,
+                username: usernameRef.current.value,
+                genre: genreRef.current.value,
+                uid: user.uid
+            }))
+            Promise.all(promises).then(() => {
+                navigate('/dashboard')
+            }).catch(() => {
+                setError('Failed to update acccount')
+            }).finally(() =>  {
+                setLoading(false)
+            })
+        } else {
+            setUsernameError("Username taken")
+        }
+    } else {
     setUsernameError("Username must consist of letters and numbers only (no spaces).")
-   }
+    }
 
     
     }
 
+    const[image, setImage] = useState(null);
+    
+
+    const handleImageChange = (e) => {
+        if(e.target.files[0]){
+            setImage(e.target.files[0]);
+        }
+    };
+
+
+
+    // const handleSubmitPicture = () => {
+    //     const imageRef = ref(storage, "image");
+    //     uploadBytes(imageRef, image)
+    //     .then(() =>{
+    //         getDownloadURL(imageRef)
+    //         .then((url) => {
+    //             setUrl(url);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error.message, "ERROR getting image URL");
+    //         });
+    //         setImage(null);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error.message);
+    //     });
+    // }
+
     return(
-    <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200">
+    <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200 gap-10">
         <form onSubmit={handleSubmit} className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
             {/* <div className="flex justify-center">
                 <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
@@ -224,6 +255,8 @@ export default function SetProfile() {
             </p> */}
         </form>
         
+        
+
 
         <section>
             <div>
@@ -231,8 +264,19 @@ export default function SetProfile() {
             </div>
         </section>
 
-        <section className="bg-green-400 py-3 px-5 rounded-xl">
+        <section className="bg-white py-3 px-5 rounded-xl text-gray-500">
             <div>
+                <Card className ="bg-white">
+                    Dark Mode / Light Mode 
+                    <Switch>
+
+                    </Switch>
+                </Card>
+            </div>
+
+            
+            <div className = "">
+                Color Picker
                 <CirclePicker/>
             </div>
         </section>
