@@ -1,100 +1,84 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import '../App.css'
-import { db } from '../firebase';
+import { useAuth } from "./auth/contexts/AuthContext"
+import { auth, db } from '../firebase';
+import Read from '../Read';
 
-function FriendsPage() {
- return (
-   <div>
-     {/* Render the friends list */}
-     <h1>
-     HELLO JAKE
-         
-     </h1>
-   </div>
- );
-}
-class Friends extends React.Component {
-  state = {
-    friends: [],
-    user: null
-  };
+export default function FriendsPage() {
+  
+  const usernameRef = useRef()
+  const {currentUser} = useAuth()
+  const [inputValue, setInputValue] = useState('')
+  const [addFriendError, setAddFriendError] = useState('')
+  const user = auth.currentUser;
+  const friendRef = db.friends.doc(user.uid)
 
-  componentDidMount() {
-    // Initialize Firebase
-    firebase.initializeApp({
-      apiKey: 'YOUR_API_KEY',
-      authDomain: 'YOUR_AUTH_DOMAIN',
-      databaseURL: 'YOUR_DATABASE_URL',
-    });
+  const [error, setError] = useState('')
 
-    // Listen for changes to the user's authentication state
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ user });
-      } else {
-        this.setState({ user: null });
-      }
-    });
-
-    // Listen for changes to the friends list
-    firebase
-      .database()
-      .ref('friends')
-      .on('value', (snapshot) => {
-        this.setState({ friends: snapshot.val() });
-      });
+  const handleClearClick = () =>
+  {
+    setInputValue('')
   }
 
-  handleAddFriend = (friend) => {
-    // Check if the user is authenticated
-    if (this.state.user) {
-      // Add a new friend to the Firebase database
-      firebase
-        .database()
-        .ref('friends')
-        .push(friend);
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  
+  async function handleAddFriend(e) {
+    e.preventDefault()
+    const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
+    if(!(snapshot.empty)) {
+      let friendRequest = {}
+      friendRequest[usernameRef.current.value] = "pending"
+      friendRef.update(friendRequest)
+      setAddFriendError("Friend request sent.")
     } else {
-      alert('Please sign in to add a friend.');
+      setAddFriendError("User does not exist.")
     }
+    // Check if the user is authenticated
+    // if (this.state.user) {
+    //   // Add a new friend to the Firebase database
+    //   firebase
+    //     .database()
+    //     .ref('friends')
+    //     .push(friend);
+    // } else {
+    //   alert('Please sign in to add a friend.');
+    // }
   };
 
-  handleDeleteFriend = (id) => {
-    // Check if the user is authenticated
-    if (this.state.user) {
-      // Remove a friend from the Firebase database
-      firebase
-        .database()
-        .ref(`friends/${id}`)
-        .remove();
-    } else {
-      alert('Please sign in to delete a friend.');
-    }
-  };
-
-  handleEditFriend = (id, name) => {
-    // Check if the user is authenticated
-    if (this.state.user) {
-      // Update a friend in the Firebase database
-      firebase
-        .database()
-        .ref(`friends/${id}`)
-        .update({ name });
-    } else {
-      alert('Please sign in to edit a friend.');
-    }
-  };
-
-  render() {
+  
+    
+  
+   function handleRemoveFriend() {
+      // Check if the user is authenticated
+      // if (this.state.user) {
+      //   // Remove a friend from the Firebase database
+      //   firebase
+      //     .database()
+      //     .ref(`friends/${id}`)
+      //     .remove();
+      // } else {
+      //   alert('Please sign in to delete a friend.');
+      // }
+    };
+ 
     return (
       <div>
-        {/* Render the friends list */}
-      </div>
-    );
-  }
-}
-
-
-export default FriendsPage;
+    {/* Render the friends list */}
+    <h1>
+    Friends
+    </h1>
+    <Read/>
+    <div>
+        {addFriendError}
+      <form onSubmit={handleAddFriend}>
+        <input type='text' ref={usernameRef} onChange={handleInputChange} value={inputValue} placeholder="Friend's Username"></input>
+        <button type='submit'  class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Add Friends</button>
+      </form>
+    </div>
+  </div>
+  );}

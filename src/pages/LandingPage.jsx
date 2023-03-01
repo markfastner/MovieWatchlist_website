@@ -3,15 +3,17 @@ import { Card } from "react-bootstrap";
 //import { useNavigate } from "react-router";
 import "../App.css";
 // import '../LandingPage.css';
+import Hero from '../components/landingpage/Hero.jsx';
+import Video from '../components/landingpage/Video.jsx';
 
 // Landing page component export function
 function LandingPage() {
   return (
-    <div
-      className="flex relative min-h-screen bg-no-repeat w-full bg-cover 
-        bg-[url('/public/images/HomeLoginImages.jpg')]">
-      
-      </div>
+    <div>
+      <Hero/>
+      <Video />
+    </div>
+    
   );
 }
 

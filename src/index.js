@@ -9,4 +9,11 @@ root.render(
     </React.StrictMode>
 );
 
+// useEffect(() => {
+//     WebFont.load({
+//         google: {
+//             families: ['Londrina Outline', cursive]
+//         }
+//     })
+// }, []);
 

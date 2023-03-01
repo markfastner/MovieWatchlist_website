@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { auth, db } from "../../../firebase"
 import "firebase/firestore"
 import firebase from "firebase"
-
+import ProfileUpload from "../../../features/profile/components/ProfileUpload"
+import { CirclePicker } from "react-color";
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -18,6 +19,8 @@ export default function SetProfile() {
 
     const user = auth.currentUser;
     const userRef = db.users.doc(user.uid)
+    //added
+    const friendRef = db.friends.doc(user.uid)
 
     const emailRef = useRef()
     const [email, setEmail] = useState()
@@ -32,10 +35,15 @@ export default function SetProfile() {
     const [username, setUsername] = useState()
 
     const genreRef = useRef()
-     const [genre, setGenre] = useState()
+    const [genre, setGenre] = useState()
 
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const [usernameError, setUsernameError] = useState("")
+
+    function isAlphanumeric(str) {
+        return /^[a-zA-Z0-9]+$/.test(str);
+      }      
     
     userRef.get().then((doc) => {
         if(doc.exists) {
@@ -54,9 +62,22 @@ export default function SetProfile() {
         console.log("Error getting document:", error);
     });
     
+    //added
+    friendRef.get().then((doc) => {
+        if(doc.exists) {
+            console.log("Document data:", doc.data());
+            setUsername(doc.data().username)
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+    
 
     // Submission handler
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
     e.preventDefault()
 
     const promises = []
@@ -67,23 +88,31 @@ export default function SetProfile() {
         promises.push(updateEmail(emailRef.current.value))
     }
     
-    
-    promises.push(userRef.update({
-        email: emailRef.current.value,
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        username: usernameRef.current.value,
-        genre: genreRef.current.value,
-        uid: user.uid
-    }))
+    const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
+   if(isAlphanumeric(usernameRef.current.value)) {
+       if(snapshot.empty || usernameRef.current.value == username) {
+           promises.push(userRef.update({
+               email: emailRef.current.value,
+               firstName: firstNameRef.current.value,
+               lastName: lastNameRef.current.value,
+               username: usernameRef.current.value,
+               genre: genreRef.current.value,
+               uid: user.uid
+           }))
+           Promise.all(promises).then(() => {
+               navigate('/dashboard')
+           }).catch(() => {
+               setError('Failed to update acccount')
+           }).finally(() =>  {
+               setLoading(false)
+           })
+       } else {
+           setUsernameError("Username taken")
+       }
+   } else {
+    setUsernameError("Username must consist of letters and numbers only (no spaces).")
+   }
 
-    Promise.all(promises).then(() => {
-        navigate('/dashboard')
-    }).catch(() => {
-        setError('Failed to update acccount')
-    }).finally(() =>  {
-        setLoading(false)
-    })
     
     }
 
@@ -159,6 +188,7 @@ export default function SetProfile() {
                     defaultValue={username}
                     required>
                 </input>
+                {usernameError && <Alert variant="danger">{usernameError}</Alert>}
             </div>
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
             <div className="relative w-full lg:max-w-sm">
@@ -184,7 +214,7 @@ export default function SetProfile() {
                 <option>Thriller</option>
             </select>
         </div>
-            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Create Account</button>
+            <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Set Profile</button>
             {/* <div className="mb-4 text-center mt-2">
                 <Link to="/dashboard">Cancel</Link>
             </div> */}
@@ -193,6 +223,20 @@ export default function SetProfile() {
             &copy;Runtime Group
             </p> */}
         </form>
+        
+
+        <section>
+            <div>
+                <ProfileUpload/>
+            </div>
+        </section>
+
+        <section className="bg-green-400 py-3 px-5 rounded-xl">
+            <div>
+                <CirclePicker/>
+            </div>
+        </section>
+        
     </div>    
     )
 }
