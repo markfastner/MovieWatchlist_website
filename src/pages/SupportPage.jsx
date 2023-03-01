@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 function SupportPage(){
+  
   const form = useRef();
 
   const sendEmail = (e) => {
@@ -11,8 +12,11 @@ function SupportPage(){
       .then((result) => {
           console.log(result.text);
           console.log("message sent")
+          e.target.reset() // this resets the forms 
       }, (error) => {
           console.log(error.text);
+          console.log("unable to send message")
+          e.target.reset() // this resets the forms 
       });
   };
 
