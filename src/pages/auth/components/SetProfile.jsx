@@ -43,6 +43,8 @@ export default function SetProfile() {
     const [loading, setLoading] = useState(false)
     const [usernameError, setUsernameError] = useState("")
 
+    const [enabled, setEnabled] = useState(false)
+    
     function isAlphanumeric(str) {
         return /^[a-zA-Z0-9]+$/.test(str);
     }      
@@ -100,6 +102,7 @@ export default function SetProfile() {
                 username: usernameRef.current.value,
                 genre: genreRef.current.value,
                 uid: user.uid
+
             }))
             Promise.all(promises).then(() => {
                 navigate('/dashboard')
@@ -260,6 +263,9 @@ export default function SetProfile() {
 
         <section>
             <div>
+                <Card className="bg-white rounded-md justify-center">
+                    Hello
+                </Card>
                 <ProfileUpload/>
             </div>
         </section>
@@ -267,9 +273,19 @@ export default function SetProfile() {
         <section className="bg-white py-3 px-5 rounded-xl text-gray-500">
             <div>
                 <Card className ="bg-white">
-                    Dark Mode / Light Mode 
-                    <Switch>
-
+                    <div>
+                        Dark Mode/Light Mode
+                    </div>
+                    <Switch 
+                    checked = {enabled}
+                    onChange = {setEnabled}
+                    className = {`${enabled ? 'bg-blue-400' : 'bg-gray-200'}
+                    relative inline-flex items-center h-6 rounded-full w-11 duration-300`}
+                    >
+                    <span className = "sr-only">Light Mode/Dark Mode</span>
+                    <span
+                    className = {`${enabled ? 'translate-x-6' : 'translate-x-1'}
+                    inline-block w-4 h-4 transform bg-white rounded-full`}/>
                     </Switch>
                 </Card>
             </div>
