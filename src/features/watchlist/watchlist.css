@@ -4,17 +4,29 @@ This page contains styling for the movie list, individual movies,
 the remove button, the h1 tag, the add movie button, and the search bar
 This page defines coloring placements and other styling for the watchlist page
 */
+
+h2{
+    font-size: 50px;
+    font-weight: bold;
+}
+
 .watchlist-container{
     background-color: #8dd8f1;
+    position: relative;
 }
 
 .movie-list{
-    
+    background-color: blueviolet;
+    height: 50%;
+    width: 50%;
+    position: relative;
+    top: -550px;
+    border: 10px solid black;
 }
 
 .movie-item{
     height: 100px;
-    width: 20%;
+    width: 300px;
     margin: 10px;
     border: 1px solid black;
     border-radius: 50px;
@@ -57,11 +69,12 @@ This page defines coloring placements and other styling for the watchlist page
     top: -300px;
 }
 
-.search-bar{
-    background-color: gray;
+
+.movie-search{
+    background-color: teal;
+    height: 50%;
+    width: 50%;
+    position: relative;
+    left: 50%;
+    border: 10px solid black;
 }
-
-.search-button{
-
-}
-

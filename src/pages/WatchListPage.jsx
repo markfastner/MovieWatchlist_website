@@ -1,5 +1,10 @@
 import React from "react";
 import "../features/watchlist/watchlist.css";
+import {useState, useEffect} from "react";
+import MovieSearch from "../features/watchlist/MovieSearch.js";
+//c4a9a1cc
+
+const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 //add movie api spice
 class Movie extends React.Component {
@@ -38,7 +43,14 @@ function WatchlistPage() {
         Watchlist Page
         </h1>
         
+        <div class = "movie-search">
+          <h2>api test</h2>
+          <MovieSearch />
+        </div>
+
+
         <div class = "movie-list">
+          <h2>Your Watchlist</h2>
           <div class = "movie-item"> 
             <h3>name = {Movie.movie1.name} year = {Movie.movie1.year} </h3>
             <div class="remove-button">
@@ -59,13 +71,7 @@ function WatchlistPage() {
           </div>
         </div>
 
-        <div class = "add-movie">
-          <div class = "search-bar">
-            <h3>Search bar to be added</h3>
-          </div>
-          <div class="search-button"></div>
-            <button>search button</button>
-          </div>
+        
         </div>
         
     );
