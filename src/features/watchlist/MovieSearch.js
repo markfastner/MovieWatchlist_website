@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
 import './MovieSearch.css';
+import { AddMovie } from "./watchlist.jsx";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -41,8 +42,12 @@ const MovieSearch = () => {
                 ? (
                     <div className ="container">
                         {movies.map((movie) => (
-                            <MovieCard movie={movie} />
+                            <><MovieCard movie={movie} />
+                            </>
+
                         ))}
+
+                        
                     </div>
                 ) : (
                     <div className = "empty">
