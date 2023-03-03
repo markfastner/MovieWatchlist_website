@@ -2,7 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
-import './MovieSearch.css';
+// import './MovieSearch.css';
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -20,20 +20,24 @@ const MovieSearch = () => {
     }
 
     return (
-        <div className = 'app'>
+        <div className = 'app bg-blue-400'>
             <h1>MovieLand</h1>
 
-            <div className = 'search'>
+            <div className = "relative flex-col rounded-full bg-gray-400">
+                
                 <input
+                    className ="rounded-full bg-green-400 text-white"
                     placeholder="Search for movies"
                     value = {searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    
                 />
                 <img
                     src={SearchIcon}
                     alt="search"
                     onClick={() => searchMovies(searchTerm)}
                 />
+                
             </div>
 
             {

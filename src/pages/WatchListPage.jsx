@@ -1,5 +1,5 @@
 import React from "react";
-import "../features/watchlist/watchlist.css";
+// import "../features/watchlist/watchlist.css";
 import {useState, useEffect} from "react";
 import MovieSearch from "../features/watchlist/MovieSearch.js";
 //c4a9a1cc
