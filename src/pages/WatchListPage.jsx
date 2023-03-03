@@ -2,6 +2,9 @@ import React from "react";
 import "../features/watchlist/watchlist.css";
 import {useState, useEffect} from "react";
 import MovieSearch from "../features/watchlist/MovieSearch.js";
+import Watchlist from "../features/watchlist/watchlist.jsx";
+import AppReducer from "./auth/contexts/AppReducer";
+import { GlobalProvider } from "./auth/contexts/GlobalState";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -37,6 +40,7 @@ function WatchlistPage() {
       // create a template in js for the watchlist page
       //template includs a header, a list of movies, and a search bar to add movies
       //each components has been put into a div for styling
+      <GlobalProvider>
       <div class="watchlist-container">
         {/* Render the friends list */}
         <h1 class="header">
@@ -51,29 +55,13 @@ function WatchlistPage() {
 
         <div class = "movie-list">
           <h2>Your Watchlist</h2>
-          <div class = "movie-item"> 
-            <h3>name = {Movie.movie1.name} year = {Movie.movie1.year} </h3>
-            <div class="remove-button">
-              <button>Remove</button>
-            </div>
-          </div>
-          <div class = "movie-item"> 
-            <h3>name = {Movie.movie2.name} year = {Movie.movie2.year} </h3>
-            <div class="remove-button">
-              <button>Remove</button>
-            </div>
-          </div>
-          <div class = "movie-item"> 
-            <h3>name = {Movie.movie3.name} year = {Movie.movie3.year} </h3>
-            <div class="remove-button">
-              <button>Remove</button>
-            </div>
-          </div>
+          <Watchlist />
+          
         </div>
 
         
         </div>
-        
+        </GlobalProvider>
     );
 }
 
