@@ -16,6 +16,7 @@ export default function FriendsPage() {
   const [addFriendError, setAddFriendError] = useState('')
   const user = auth.currentUser;
   const friendRef = db.friends.doc(user.uid)
+  const [readFriendsListError, setReadFriendsListError] = useState('')
 
   const [error, setError] = useState('')
 
@@ -51,14 +52,11 @@ export default function FriendsPage() {
     // }
   };
 
-  async function readFriendsList() {
-    const friendsRef = db.collection("friends").doc("friendsList");
-    const doc = await friendsRef.get();
-    if (!doc.exists) {
-      console.log('No such document');
-    } else {
-      console.log('Document data:', doc.data());
-    }
+  async function readFriendsList(e) {
+    e.preventDefault()
+    var friendsList = db.collection('friends');
+
+    
   }
 
   
@@ -83,7 +81,10 @@ export default function FriendsPage() {
     <h1>
     Friends
     </h1>
-    <button type='show' class='' onClick={readFriendsList}>Show Friends List</button>
+    <div>
+        {readFriendsListError}
+      <button type='show' class='' onClick={readFriendsList}>Show Friends List</button>
+    </div>
     <div>
         {addFriendError}
       <form onSubmit={handleAddFriend}>

@@ -18,6 +18,7 @@ import Support from './pages/SupportPage';
 import TermsAndConditions from './pages/TermsAndConditionsPage';
 import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
+import Chat from './pages/Chat';
 
 // App component which runs the whole application
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
+            <Route path='/chat' element={<PrivateRoute><Chat/></PrivateRoute>}/>
           </Routes>
           </AuthProvider>
           <Footer/>
