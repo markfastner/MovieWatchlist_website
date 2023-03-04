@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
 import './MovieSearch.css';
-import { AddMovie } from "./watchlist.jsx";
+import { GlobalContext } from "../../pages/auth/contexts/GlobalState";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -12,6 +12,11 @@ const MovieSearch = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const {addMovieToWatchlist, watchlist} = useContext(GlobalContext);
+    //let storedMovie = watchlist.find(watchlist => watchlist.imdbID === movie.imdbID);
+    //const watchlistDisabled = storedMovie ? true : false;
+
 
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`);
@@ -43,6 +48,11 @@ const MovieSearch = () => {
                     <div className ="container">
                         {movies.map((movie) => (
                             <><MovieCard movie={movie} />
+                            {!watchlist.find(watchlist => watchlist.imdbID === movie.imdbID) ? (
+                            <button onClick={() => addMovieToWatchlist(movie)} className="btn">Add to Watchlist</button>
+                            ) : (
+                                <h2>already in watchlist</h2>
+                              )}
                             </>
 
                         ))}

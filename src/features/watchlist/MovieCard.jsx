@@ -1,8 +1,10 @@
 import React, {useContext} from "react";
 import addMovie from "./watchlist.jsx";
 import { GlobalContext } from "../../pages/auth/contexts/GlobalState";
+
 const MovieCard = ({ movie }) => {
-const {addMovieToWatchlist, watchlist} = useContext(GlobalContext);
+
+
   return (
     <div className="movie">
       <div>
@@ -23,8 +25,7 @@ const {addMovieToWatchlist, watchlist} = useContext(GlobalContext);
       <div>
         <span>{movie.Type}</span>
         <h3>{movie.Title}</h3>
-        <button onClick={() => addMovieToWatchlist(movie)} className="btn">Add to Watchlist</button>
-        {console.log(watchlist.find(watchlist => watchlist.imdbID === movie.imdbID))}
+      
       </div>
     </div>
   );
