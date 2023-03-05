@@ -9,6 +9,8 @@ import firebase from "firebase"
 import ProfileUpload from "../../../features/profile/components/ProfileUpload"
 import { CirclePicker } from "react-color";
 import {Switch} from "@headlessui/react"
+import Switcher from "../../../features/profile/components/switcher";
+
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -151,8 +153,8 @@ export default function SetProfile() {
     // }
 
     return(
-    <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200 gap-10">
-        <form onSubmit={handleSubmit} className="relative-right-[15%] bg-white shadow-md rounded px-8 pt-6 mb-4">    
+    <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200 dark:bg-slate-800 gap-10">
+        <form onSubmit={handleSubmit} className="relative-right-[15%] bg-white dark:bg-slate-700 dark:text-white shadow-md rounded px-8 pt-6 mb-4">    
             {/* <div className="flex justify-center">
                 <img src="[url('/public/images/Logo.jpg')]" alt="Logo" className="w-14 h-14"></img>
             </div> */}
@@ -160,10 +162,10 @@ export default function SetProfile() {
             {error && <Alert variant="danger">{error}</Alert>}
             <div className="mb-4">
                 <label
-                class="block text-gray-700 text-sm font-bold mb-2"
+                class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
                 for="email address">
                     
-                Email 
+                Email Address
                 </label>
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -176,7 +178,7 @@ export default function SetProfile() {
             </div>
             <div className="mb-4">
                 <label
-                class="block text-gray-700 text-sm font-bold mb-2"
+                class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
                 for="first name">
                 First Name
                 {/* {db.users.doc(user.uid).get({source: 'cache'})} */}
@@ -193,7 +195,7 @@ export default function SetProfile() {
             </div>
             <div class="mb-4">
                 <label
-                class="block text-gray-700 text-sm font-bold mb-2"
+                class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
                 for="password">
                 Last Name
                 </label>
@@ -209,7 +211,7 @@ export default function SetProfile() {
             </div>
             <div class="mb-4">
                 <label
-                class="block text-gray-700 text-sm font-bold mb-2"
+                class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
                 for="username">
                 Username
                 </label>
@@ -227,7 +229,7 @@ export default function SetProfile() {
             {/* Dropdown menu for form to allow users to pick their favorite genre and get recommendations for them*/}
             <div className="relative w-full lg:max-w-sm">
             <label
-                class="block text-gray-700 text-sm font-bold mb-2"
+                class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
                 for="movie genre">
                 Favorite Movie Genre
                 </label>
@@ -263,34 +265,38 @@ export default function SetProfile() {
 
         <section>
             <div>
-                <Card className="bg-white rounded-md justify-center">
+                {/* <Card className="bg-white dark:bg-slate-600 dark:text-white rounded-md justify-center">
                     Hello
-                </Card>
+                </Card> */}
                 <ProfileUpload/>
             </div>
         </section>
 
-        <section className="bg-white py-3 px-5 rounded-xl text-gray-500">
+        <section className="bg-white py-3 px-5 rounded-xl text-gray-500 dark:bg-slate-700 dark:text-white">
             <div>
-                <Card className ="bg-white">
+                <Card className ="bg-white dark:bg-slate-700">
+                    
                     <div>
-                        Dark Mode/Light Mode
+                    Light Mode/Dark Mode
+                    </div>
+                    <Switcher/>
+                    
+                    <div>
+                        Enable Activity Status
                     </div>
                     <Switch 
                     checked = {enabled}
                     onChange = {setEnabled}
-                    className = {`${enabled ? 'bg-blue-400' : 'bg-gray-200'}
+                    className = {`${enabled ? 'bg-blue-600' : 'bg-gray-200'}
                     relative inline-flex items-center h-6 rounded-full w-11 duration-300`}
                     >
-                    <span className = "sr-only">Light Mode/Dark Mode</span>
+                    <span className = "sr-only">Enable Activity Status</span>
                     <span
                     className = {`${enabled ? 'translate-x-6' : 'translate-x-1'}
                     inline-block w-4 h-4 transform bg-white rounded-full`}/>
                     </Switch>
                 </Card>
             </div>
-
-            
             <div className = "">
                 Color Picker
                 <CirclePicker/>
