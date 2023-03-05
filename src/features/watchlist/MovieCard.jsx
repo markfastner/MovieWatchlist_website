@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import addMovie from "./watchlist.jsx";
-import { GlobalContext } from "../../pages/auth/contexts/GlobalState";
+import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 
 const MovieCard = ({ movie }) => {
 

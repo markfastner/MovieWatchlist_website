@@ -3,8 +3,8 @@ import React from "react";
 import {useState, useEffect} from "react";
 import MovieSearch from "../features/watchlist/MovieSearch.js";
 import Watchlist from "../features/watchlist/watchlist.jsx";
-import AppReducer from "./auth/contexts/AppReducer";
-import { GlobalProvider } from "./auth/contexts/GlobalState";
+import AppReducer from "./auth/contexts/WatchlistReducer";
+import { WatchlistProvider } from "./auth/contexts/WatchlistState";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -40,7 +40,7 @@ function WatchlistPage() {
       // create a template in js for the watchlist page
       //template includs a header, a list of movies, and a search bar to add movies
       //each components has been put into a div for styling
-      <GlobalProvider>
+      <WatchlistProvider>
       <div class="watchlist-container">
         {/* Render the friends list */}
         <h1 class="header">
@@ -61,7 +61,7 @@ function WatchlistPage() {
 
         
         </div>
-        </GlobalProvider>
+        </WatchlistProvider>
     );
 }
 

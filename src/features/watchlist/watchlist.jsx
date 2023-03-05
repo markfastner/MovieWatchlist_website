@@ -1,10 +1,11 @@
 import React, {useContext} from 'react'
-import { GlobalContext } from "../../pages/auth/contexts/GlobalState";
+import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 import MovieCard from './MovieCard'
 //import { useAuth } from "./auth/contexts/AuthContext";
+//import "./watchlist.css"
 
 function Watchlist(){
-const {removeMovieFromWatchlist, watchlist} = useContext(GlobalContext);
+const {removeMovieFromWatchlist, watchlist} = useContext(WatchlistContext);
 
   return(
     <div>

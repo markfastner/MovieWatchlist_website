@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
 import './MovieSearch.css';
-import { GlobalContext } from "../../pages/auth/contexts/GlobalState";
+import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -13,7 +13,7 @@ const MovieSearch = () => {
     const [movies, setMovies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const {addMovieToWatchlist, watchlist} = useContext(GlobalContext);
+    const {addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
     //let storedMovie = watchlist.find(watchlist => watchlist.imdbID === movie.imdbID);
     //const watchlistDisabled = storedMovie ? true : false;
 
@@ -27,7 +27,7 @@ const MovieSearch = () => {
 
     return (
         <div className = 'app'>
-            <h1>MovieLand</h1>
+            <h1>Moviehub</h1>
 
             <div className = 'search'>
                 <input
