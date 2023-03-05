@@ -1,6 +1,9 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AppReducer from "./WatchlistReducer";
 
+//this is the file that manages the state of the watachlist
+//defines the initial state and the actions that can be performed on the state
+
 // initial state
 const initialState = {
   watchlist: localStorage.getItem("watchlist")

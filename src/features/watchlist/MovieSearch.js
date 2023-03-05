@@ -4,8 +4,11 @@ import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
 import './MovieSearch.css';
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
-//c4a9a1cc
+//api key: c4a9a1cc
 
+// this is the MovieSearch component which is used to search for movies using the OMDB API
+// the search results are displayed in the MovieCard component
+// search result also has a button to add the movie to the watchlist
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 const MovieSearch = () => {

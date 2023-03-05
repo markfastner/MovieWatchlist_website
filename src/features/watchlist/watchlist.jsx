@@ -4,6 +4,9 @@ import MovieCard from './MovieCard'
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
 
+//this is the watchlist page that will be rendered when called
+//the watchlist page  will display all the MovieCards that the user has added to their watchlist
+//the user will be able to remove movies from their watchlist using the remove button after each MovieCard
 function Watchlist(){
 const {removeMovieFromWatchlist, watchlist} = useContext(WatchlistContext);
 

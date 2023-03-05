@@ -1,3 +1,5 @@
+// this is the reducer for the watchlist context
+//reducs the state based on the action type
 export default (state, action) => {
   switch (action.type) {
     case "ADD_MOVIE_TO_WATCHLIST":
