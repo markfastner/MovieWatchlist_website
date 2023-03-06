@@ -2,11 +2,10 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/firestore';
 import '../App.css';
-import 'firebase/compat/firestore';
 import { useAuth } from "./auth/contexts/AuthContext";
 import { auth, db } from '../firebase';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 export default function App() {
