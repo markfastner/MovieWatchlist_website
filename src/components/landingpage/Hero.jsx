@@ -3,6 +3,8 @@ import React from 'react';
 import WebFont from 'webfontloader';
 // import font from '../components/landingpage/Font.css';
 
+// This is the hero component that will be used in the landing page and will feature our background image with our slogan 
+// When clicking the get started button it will prompt to the sign in and sign up page
 
 const Hero = () => (
     <section id="home" className = "flex md:flex-row flex-col font-title ">
