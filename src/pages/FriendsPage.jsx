@@ -8,7 +8,6 @@ import { auth, db } from '../firebase';
 import Chat from './Chat';
 
 
-
 export default function FriendsPage() {
   
   const usernameRef = useRef()
@@ -55,7 +54,7 @@ export default function FriendsPage() {
 
   async function readFriendsList(e) {
     e.preventDefault()
-    var friendsList = db.collection('friends');
+    const friendsList = db.collection('friends');
 
     
   }
