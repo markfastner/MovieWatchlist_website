@@ -82,6 +82,7 @@ export default function FriendsPage() {
     Friends
     </h1>
     <div>
+      <Chat/>
         {readFriendsListError}
       <button type='show' class='' onClick={readFriendsList}>Show Friends List</button>
     </div>
