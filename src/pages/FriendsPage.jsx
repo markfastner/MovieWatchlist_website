@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import '../App.css'
 import { useAuth } from "./auth/contexts/AuthContext"
 import { auth, db } from '../firebase';
-import Read from '../Read';
+import Chat from './Chat';
 
 
 export default function FriendsPage() {
@@ -54,7 +54,7 @@ export default function FriendsPage() {
 
   async function readFriendsList(e) {
     e.preventDefault()
-    var friendsList = db.collection('friends');
+    const friendsList = db.collection('friends');
 
     
   }
