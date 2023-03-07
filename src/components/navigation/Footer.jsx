@@ -6,31 +6,41 @@ import '../../App.css';
 
 
 
-
+// this is the footer section where the user can navigate to the about, terms and conditions, support and contact us pages
+// we are using an array for the links and we route everything to the main
+// The footer page is accessible to everybody whether they have an account or not
 
 
 export const Footer=()=>{
     const FooterLinks = ["About", "Terms and Conditions", "Support", "Contact Us"]
+    const navigate = useNavigate()
+    
 
     return(
         
-        <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-blue-900">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="./" class="hover:underline">Runtime™</a>
-            </span>
-            <ul class="flex flex-wrap items-center mt-3 text-sm text-white dark:text-white sm:mt-0">
-                <li>
-                    <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
-                </li>
-                <li>
-                    <a href="#" class="mr-4 hover:underline md:mr-6">Terms and Conditions</a>
-                </li>
-                <li>
-                    <a href="#" class="mr-4 hover:underline md:mr-6">Support</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:underline">Contact Us</a>
-                </li>
-            </ul>
+        <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-slate-900">
+            <div>
+                <span class="text-sm dark:text-white text-blue-900 sm:text-center">© 2023 <a href="./" class="hover:underline">Runtime™</a>
+                </span>
+                <Link to='/' className="text-white tracking-wide px-8 py-4">
+                </Link>
+                
+            </div>
+            
+            
+            <div className="flex justify-center items-center space-x-8">
+                
+                <ul className="flex items-center justify-end space-x-4 ">
+                    
+                    {
+                        FooterLinks.map(link => {
+                            return <li>
+                                <Link to={`/${link}`} className="text-blue-900 dark:text-white tracking-wider hover:underline hover:text-blue-400">{link}</Link>
+                            </li>
+                        })
+                    }
+                </ul>
+            </div>
         </footer>
 
         
