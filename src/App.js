@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
@@ -9,7 +9,7 @@ import ProfilePage from './pages/ProfilePage'
 import WatchListPage from './pages/WatchListPage'
 import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
-import {AuthProvider} from './pages/auth/contexts/AuthContext';
+import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
@@ -22,6 +22,7 @@ import Chat from './pages/Chat';
 
 // App component which runs the whole application
 function App() {
+  
 
   // Returns the app component which handles the routing of the application
   return (
