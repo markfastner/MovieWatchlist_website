@@ -47,7 +47,9 @@ export default function SignUp() {
                 lastName: "",
                 username: "",
                 genre: "",
-                uid: user.uid
+                uid: user.uid,
+                profilePic:"",
+                colorTheme: ""
             })
         navigation("/set-profile")
     } catch {

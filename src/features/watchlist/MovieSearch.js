@@ -32,17 +32,21 @@ const MovieSearch = () => {
         <div className = 'app'>
             <h1>Moviehub</h1>
 
-            <div className = 'search'>
+            <div className = "relative flex-col rounded-full bg-gray-400">
+                
                 <input
+                    className ="rounded-full bg-green-400 text-white"
                     placeholder="Search for movies"
                     value = {searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    
                 />
                 <img
                     src={SearchIcon}
                     alt="search"
                     onClick={() => searchMovies(searchTerm)}
                 />
+                
             </div>
 
             {

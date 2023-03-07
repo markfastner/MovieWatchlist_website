@@ -1,23 +1,33 @@
+import React, {useState} from "react";
+import { Card } from "react-bootstrap";
 import { CirclePicker } from "react-color";
+import { useAuth } from "./auth/contexts/AuthContext";
+import {database} from "../firebase"
+import { Link, useNavigate } from "react-router-dom"
+
+
+// creating the profile page where there is a card to allow the user to change their profile picture and color with the edit profile button
 
 function ProfilePage() {
 
+  const [error, setError] = useState("")
+  const {currentUser} = useAuth()
   
     return (
-      <div className ="bg-green-400 flex-col relative min-h-screen">
+      <div className ="bg-blue-200 dark:bg-slate-800 flex relative min-h-screen gap-4">
         {/* Render the friends list */}
-        <h1>Profile Customization Page</h1>       
-        <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 justify-center">
-            <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+              
+        <div>
+          <Card className = "relative flex-col bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-10 gap-1 mx-10 my-10 max-w-screen">
+
+              {currentUser.email}
+            <Link to="/set-profile">
+              <button className="bg-blue-800 text-white p-2 hover:text-blue-900 hover:bg-blue-200 dark:bg-slate-400 dark:hover:bg-blue-200 dark:text-white  dark:hover:text-blue-800 duration-300 rounded-md my-8 mx-6">
+              Edit Profile
+              </button>
+            </Link>
+          </Card> 
         </div>
-        
-        <div className="flex relative justify-center">
-          <form className="bg-blue-200">
-            <CirclePicker />
-          </form>
-        </div>
-        
-        
       </div>
     );
 }

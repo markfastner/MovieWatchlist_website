@@ -11,14 +11,25 @@ function DashboardPage() {
   const [error, setError] = useState("")
   const {currentUser} = useAuth()
   
+  const [selectedStatus, setSelectedStatus] = useState('Online');
+  const activityStatuses = ['Online', 'Idle', 'Do Not Disturb', 'Invisible'];
   
-
+  const handleChange = (event) => {
+    setSelectedStatus(event.target.value);
+  };
 
     return (
-      <div className="flex justify-start bg-blue-200 min-h-screen">
-        <Card className="w-full max-w-sm p-4 bg-blue-100 border-blue-400 shadow sm:p-6 md:p-100">
+      <div className="flex justify-start bg-blue-200 dark:bg-slate-800 min-h-screen">
+        <Card className="w-full max-w-sm p-4 bg-blue-100 dark:bg-slate-600 dark:text-white shadow sm:p-6 md:p-100">
           <Card.Body>
-            <h2 className="text-center mb-4 text-black">Friend Activity</h2>
+          <select value={selectedStatus} onChange={handleChange}>
+        {activityStatuses.map((status) => (
+          <option key={status} value={status}>
+            {status}
+          </option>
+        ))}
+      </select>
+      <p>You are currently {selectedStatus}.</p>
             {error && <Alert variant="danger">{error}</Alert>}
             <strong>Email: </strong>{currentUser.email}
             <div>
