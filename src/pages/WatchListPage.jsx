@@ -19,7 +19,6 @@ function WatchlistPage() {
       // the watchlist page will be a list of movies that the user has added to their watchlist
 
   
-      <WatchlistProvider>
       <div class="watchlist-container">
         {/* Render the friends list */}
         <h1 class="header">
@@ -40,7 +39,6 @@ function WatchlistPage() {
 
         
         </div>
-        </WatchlistProvider>
     );
 }
 
