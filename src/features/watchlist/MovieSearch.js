@@ -1,16 +1,25 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
-// import './MovieSearch.css';
-//c4a9a1cc
+import './MovieSearch.css';
+import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
+//api key: c4a9a1cc
 
+// this is the MovieSearch component which is used to search for movies using the OMDB API
+// the search results are displayed in the MovieCard component
+// search result also has a button to add the movie to the watchlist
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 const MovieSearch = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const {addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
+    //let storedMovie = watchlist.find(watchlist => watchlist.imdbID === movie.imdbID);
+    //const watchlistDisabled = storedMovie ? true : false;
+
 
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`);
@@ -20,8 +29,8 @@ const MovieSearch = () => {
     }
 
     return (
-        <div className = 'app bg-blue-400'>
-            <h1>MovieLand</h1>
+        <div className = 'app'>
+            <h1>Moviehub</h1>
 
             <div className = "relative flex-col rounded-full bg-gray-400">
                 
@@ -45,8 +54,17 @@ const MovieSearch = () => {
                 ? (
                     <div className ="container">
                         {movies.map((movie) => (
-                            <MovieCard movie={movie} />
+                            <><MovieCard movie={movie} />
+                            {!watchlist.find(watchlist => watchlist.imdbID === movie.imdbID) ? (
+                            <button onClick={() => addMovieToWatchlist(movie)} className="btn">Add to Watchlist</button>
+                            ) : (
+                                <h2>already in watchlist</h2>
+                              )}
+                            </>
+
                         ))}
+
+                        
                     </div>
                 ) : (
                     <div className = "empty">

@@ -1,6 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import addMovie from "./watchlist.jsx";
+import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 
+//this is the movie card that will be rendered when called
+//this component takes in a parameter of a movie and dispalys the movie's title, year, and poster
 const MovieCard = ({ movie }) => {
+
+
   return (
     <div className="movie">
       <div>
@@ -21,6 +27,7 @@ const MovieCard = ({ movie }) => {
       <div>
         <span>{movie.Type}</span>
         <h3>{movie.Title}</h3>
+      
       </div>
     </div>
   );
