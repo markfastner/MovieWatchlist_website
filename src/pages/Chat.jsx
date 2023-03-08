@@ -43,6 +43,8 @@ function ChatRoom() {
             uid,
             photoURL
         })
+
+        setFormValue('');
     }
 
     return (
@@ -52,9 +54,9 @@ function ChatRoom() {
             </div>
 
             <form onSubmit={sendMessage}>
-                <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+                <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={!formValue}>Submit</button>
 
             </form>
         </>
@@ -68,7 +70,7 @@ function ChatMessage(props) {
 
     return (
         <div className={`message ${messageClass}`}>
-            {/* <img src={photoURL} alt='n' /> */}
+            {/* <img src={photoURL} alt='x' /> */}
             <p>{text}</p>
         </div>
     );
