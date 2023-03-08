@@ -18,6 +18,7 @@ import Support from './pages/SupportPage';
 import TermsAndConditions from './pages/TermsAndConditionsPage';
 import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
+import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
 
 // App component which runs the whole application
 function App() {
@@ -93,6 +94,7 @@ function App() {
     <>
         <Router>
           <AuthProvider> 
+          <WatchlistProvider>
           <Navbar/>
           <Routes>
             <Route exact path='/'  element={<LandingPage/>} />
@@ -115,6 +117,7 @@ function App() {
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
           </Routes>
+          </WatchlistProvider>
           </AuthProvider>
           <Footer/>
         </Router>
