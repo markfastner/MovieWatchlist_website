@@ -1,11 +1,12 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../App.css'
 import { useAuth } from "./auth/contexts/AuthContext"
-import { auth, db } from '../firebase';
+import { auth, db, database } from '../firebase';
 import Chat from './Chat';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 export default function FriendsPage() {
@@ -51,17 +52,9 @@ export default function FriendsPage() {
     //   alert('Please sign in to add a friend.');
     // }
   };
-
-  async function readFriendsList(e) {
-    e.preventDefault()
-    const friendsList = db.collection('friends');
-
-    
-  }
-
   
+    //unused currently 2:31am 3/11/23
     
-  
    function handleRemoveFriend() {
       // Check if the user is authenticated
       // if (this.state.user) {
@@ -82,9 +75,8 @@ export default function FriendsPage() {
     Friends
     </h1>
     <div>
-      <Chat/>
-        {readFriendsListError}
-      <button type='show' class='' onClick={readFriendsList}>Show Friends List</button>
+      <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button>
+        <RenderFriendsList/>
     </div>
     <div>
         {addFriendError}
@@ -95,3 +87,34 @@ export default function FriendsPage() {
     </div>
   </div>
   );}
+
+export function RenderFriendsList() {
+
+    var docRef = db.users.doc("zCsrEK96qiZwGcp0LxWRmWl7jTI2");
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+
+    db.users.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data().username);
+        });
+    });
+
+    return (
+        <p>testing</p>
+    )
+
+}
+
+
+
