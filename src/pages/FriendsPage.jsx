@@ -16,8 +16,10 @@ export default function FriendsPage() {
   const [inputValue, setInputValue] = useState('')
   const [addFriendError, setAddFriendError] = useState('')
   const user = auth.currentUser;
-  const friendRef = db.friends.doc(user.uid)
-  const [readFriendsListError, setReadFriendsListError] = useState('')
+ // old way, currently testing new way below  
+    //const friendRef = db.friends.doc(user.uid)
+    const friendRef = db.users.doc(user.uid).collection('friends');
+ 
 
   const [error, setError] = useState('')
 
@@ -34,12 +36,12 @@ export default function FriendsPage() {
     e.preventDefault()
     const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
     if(!(snapshot.empty)) {
-      let friendRequest = {}
-      friendRequest[usernameRef.current.value] = "pending"
-      friendRef.update(friendRequest)
-      setAddFriendError("Friend request sent.")
+      let friendRequest = {};
+      friendRequest[usernameRef.current.value] = "pending";
+      friendRef.update(friendRequest);
+      setAddFriendError("Friend request sent.");
     } else {
-      setAddFriendError("User does not exist.")
+      setAddFriendError("User does not exist.");
     }
     // Check if the user is authenticated
     // if (this.state.user) {
@@ -55,18 +57,7 @@ export default function FriendsPage() {
   
     //unused currently 2:31am 3/11/23
     
-   function handleRemoveFriend() {
-      // Check if the user is authenticated
-      // if (this.state.user) {
-      //   // Remove a friend from the Firebase database
-      //   firebase
-      //     .database()
-      //     .ref(`friends/${id}`)
-      //     .remove();
-      // } else {
-      //   alert('Please sign in to delete a friend.');
-      // }
-    };
+
  
     return (
       <div>
@@ -77,6 +68,7 @@ export default function FriendsPage() {
     <div>
       <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button>
         <RenderFriendsList/>
+       
     </div>
     <div>
         {addFriendError}
@@ -90,30 +82,25 @@ export default function FriendsPage() {
 
 export function RenderFriendsList() {
 
-    var docRef = db.users.doc("zCsrEK96qiZwGcp0LxWRmWl7jTI2");
+    var friendsList = []
 
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-
-    db.users.get().then((querySnapshot) => {
+    db.users.doc('zCsrEK96qiZwGcp0LxWRmWl7jTI2').collection("friends").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data().username);
+            friendsList.push(doc.data().friend);
         });
     });
 
-    return (
-        <p>testing</p>
-    )
+    console.log(friendsList);
 
+    let friendsListStr = 'test';
+    friendsList.forEach(element => friendsListStr += element);
+    console.log(friendsListStr);
+
+    return (
+
+        <p>{friendsListStr}</p>
+    );
+        
 }
 
 
