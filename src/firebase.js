@@ -17,8 +17,7 @@ const app = firebase.initializeApp({
 //authentication
 export const auth = app.auth()
 //realtime db
-// added export database
-export const database = app.firestore()
+const database = app.firestore()
 export const db = {
   users: database.collection('users'),
   friends: database.collection('friends'),

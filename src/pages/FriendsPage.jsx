@@ -8,8 +8,7 @@ import { auth, db } from '../firebase';
 import FriendsList from './FriendsList';
 
 export default function FriendsPage() {
-
-    const usernameRef = useRef()
+   const usernameRef = useRef()
     const {currentUser} = useAuth()
     const [inputValue, setInputValue] = useState('')
     const [addFriendError, setAddFriendError] = useState('')
@@ -40,21 +39,18 @@ export default function FriendsPage() {
         }
     }
 
-
-   
-
     return (
-        <div>
-        {/* Render the friends list */}
-        <h1>
-        Friends
-        </h1>
-        <div>
-        <button onClick={RenderFriendsList} class="btn btn-primary my-6 w-32 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Show Friends</button>
-        <RenderFriendsList/> 
-
-        </div>
-        <div>
+      <div>
+    {/* Render the friends list */}
+    <h1>
+    Friends
+    </h1>
+    <div>
+      <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button>
+        <RenderFriendsList/>
+       
+    </div>
+    <div>
         {addFriendError}
         <form onSubmit={handleAddFriend}>
         <input type='text' ref={usernameRef} onChange={handleInputChange} value={inputValue} placeholder="Friend's Username"></input>
@@ -67,22 +63,6 @@ export default function FriendsPage() {
 
 export function RenderFriendsList() {
 
-    const friendsList = [];
-
-    db.users.doc('zCsrEK96qiZwGcp0LxWRmWl7jTI2').collection("friends").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            friendsList.push(doc.data().friend);
-        });
-    });
-
-    console.log(friendsList);
-    var testing = friendsList.pop();
-    console.log(testing);
-
-    let friendsListStr = 'test';
-    friendsList.forEach(element => friendsListStr += element);
-    console.log(friendsListStr);
-
     const userId = 'zCsrEK96qiZwGcp0LxWRmWl7jTI2';
     
     return (
@@ -91,3 +71,4 @@ export function RenderFriendsList() {
         </div>
     );
 }
+

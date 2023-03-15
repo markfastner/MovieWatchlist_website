@@ -22,11 +22,10 @@ import Support from './pages/SupportPage';
 import TermsAndConditions from './pages/TermsAndConditionsPage';
 import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
-import {WatchlistProvider} from './pages/auth/contexts/WatchlistState';
+import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
 
 // App component which runs the whole application
 function App() {
-  
   const [error, setError] = useState("")
 
   
