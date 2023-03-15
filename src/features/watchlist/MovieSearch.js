@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {useState, useEffect} from "react";
 import SearchIcon from './search.svg';
 import MovieCard from "./MovieCard";
-import './MovieSearch.css';
+// import './MovieSearch.css';
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 //api key: c4a9a1cc
 

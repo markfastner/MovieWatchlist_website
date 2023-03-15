@@ -30,7 +30,7 @@ export const Navbar=()=>{
       setError = 'Logout not executed.'
     }
   }
-  return(<nav className="flex justify-between px-8 py-4 bg-blue-900">
+  return(<nav className="flex justify-between px-8 py-4 bg-white dark:bg-slate-900">
     <div >
       <Link to='/' className="text-blue-900 dark:text-white tracking-wide px-8 py-4">
         Runtime <i className="fa-thin fa-camera-movie text-white" />
@@ -39,7 +39,7 @@ export const Navbar=()=>{
     <div className="flex justify-center items-center space-x-8">
     <ul className="flex items-center justify-end space-x-4">
       {!currentUser ? (
-        <button onClick={() => navigate('/signup', { replace: true })} className="px-4 py-0.5 bg-blue-900 text-white dark:bg-white hover:bg-blue-200 rounded duration-500 ">Sign Up</button>
+        <button onClick={() => navigate('/signup', { replace: true })} className="px-4 py-0.5 bg-blue-900 text-white dark:bg-white hover:bg-blue-200 rounded duration-500 dark:text-black">Sign Up</button>
       ): 
     <ul className="flex items-center justify-end space-x-4">
       {
@@ -55,7 +55,7 @@ export const Navbar=()=>{
             {currentUser ? (
             <button onClick={handleLogout} className="px-4 py-0.5 bg-blue-900 text-white dark:bg-white dark:text-blue-900 hover:bg-blue-200 rounded duration-500 dark:duration-500 dark:hover:bg-blue-200">Log Out</button>
           ) : (
-            <a href="/signin" className="px-4 py-0.5 bg-blue-900 dark:bg-white text-white hover:bg-blue-200 rounded duration-500 ">Sign In</a>
+            <a href="/signin" className="px-4 py-0.5 bg-blue-900 dark:bg-white text-white hover:bg-blue-200 rounded duration-500 dark:text-black">Sign In</a>
           )}
     </ul>
     </div>

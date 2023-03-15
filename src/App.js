@@ -128,9 +128,9 @@ function App() {
             {/* <Route path='/dashboard' element={<DashboardPage/>}/> */}
             {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/support' element={<Support/>}/>
-            <Route path='/terms-and-conditions' element={<TermsAndConditions/>}/>
+            <Route path='/terms and conditions' element={<TermsAndConditions/>}/>
             <Route path='/about' element={<About/>}/>
-            <Route path='/contact' element={<Contact/>}/>
+            <Route path='/contact us' element={<Contact/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
