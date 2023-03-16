@@ -13,7 +13,7 @@ const Chat = ({ user }) => {
             .doc(user.uid)
             .collection("friends")
             .onSnapshot((snapshot) => {
-                const friendsList = snapshot.docs.map((doc) => doc.id);
+                const friendsList = snapshot.docs.map((doc) => doc.data().friend);
                 setFriends(friendsList);
             });
         return unsubscribe;
