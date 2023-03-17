@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const OpenAIButton = () => {
   const [response, setResponse] = useState('');
-  const [prompt, setPrompt] = useState('Recommend me a romantic movie!');
+  const [prompt, setPrompt] = useState('Im a fan of the movie Titanic. Recommend me a similiar movie.');
   const model = 'text-davinci-002'; // replace with your desired OpenAI model, e.g. 'text-davinci-002'
 
   const handleClick = async () => {
@@ -36,11 +36,26 @@ const OpenAIButton = () => {
   return (
     <div>
       <label>
-        User Name:
-        <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
+        <h1>Ask movie-bot a question: </h1>
+        <input 
+        type="text" 
+        value={prompt} 
+        onChange={(e) => setPrompt(e.target.value)} 
+        style={{ 
+        width: "500px", 
+        height: "40px", 
+        fontSize: "18px", 
+        padding: "10px", 
+        borderRadius: "20px", 
+        border: "2px solid #ccc", 
+        boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.1)", 
+        outline: "none" 
+      }} 
+    />
       </label>
       <br />
-      <button onClick={handleClick}>send</button>
+      <button onClick={handleClick} style={{backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold'}}>Send</button>
+
       <p>Movie-Bot: {response}</p>
     </div>
   );

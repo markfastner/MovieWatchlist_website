@@ -31,7 +31,6 @@ function WatchlistPage() {
         </h1>
         
         <div>
-          <h1>openai</h1>
           <OpenAIButton />
           
         </div>
