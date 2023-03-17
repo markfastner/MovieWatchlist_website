@@ -5,12 +5,13 @@ import {useState, useEffect} from "react";
 import Watchlist from "../features/watchlist/watchlist.jsx";
 import AppReducer from "./auth/contexts/WatchlistReducer";
 import { WatchlistProvider } from "./auth/contexts/WatchlistState";
-import Recommendations from "../features/watchlist/Recommendations.jsx";
+import MostPopularMoviesList from "../features/watchlist/MostPopularMoviesList.jsx";
 import MovieSearch from "../features/watchlist/MovieSearch2.jsx";
 import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
 import "../features/watchlist/WatchlistPageStyle.css"
 //c4a9a1cc
-
+import OpenAIButton from "../features/watchlist/OpenAI.jsx";
+import MovieGenreList from "../features/watchlist/MovieGenreList.jsx";
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 
@@ -29,15 +30,26 @@ function WatchlistPage() {
         Watchlist Page
         </h1>
         
+        <div>
+          <h1>openai</h1>
+          <OpenAIButton />
+          
+        </div>
         <div class = "movie-list">
           <Watchlist2 />
           
         </div>
         
+        { <div clas = "MovieGenreList">
+          <h1>Genre Recommendation for Action Movies</h1>
+          <MovieGenreList 
+          genreID = {28}/>
+        </div> }
+
 
         { <div clas = "recommendations">
-          <h1>Recommendations</h1>
-          <Recommendations />
+          <h1>Most Popular Movies Now!</h1>
+          <MostPopularMoviesList />
         </div> }
 
         

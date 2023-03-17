@@ -33,7 +33,7 @@ function MovieSearch() {
     <div>
       <h1>Find Movies</h1>
       <form>
-        <input className ="rounded-full bg-yellow-400 text-white" type="text" placeholder="Search for a movie" value={query} onChange={handleInputChange} />
+        <input className ="rounded-full bg-yellow-400 text-black" type="text" placeholder="Search for a movie" value={query} onChange={handleInputChange} />
       </form>
       {results.length > 0 && (
         <div className="movie-list">
@@ -43,7 +43,6 @@ function MovieSearch() {
                 key={movie.id}
                 posterPath={movie.poster_path}
                 title={movie.title}
-                releaseDate={movie.release_date}
               />
               <AddToWatchlistButton movie={movie} />
             </div>

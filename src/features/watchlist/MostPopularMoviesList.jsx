@@ -4,7 +4,7 @@ import AddToWatchlistButton from "./AddToWatchlistButton";
 import MovieCard2 from "./MovieCard2";
 import "./MovieSearch2.css"
 
-function Recommendations() {
+function MostPopularMoviesList() {
   const [movies, setMovies] = useState([]);
   const {addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
 
@@ -38,4 +38,4 @@ function Recommendations() {
   );
 }
 
-export default Recommendations;
+export default MostPopularMoviesList;

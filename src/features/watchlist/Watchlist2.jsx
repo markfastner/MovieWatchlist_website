@@ -23,6 +23,7 @@ function displayCardPlusRemoveButton(movie){
               posterPath={movie.poster_path}
               title={movie.title}
               releaseDate={movie.release_date}
+              type = {movie.media_type}
             />
             <RemoveFromWatchlsitButton movie={movie} />
               
