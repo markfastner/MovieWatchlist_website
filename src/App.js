@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
@@ -9,7 +10,10 @@ import ProfilePage from './pages/ProfilePage'
 import WatchListPage from './pages/WatchListPage'
 import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
+
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
+import {auth} from './firebase'
+
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
@@ -22,6 +26,86 @@ import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
 
 // App component which runs the whole application
 function App() {
+  const [error, setError] = useState("")
+
+  
+  // logs the user out
+  async function handleLogout(){
+    setError('')
+    try {
+      await auth.signOut()
+    } catch {
+      setError = 'Logout not executed.'
+    }
+  }
+
+  // logged in status
+  const [loggedIn, setLoggedIn] = useState(true)
+  
+  // check for inactivity and log out
+  const checkForInactivity = () => {
+
+    // Get expiretime from local storage
+    const expireTime = localStorage.getItem('expireTime')
+
+    // if no user, keep expiretime at 0
+    // if(!currentUser) {
+    //   updateExpireTime()
+    //   setLoggedIn(false)
+    // }
+
+    // If expire time is earlier than current time, log out
+    if (expireTime < Date.now()) { //  && loggedIn
+      setLoggedIn(false)
+      handleLogout()
+    }
+  }
+
+  // function to update expire time
+  const updateExpireTime = () => {
+    
+    // set expire time to 10 seconds of inactivity, from current time
+    const expireTime = Date.now() + 1800000
+
+    // set expire time in local storage
+    localStorage.setItem('expireTime', expireTime)
+  }
+
+  // use effect to set interval to check for inactivity
+  useEffect(() => {
+
+  
+    // check for inactivity every 1 seconds
+    const interval = setInterval(() => {
+      checkForInactivity()
+    }, 1000) 
+
+    // clear interval on unmount
+    return () => clearInterval(interval)
+  }, [])
+
+  // reset expire time on user activity
+  useEffect(() => {
+    
+    // set initial expire time
+    updateExpireTime()
+
+    // add event listeners to reset inactivity timer
+    window.addEventListener("click", updateExpireTime)
+    window.addEventListener("keypress", updateExpireTime)
+    window.addEventListener("scroll", updateExpireTime)
+    window.addEventListener("mousemove", updateExpireTime)
+
+    // clean up
+    return() => {
+      
+      // event listeners must be removed to add new ones
+      window.removeEventListener("click", updateExpireTime)
+      window.removeEventListener("keypress", updateExpireTime)
+      window.removeEventListener("scroll", updateExpireTime)
+      window.removeEventListener("mousemove", updateExpireTime)
+    }
+  },  [])
   
 
   // Returns the app component which handles the routing of the application
@@ -44,9 +128,9 @@ function App() {
             {/* <Route path='/dashboard' element={<DashboardPage/>}/> */}
             {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/support' element={<Support/>}/>
-            <Route path='/terms-and-conditions' element={<TermsAndConditions/>}/>
+            <Route path='/terms and conditions' element={<TermsAndConditions/>}/>
             <Route path='/about' element={<About/>}/>
-            <Route path='/contact' element={<Contact/>}/>
+            <Route path='/contact us' element={<Contact/>}/>
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
