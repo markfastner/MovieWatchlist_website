@@ -5,9 +5,10 @@ import {useState, useEffect} from "react";
 import Watchlist from "../features/watchlist/watchlist.jsx";
 import AppReducer from "./auth/contexts/WatchlistReducer";
 import { WatchlistProvider } from "./auth/contexts/WatchlistState";
-import Recommendations from "../features/watchlist/recommendations.jsx";
+import Recommendations from "../features/watchlist/Recommendations.jsx";
 import MovieSearch from "../features/watchlist/MovieSearch2.jsx";
 import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
+import "../features/watchlist/WatchlistPageStyle.css"
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -20,7 +21,7 @@ function WatchlistPage() {
       // the user will be able to remove movies from their watchlist from the watchlist page
       
       // the watchlist page will be a list of movies that the user has added to their watchlist
-
+      
   
       <div class="watchlist-container">
         {/* Render the friends list */}
@@ -28,22 +29,26 @@ function WatchlistPage() {
         Watchlist Page
         </h1>
         
+        <div class = "movie-list">
+          <Watchlist2 />
+          
+        </div>
+        
+
+        { <div clas = "recommendations">
+          <h1>Recommendations</h1>
+          <Recommendations />
+        </div> }
+
+        
         <div class = "movie-search">
-          <h2>api test</h2>
           <MovieSearch />
         </div>
 
 
-        <div class = "movie-list">
-          <h2>Your Watchlist</h2>
-          <Watchlist2 />
-          
-        </div>
+        
 
-        {/* <div clas = "recommendations">
-          <h1>Recommendations</h1>
-          <Recommendations />
-        </div> */}
+      
 
         
         </div>

@@ -1,7 +1,9 @@
 import React, {useContext} from 'react'
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
-import MovieCard from './MovieCard'
-import MovieCard2 from './MovieCard2'
+import MovieCard from './MovieCard';
+import MovieCard2 from './MovieCard2';
+import RemoveFromWatchlsitButton from './RemoveFromWatchlistButton';
+import "./MovieSearch2.css"
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
@@ -22,14 +24,15 @@ function displayCardPlusRemoveButton(movie){
               title={movie.title}
               releaseDate={movie.release_date}
             />
-              <button onClick={() => removeMovieFromWatchlist(movie.id)}>remove from Watchlist</button>
+            <RemoveFromWatchlsitButton movie={movie} />
+              
     </div>
   )
 }
 
   return(
     <div>
-      <h1>Watchlist</h1>
+      <h1>Your Watchlist</h1>
       {watchlist.length > 0 ? (
       <div class = "movie-list"> 
             {watchlist.map(displayCardPlusRemoveButton)}         
