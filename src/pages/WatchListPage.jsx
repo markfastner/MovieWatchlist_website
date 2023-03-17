@@ -1,10 +1,13 @@
 import React from "react";
 //import "../features/watchlist/watchlist.css";
 import {useState, useEffect} from "react";
-import MovieSearch from "../features/watchlist/MovieSearch.js";
+//import MovieSearch from "../features/watchlist/MovieSearch.js";
 import Watchlist from "../features/watchlist/watchlist.jsx";
 import AppReducer from "./auth/contexts/WatchlistReducer";
 import { WatchlistProvider } from "./auth/contexts/WatchlistState";
+import Recommendations from "../features/watchlist/recommendations.jsx";
+import MovieSearch from "../features/watchlist/MovieSearch2.jsx";
+import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
 //c4a9a1cc
 
 const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
@@ -33,9 +36,14 @@ function WatchlistPage() {
 
         <div class = "movie-list">
           <h2>Your Watchlist</h2>
-          <Watchlist />
+          <Watchlist2 />
           
         </div>
+
+        {/* <div clas = "recommendations">
+          <h1>Recommendations</h1>
+          <Recommendations />
+        </div> */}
 
         
         </div>
