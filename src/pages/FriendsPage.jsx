@@ -19,6 +19,7 @@ export default function FriendsPage() {
     const user = auth.currentUser;
     const userRef = db.users.doc(currentUser.uid);
     const [senderUsername, setSenderUsername] = useState('')
+    const [acceptFriendError, setAcceptFriendError] = useState('')
 
     const [error, setError] = useState('')
 
@@ -44,16 +45,10 @@ export default function FriendsPage() {
             const recipientPendingRequest = await db.users.doc(recipientId).collection('pending-friends').where('pending', '==', senderUsername).get()
             if((recipientPendingRequest.empty))
             {
-                // const db = firebase.firestore();
-                // const docRef = db.collection("myCollection").doc("myDoc");
-                // const subCollectionRef = docRef.collection("mySubCollection");
-
-                // docRef.set({ name: "John Doe" });
-                // subCollectionRef.add({ age: 25 });
                 const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
                 pendingCollection.add({pending: senderUsername})
             } else {
-                setAddFriendError("You have a pending request, cannot send more requests at this time.")
+                setAddFriendError("Your friend request is pending, please wait.")
                 return
             }
             setAddFriendError(senderUsername)
@@ -63,12 +58,39 @@ export default function FriendsPage() {
         }
       }
 
+     
+    const friendRequestsRef = userRef.collection('pending-friends');
+    const friendRequests = [];
+
+    friendRequestsRef.onSnapshot((snapshot) => {
+
+    snapshot.forEach((doc) => {
+        const friendRequest = {
+        user_id: currentUser.uid,
+        doc_id: doc.id,
+        pending: doc.pending
+        };
+
+        friendRequests.push(friendRequest);
+    });
+    });
+
+    const acceptFriendRequest = async (friendRequest) => {
+        setAcceptFriendError("Friend Added.")
+      };
+
+    const declineFriendRequest = async (friendRequest) => {
+        setAcceptFriendError("Friend Declined.")
+    };
+
+    
+
 
     return (
       <div>
     {/* Render the friends list */}
     <h1>
-    Friends
+    Friends 
     </h1>
     <div>
       <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button>
@@ -83,7 +105,15 @@ export default function FriendsPage() {
         </form>
         
         </div>
-        
+        <div>
+            {friendRequests.map((friendRequest) => (
+            <div key={friendRequest.user_id}>
+            <p>{friendRequest.pending} ({friendRequest.pending})</p>
+            <button onClick={() => acceptFriendRequest(friendRequest)}>Accept</button>
+            <button onClick={() => declineFriendRequest(friendRequest)}>Decline</button>
+            </div>
+        ))}  
+        </div>
 
     <div>
         <Chat user={user} />
