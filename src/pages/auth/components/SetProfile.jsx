@@ -24,7 +24,6 @@ export default function SetProfile() {
     const user = auth.currentUser;
     const userRef = db.users.doc(user.uid)
     //added
-    const friendRef = db.friends.doc(user.uid)
 
     const emailRef = useRef()
     const [email, setEmail] = useState()
@@ -68,18 +67,7 @@ export default function SetProfile() {
         console.log("Error getting document:", error);
     });
     
-    //added
-    friendRef.get().then((doc) => {
-        if(doc.exists) {
-            console.log("Document data:", doc.data());
-            setUsername(doc.data().username)
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
+    
     
 
     // Submission handler

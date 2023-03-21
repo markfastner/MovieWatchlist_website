@@ -20,7 +20,6 @@ export const auth = app.auth()
 const database = app.firestore()
 export const db = {
   users: database.collection('users'),
-  friends: database.collection('friends'),
   movies: database.collection('movies'),
   watchlists: database.collection('watchlists'),
   chats: database.collection('chats'),
