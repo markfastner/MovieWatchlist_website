@@ -1,0 +1,91 @@
+.movie-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.movie-item {
+    position: relative;
+    margin: 10px;
+    display: inline-block;
+    width: 200px;
+    height: 350px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+      0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  }
+  
+  .movie-item:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }
+  
+  .movie-item img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+  }
+  
+  .movie-item .movie-info {
+    padding: 10px;
+  }
+  
+  .movie-item h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .movie-item p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #ada9a9;
+  }
+  
+  .movie-item button {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    height: 50px;
+    width: 150px;
+  }
+  
+  .movie-item button:hover {
+    background-color: #0058c2;
+  }
+
+  .after-click {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: rgb(158, 1, 1);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    height: 50px;
+    width: 150px;
+  }
+
+
+  

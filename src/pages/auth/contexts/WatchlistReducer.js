@@ -11,7 +11,7 @@ export default (state, action) => {
       return {
         ...state,
         watchlist: state.watchlist.filter(
-          (movie) => movie.imdbID !== action.payload
+          (movie) => movie.id !== action.payload
         ),
       };
     // case "ADD_MOVIE_TO_WATCHED":
