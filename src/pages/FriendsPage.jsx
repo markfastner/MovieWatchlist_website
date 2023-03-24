@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import '../App.css';
 import { useAuth } from "./auth/contexts/AuthContext";
 import { auth, db } from '../firebase';
@@ -31,7 +31,10 @@ export default function FriendsPage() {
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
-
+    
+    userRef.get().then((doc) => {
+        if(doc.exists) {setSenderUsername(doc.data().username)}
+    })
     async function handleAddFriend(e) {
         e.preventDefault()
         const queriedUsername = usernameRef.current.value;
@@ -39,9 +42,6 @@ export default function FriendsPage() {
         
         if(!(recipientSnapshot.empty)) {
             const recipientId = recipientSnapshot.docs[0].id
-            userRef.get().then((doc) => {
-                if(doc.exists) {setSenderUsername(doc.data().username)}
-            })
             const recipientPendingRequest = await db.users.doc(recipientId).collection('pending-friends').where('pending', '==', senderUsername).get()
             if((recipientPendingRequest.empty))
             {
@@ -51,7 +51,6 @@ export default function FriendsPage() {
                 setAddFriendError("Your friend request is pending, please wait.")
                 return
             }
-            setAddFriendError(senderUsername)
         } else {
             setAddFriendError("User does not exist.")
             return
@@ -60,26 +59,37 @@ export default function FriendsPage() {
 
      
     const friendRequestsRef = userRef.collection('pending-friends');
-    const friendRequests = [];
-
-    friendRequestsRef.onSnapshot((snapshot) => {
-
-    snapshot.forEach((doc) => {
-        const friendRequest = {
-        user_id: currentUser.uid,
-        doc_id: doc.id,
-        pending: doc.pending
-        };
-
-        friendRequests.push(friendRequest);
-    });
-    });
+    const [friendRequests, setFriendRequests] = useState([]);
+    
+    useEffect(() => {
+        const unsubscribe = db
+          .users
+          .doc(currentUser.uid)
+          .collection("pending-friends")
+          .onSnapshot((snapshot) => {
+            const pendingList = snapshot.docs.map((doc) => 
+            {
+                
+                const data = doc.data();
+                data.id = doc.id; // Add the document ID to the data object
+                return data;
+            });
+            setFriendRequests(pendingList);
+        });
+        return unsubscribe;
+      }, [currentUser.uid]);
 
     const acceptFriendRequest = async (friendRequest) => {
-        setAcceptFriendError("Friend Added.")
+        const recipientSnapshot = await db.users.where("username", "==", friendRequest.pending).get();
+        const recipientId = recipientSnapshot.docs[0].id
+        db.users.doc(currentUser.uid).collection('friends').add({friend: friendRequest.pending})
+        db.users.doc(recipientId).collection('friends').add({friend: senderUsername})
+      db.users.doc(currentUser.uid).collection('pending-friends').doc(friendRequest.id).delete();
+      setAcceptFriendError("Friend Added.")
       };
 
     const declineFriendRequest = async (friendRequest) => {
+        const a = db.users.doc(currentUser.uid).collection('pending-friends').doc(friendRequest.id).delete();
         setAcceptFriendError("Friend Declined.")
     };
 
@@ -105,12 +115,13 @@ export default function FriendsPage() {
         </form>
         
         </div>
+            {acceptFriendError}
         <div>
             {friendRequests.map((friendRequest) => (
-            <div key={friendRequest.user_id}>
-            <p>{friendRequest.pending} ({friendRequest.pending})</p>
-            <button onClick={() => acceptFriendRequest(friendRequest)}>Accept</button>
-            <button onClick={() => declineFriendRequest(friendRequest)}>Decline</button>
+            <div key={friendRequest.pending}>
+            {friendRequest.pending}
+            <button type='button' onClick={() => acceptFriendRequest(friendRequest)} class="btn btn-primary my-6 w-10 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">+</button>
+            <button type='button' onClick={() => declineFriendRequest(friendRequest)} class="btn btn-primary my-6 w-10 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">x</button>
             </div>
         ))}  
         </div>
@@ -120,21 +131,6 @@ export default function FriendsPage() {
     </div>
 
     <div>
-    {/* <ul>
-      {friendRequests.map((friendRequest) => (
-        <li key={friendRequest.id}>
-          {friendRequest.sender} wants to be your friend.
-          {friendRequest.status === 'pending' && (
-<>
-<button onClick={() => handleAccept(friendRequest.id)}>Accept</button>
-<button onClick={() => handleReject(friendRequest.id)}>Reject</button>
-</>
-)}
-{friendRequest.status === 'accepted' && <span>Friend request accepted.</span>}
-{friendRequest.status === 'rejected' && <span>Friend request rejected.</span>}
-</li>
-))}
-</ul> */}
     </div>
         </div>
     );
