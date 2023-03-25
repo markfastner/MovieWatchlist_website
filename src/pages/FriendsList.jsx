@@ -47,7 +47,7 @@ const FriendsList = ({ userId }) => {
       <h2>Friends List</h2>
       <ul>
         {friends.map((friend) => (
-          <li key={friend}>{friend.friend} {friend.id}
+          <li key={friend}>{friend.friend}
            <button type='button' onClick={() => removeFriend(friend)} class="btn btn-primary my-6 w-10 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">-</button>
            </li>
           

@@ -108,7 +108,7 @@ export default function FriendsPage() {
     Friends 
     </h1>
     <div>
-      <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button>
+      {/* <button type='show' class='btn' onClick={RenderFriendsList}>Show Friends List</button> */}
         <RenderFriendsList/>
        
     </div>
