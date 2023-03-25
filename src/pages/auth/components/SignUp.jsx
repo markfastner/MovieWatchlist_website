@@ -34,7 +34,7 @@ export default function SignUp() {
             const userRef = db.users.doc(user.uid)
             const friendRef = db.users.doc(user.uid).collection('friends')
             const pendingFriendRef = db.users.doc(user.uid).collection('pending-friends')
-            
+           
             userRef.set({
                 email: emailRef.current.value,
                 firstName: "",
@@ -43,8 +43,12 @@ export default function SignUp() {
                 genre: "",
                 uid: user.uid,
                 profilePic:"",
-                colorTheme: ""
+                colorTheme: "",
+                signed_in: true, 
+                visibility: 'Online'
             })
+
+            
             
 
         navigation("/set-profile")

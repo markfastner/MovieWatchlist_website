@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "./auth/contexts/AuthContext";
-import {database} from "../firebase"
+import {auth, database, db} from "../firebase"
 
 
 // Displaying the dashboard page
@@ -10,12 +10,15 @@ import {database} from "../firebase"
 function DashboardPage() {
   const [error, setError] = useState("")
   const {currentUser} = useAuth()
+  const user = auth.currentUser
   
   const [selectedStatus, setSelectedStatus] = useState('Online');
   const activityStatuses = ['Online', 'Idle', 'Do Not Disturb', 'Invisible'];
   
   const handleChange = (event) => {
-    setSelectedStatus(event.target.value);
+    const newStatus = event.target.value
+    setSelectedStatus(newStatus);
+    db.users.doc(user.uid).update({visibility: newStatus})
   };
 
     return (

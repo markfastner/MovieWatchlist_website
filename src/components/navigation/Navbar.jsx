@@ -14,14 +14,17 @@ export const Navbar=()=>{
   const passwordRef = useRef()
   const nameRef = useRef()
   const {signin, currentUser, signout} = useAuth()
-  const userRef = db.users.doc(currentUser.uid)
+  if(currentUser)
+  {
+    const userRef = db.users.doc(auth.currentUser.uid)
+  }
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const [senderUsername, setSenderUsername] = useState('')
-    userRef.get().then((doc) => {
-        if(doc.exists) {setSenderUsername(doc.data().username)}
-    })
+  // const [senderUsername, setSenderUsername] = useState('')
+  //   userRef.get().then((doc) => {
+  //       if(doc.exists) {setSenderUsername(doc.data().username)}
+  //   })
 
   // The Navigation bar which links to each component's url extension
   const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"] // senderUsername could be added here, but would need to link to profile

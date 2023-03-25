@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from '../firebase.js';
+import { auth, db } from '../firebase.js';
 import { useAuth } from "./auth/contexts/AuthContext";
 
 const FriendsList = ({ userId }) => {
@@ -22,9 +22,12 @@ const FriendsList = ({ userId }) => {
       .onSnapshot((snapshot) => {
         const friendsList = snapshot.docs.map((doc) => 
         {
-                
+          const recipientSnapshot = db.users.where("username", "==", doc.data().friend).get();
+          const recipientId = recipientSnapshot.docs[0].id
+          // const activity = (db.users.doc(recipientId).get()).docs[0].visibility     
           const data = doc.data();
           data.id = doc.id; // Add the document ID to the data object
+          // data.visibility = activity
           return data;
       });
         setFriends(friendsList);
