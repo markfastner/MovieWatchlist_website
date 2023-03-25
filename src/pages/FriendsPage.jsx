@@ -43,6 +43,11 @@ export default function FriendsPage() {
         if(!(recipientSnapshot.empty)) {
             const recipientId = recipientSnapshot.docs[0].id
             const recipientPendingRequest = await db.users.doc(recipientId).collection('pending-friends').where('pending', '==', senderUsername).get()
+            if(senderUsername == recipientSnapshot.docs[0].username)
+            {
+                setAddFriendError("That is you.")
+                return
+            }
             if((recipientPendingRequest.empty))
             {
                 const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
