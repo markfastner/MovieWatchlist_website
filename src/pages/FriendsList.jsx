@@ -29,7 +29,7 @@ const FriendsList = ({ userId }) => {
           const data = {
             ...doc.data(),
             id: doc.id, // Add the document ID to the data object
-            visibility : activityStatus,
+            visibility : activityStatus
 
           }
           return data;
