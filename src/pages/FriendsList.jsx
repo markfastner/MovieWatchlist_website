@@ -6,8 +6,8 @@ const FriendsList = ({ userId }) => {
   const [friends, setFriends] = useState([]);
   const [friendMessage, setFriendMessage] = useState('')
   const [senderUsername, setSenderUsername] = useState('')
-  const {currentUser} = useAuth()
-  const userRef = db.users.doc(currentUser.uid);
+
+  const userRef = db.users.doc(userId);
   
   
   userRef.get().then((doc) => {
@@ -19,18 +19,23 @@ const FriendsList = ({ userId }) => {
       .users
       .doc(userId)
       .collection("friends")
-      .onSnapshot((snapshot) => {
-        const friendsList = snapshot.docs.map((doc) => 
+      .onSnapshot(async (snapshot) => {
+        const friendsList = snapshot.docs.map(async (doc) => 
         {
-          const recipientSnapshot = db.users.where("username", "==", doc.data().friend).get();
+          const recipientSnapshot = await db.users.where("username", "==", doc.data().friend).get();
           const recipientId = recipientSnapshot.docs[0].id
-          // const activity = (db.users.doc(recipientId).get()).docs[0].visibility     
-          const data = doc.data();
-          data.id = doc.id; // Add the document ID to the data object
-          // data.visibility = activity
+          const friendDoc = await db.users.doc(recipientId).get()
+          const activityStatus = friendDoc.data().visibility
+          const data = {
+            ...doc.data(),
+            id: doc.id, // Add the document ID to the data object
+            visibility : activityStatus,
+
+          }
           return data;
       });
-        setFriends(friendsList);
+      const friendsData = await Promise.all(friendsList);
+        setFriends(friendsData);
       });
     return unsubscribe;
   }, [userId]);
@@ -38,9 +43,9 @@ const FriendsList = ({ userId }) => {
   const removeFriend = async (friend) => {
     const recipientSnapshot = await db.users.where("username", "==", friend.friend).get();
     const recipientId = recipientSnapshot.docs[0].id
-    const senderFriendDocId = (await db.users.doc(currentUser.uid).collection('friends').where('friend', '==', friend.friend).get()).docs[0].id;
+    const senderFriendDocId = (await db.users.doc(userId).collection('friends').where('friend', '==', friend.friend).get()).docs[0].id;
     const recipientFriendDocId = (await db.users.doc(recipientId).collection('friends').where('friend', '==', senderUsername).get()).docs[0].id;
-    db.users.doc(currentUser.uid).collection('friends').doc(senderFriendDocId).delete();
+    db.users.doc(userId).collection('friends').doc(senderFriendDocId).delete();
     db.users.doc(recipientId).collection('friends').doc(recipientFriendDocId).delete();
     setFriendMessage("Friend Removed.")
   };
@@ -50,7 +55,7 @@ const FriendsList = ({ userId }) => {
       <h2>Friends List</h2>
       <ul>
         {friends.map((friend) => (
-          <li key={friend}>{friend.friend}
+          <li key={friend}>{friend.friend} {friend.visibility}
            <button type='button' onClick={() => removeFriend(friend)} class="btn btn-primary my-6 w-10 duration-200 bg-slate-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">-</button>
            </li>
           
