@@ -37,6 +37,8 @@ export const Navbar=()=>{
   async function handleLogout(){
     setError('')
     try {
+      await db.users.doc(auth.currentUser.uid).update({signed_in: false, 
+        visibility: 'Offline'})
       await signout()
       navigate('/')
     } catch {

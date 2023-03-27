@@ -26,6 +26,10 @@ const FriendsList = ({ userId }) => {
           const recipientId = recipientSnapshot.docs[0].id
           const friendDoc = await db.users.doc(recipientId).get()
           const activityStatus = friendDoc.data().visibility
+          if(activityStatus == 'Invisible' || activityStatus == 'Offline')
+          {
+            activityStatus = 'Offline'
+          }
           const data = {
             ...doc.data(),
             id: doc.id, // Add the document ID to the data object
