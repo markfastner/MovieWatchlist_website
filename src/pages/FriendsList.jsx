@@ -71,6 +71,13 @@ const FriendsList = ({ userId }) => {
     }
   }
 
+  useEffect(() => {
+  const unsubscribe = userRef.onSnapshot((doc) => {
+    setActivityStatus(doc.data().visibility);
+  });
+  return unsubscribe;
+}, [userRef]);
+
   const removeFriend = async (friend) => {
     const recipientSnapshot = await db.users.where("username", "==", friend.friend).get();
     const recipientId = recipientSnapshot.docs[0].id
