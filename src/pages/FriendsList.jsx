@@ -64,7 +64,7 @@ const FriendsList = ({ userId }) => {
     switch(status) {
       case 'Online':
         return <FaCircle className="text-green-500" />;
-      case 'Do not disturb':
+      case 'Do Not Disturb':
         return <FaCircle className="text-red-500" />;
       case 'Idle':
         return <IoIosMoon className="text-yellow-500" />;
