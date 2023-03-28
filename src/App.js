@@ -51,10 +51,10 @@ function App() {
     const expireTime = localStorage.getItem('expireTime')
 
     // if no user, keep expiretime at 0
-    // if(!currentUser) {
-    //   updateExpireTime()
-    //   setLoggedIn(false)
-    // }
+    if(!currentUser) {
+      updateExpireTime()
+      setLoggedIn(false)
+    }
 
     // If expire time is earlier than current time, log out
     if (expireTime < Date.now()) { //  && loggedIn
