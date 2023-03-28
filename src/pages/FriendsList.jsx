@@ -2,6 +2,8 @@ import { async } from "q";
 import React, { useEffect, useState } from "react";
 import { auth, db } from '../firebase.js';
 import { useAuth } from "./auth/contexts/AuthContext";
+import { FaCircle, FaMoon } from 'react-icons/fa';
+import { IoIosMoon, IoIosRadioButtonOn, IoIosRadioButtonOff } from 'react-icons/io';
 
 const FriendsList = ({ userId }) => {
   const [friends, setFriends] = useState([]);
@@ -22,29 +24,52 @@ const FriendsList = ({ userId }) => {
       .doc(userId)
       .collection("friends")
       .onSnapshot(async (snapshot) => {
-        const friendsList = snapshot.docs.map(async (doc) => 
-        {
+        const friendsList = snapshot.docs.map(async (doc) => {
           const recipientSnapshot = await db.users.where("username", "==", doc.data().friend).get();
           const recipientId = recipientSnapshot.docs[0].id
           const friendDoc = await db.users.doc(recipientId).get()
-          setActivityStatus(friendDoc.data().visibility)
-          if(activityStatus == 'Invisible' || activityStatus == 'Offline')
-          {
-            setActivityStatus('Offline')
+          const friendActivityStatus = friendDoc.data().visibility;
+          let newActivityStatus = friendActivityStatus;
+          if (friendActivityStatus === 'Invisible' || friendActivityStatus === 'Offline') {
+            newActivityStatus = 'Offline';
           }
           const data = {
             ...doc.data(),
             id: doc.id, // Add the document ID to the data object
-            visibility : activityStatus
-
+            visibility: friendDoc.data().visibility
           }
           return data;
-      });
-      const friendsData = await Promise.all(friendsList);
+        });
+        const friendsData = await Promise.all(friendsList);
         setFriends(friendsData);
       });
     return unsubscribe;
-  }, [userId]);
+  }, [userId, setFriends]);
+  
+
+  useEffect(() => {
+    // Listen for changes in activityStatus and update the friends list accordingly
+    const friendsWithStatus = friends.map((friend) => {
+      return {
+        ...friend,
+        activityIcon: getActivityIcon(friend.visibility),
+      }
+    });
+    setFriends(friendsWithStatus);
+  }, [activityStatus]);
+
+  function getActivityIcon(status) {
+    switch(status) {
+      case 'Online':
+        return <FaCircle className="text-green-500" />;
+      case 'Do not disturb':
+        return <FaCircle className="text-red-500" />;
+      case 'Idle':
+        return <IoIosMoon className="text-yellow-500" />;
+      default:
+        return <FaCircle className="text-gray-500" />;
+    }
+  }
 
   const removeFriend = async (friend) => {
     const recipientSnapshot = await db.users.where("username", "==", friend.friend).get();
@@ -74,6 +99,7 @@ const FriendsList = ({ userId }) => {
     setShowPrompt(false);
     setFriendToRemove(null);
   }
+
 
   return (
     <div>
@@ -110,8 +136,9 @@ const FriendsList = ({ userId }) => {
 </div>
       <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
         {friends.map((friend) => (
-          <li key={friend} style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
-            <span style={{ marginRight: '10px' }}>{friend.friend} {friend.visibility}</span>
+          <li key={friend.id} style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
+            <span>{friend.friend}</span>
+            <span>{friend.visibility}</span>
             <button
               type="button"
               onClick={() => handleRemoveFriend(friend)}

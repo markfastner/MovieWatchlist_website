@@ -11,6 +11,7 @@ function DashboardPage() {
   const [error, setError] = useState("")
   const {currentUser} = useAuth()
   const user = auth.currentUser
+  const userRef = db.users.doc(user.uid)
   
   const [selectedStatus, setSelectedStatus] = useState('Online');
   const activityStatuses = ['Online', 'Idle', 'Do Not Disturb', 'Invisible'];
@@ -20,6 +21,10 @@ function DashboardPage() {
     setSelectedStatus(newStatus);
     db.users.doc(user.uid).update({visibility: newStatus})
   };
+  const [senderUsername, setSenderUsername] = useState('')
+  userRef.get().then((doc) => {
+      if(doc.exists) {setSenderUsername(doc.data().username)}
+  })
 
     return (
       <div className="flex justify-start bg-blue-200 dark:bg-slate-800 min-h-screen">
@@ -35,6 +40,8 @@ function DashboardPage() {
       <p>You are currently {selectedStatus}.</p>
             {error && <Alert variant="danger">{error}</Alert>}
             <strong>Email: </strong>{currentUser.email}
+            <br></br>
+            <strong>Username: </strong>{senderUsername}
             <div>
             <Link to="/set-profile">Update Profile</Link>
 
