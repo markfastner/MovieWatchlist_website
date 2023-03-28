@@ -10,6 +10,8 @@ const FriendsList = ({ userId }) => {
   const [friendMessage, setFriendMessage] = useState('')
   const [senderUsername, setSenderUsername] = useState('')
   const [activityStatus, setActivityStatus] = useState('')
+  const [filteredFriends, setFilteredFriends] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const userRef = db.users.doc(userId);
   
@@ -70,6 +72,15 @@ const FriendsList = ({ userId }) => {
         return <FaCircle className="text-gray-500" />;
     }
   }
+
+  useEffect(() => {
+    const filteredFriends = friends.filter((friend) => {
+      const friendName = friend.friend.toLowerCase();
+      const searchTermLower = searchTerm.toLowerCase();
+      return friendName.includes(searchTermLower);
+    });
+    setFilteredFriends(filteredFriends);
+  }, [friends, searchTerm]);
 
   useEffect(() => {
   const unsubscribe = userRef.onSnapshot((doc) => {
@@ -137,12 +148,13 @@ const FriendsList = ({ userId }) => {
       id="searchFriends"
       className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-3 py-2 border-gray-300 rounded-md"
       placeholder="Search friends"
-      // onChange={handleSearchInputChange}
+      value = {searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
     />
   </div>
 </div>
       <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
-        {friends.map((friend) => (
+        {friends.filter((friend) => friend.friend.toLowerCase().includes(searchTerm.toLowerCase())).map((friend) => (
           <li key={friend.id} style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
             <span>{friend.friend}</span>
             <span>{getActivityIcon(friend.visibility)}</span>
