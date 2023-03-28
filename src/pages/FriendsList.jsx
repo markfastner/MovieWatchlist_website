@@ -138,7 +138,7 @@ const FriendsList = ({ userId }) => {
         {friends.map((friend) => (
           <li key={friend.id} style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
             <span>{friend.friend}</span>
-            <span>{friend.visibility}</span>
+            <span>{getActivityIcon(friend.visibility)}</span>
             <button
               type="button"
               onClick={() => handleRemoveFriend(friend)}
