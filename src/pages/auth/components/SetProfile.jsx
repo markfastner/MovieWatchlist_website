@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
@@ -10,6 +10,8 @@ import ProfileUpload from "../../../features/profile/components/ProfileUpload"
 import { CirclePicker } from "react-color";
 import {Switch} from "@headlessui/react"
 import Switcher from "../../../features/profile/components/switcher";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import DarkMode from "../../../features/profile/components/darkMode";
 
 
 // profile creation page from the sign in page
@@ -46,6 +48,30 @@ export default function SetProfile() {
 
     const [enabled, setEnabled] = useState(false)
     
+    // for light/dark mode to save state
+    const [colorTheme, setTheme] = DarkMode();
+    const [darkMode, setDarkMode] = useState(
+        colorTheme === "light" ? true : false
+    );
+
+    const toggleDarkMode = (checked) => {
+        setTheme(colorTheme);
+        setDarkMode(checked);
+    };
+
+    // useEffect(() =>{
+    //     if(darkMode === true) {
+    //         localStorage.setItem("darkMode", JSON.stringify(true))
+    //         document.body.style.background = 'dark'
+    //         console.log('dark mode enabled') 
+    //     }
+    //     else{
+    //         localStorage.setItem("darkMode", JSON.stringify(false))
+    //         document.body.style.background = 'light'
+    //         console.log('dark mode disabled')
+    //     }
+    // }, [darkMode]) 
+
     function isAlphanumeric(str) {
         return /^[a-zA-Z0-9]+$/.test(str);
     }      
@@ -58,6 +84,7 @@ export default function SetProfile() {
             setLastName(doc.data().lastName)
             setUsername(doc.data().username)
             setGenre(doc.data().genre)
+            colorTheme(doc.data().colorTheme)
             
         } else {
             // doc.data() will be undefined in this case
@@ -91,7 +118,8 @@ export default function SetProfile() {
                 lastName: lastNameRef.current.value,
                 username: usernameRef.current.value,
                 genre: genreRef.current.value,
-                uid: user.uid
+                uid: user.uid,
+                colorTheme: colorTheme.current.value
 
             }))
             Promise.all(promises).then(() => {
@@ -267,8 +295,16 @@ export default function SetProfile() {
                     <div>
                     Light Mode/Dark Mode
                     </div>
-                    <Switcher/>
-                    
+                    <>
+                        <DarkModeSwitch
+                            style={{ marginBottom: "2rem" }}
+                            checked={darkMode}
+                            onChange={toggleDarkMode}
+                            size={40}
+                        />
+                    </>
+
+
                     <div>
                         Enable Activity Status
                     </div>

@@ -4,6 +4,8 @@ import { useAuth } from "../contexts/AuthContext"
 import { db, auth} from "../../../firebase"
 import { Link, useNavigate } from "react-router-dom"
 import "firebase/firestore"
+// import { DarkModeSwitch } from "react-toggle-dark-mode"
+
 
 //Export function to sign users up
 export default function SignUp() {
@@ -34,7 +36,7 @@ export default function SignUp() {
             const userRef = db.users.doc(user.uid)
             const friendRef = db.users.doc(user.uid).collection('friends')
             const pendingFriendRef = db.users.doc(user.uid).collection('pending-friends')
-           
+
             userRef.set({
                 email: emailRef.current.value,
                 firstName: "",
@@ -42,8 +44,8 @@ export default function SignUp() {
                 username: "",
                 genre: "",
                 uid: user.uid,
-                profilePic:"",
-                colorTheme: "",
+                profilePic: "",
+                colorTheme: "light",
                 signed_in: true, 
                 visibility: 'Online'
             })
