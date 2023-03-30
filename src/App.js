@@ -12,7 +12,7 @@ import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
 
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
-import {auth} from './firebase'
+import {auth, db} from './firebase'
 
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
@@ -27,12 +27,14 @@ import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
 // App component which runs the whole application
 function App() {
   const [error, setError] = useState("")
-
+  const {currentUser} = useAuth() || {}
   
   // logs the user out
   async function handleLogout(){
     setError('')
     try {
+      await db.users.doc(auth.currentUser.uid).update({signed_in: false, 
+        visibility: 'Offline'})
       await auth.signOut()
     } catch {
       setError = 'Logout not executed.'
@@ -49,10 +51,10 @@ function App() {
     const expireTime = localStorage.getItem('expireTime')
 
     // if no user, keep expiretime at 0
-    // if(!currentUser) {
-    //   updateExpireTime()
-    //   setLoggedIn(false)
-    // }
+    if(!currentUser) {
+      updateExpireTime()
+      setLoggedIn(false)
+    }
 
     // If expire time is earlier than current time, log out
     if (expireTime < Date.now()) { //  && loggedIn
