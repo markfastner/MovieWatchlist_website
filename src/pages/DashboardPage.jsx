@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "./auth/contexts/AuthContext";
 import {auth, database, db} from "../firebase"
-
+import {Chart} from 'react-google-charts';
 
 // Displaying the dashboard page
 // Dashboard page currently has the activity status card
