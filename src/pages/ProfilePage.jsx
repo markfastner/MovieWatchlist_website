@@ -26,7 +26,7 @@ function ProfilePage() {
               Edit Profile
               </button>
             </Link>
-          </Card> 
+          </Card>
         </div>
       </div>
     );

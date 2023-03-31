@@ -26,6 +26,22 @@ function DashboardPage() {
       if(doc.exists) {setSenderUsername(doc.data().username)}
   })
 
+
+  const exampleData = [
+    ['Watch time', 'Hours per day'],
+    ['Monday', 4],
+    ['Tuesday', 5],
+    ['Wednesday', 6],
+    ['Thursday', 7],
+    ['Friday', 8],
+    ['Saturday', 9],
+    ['Sunday', 10],
+  ];
+
+  const options = {
+    title: "Watch time per day",
+  };
+
     return (
       <div className="flex justify-start bg-blue-200 dark:bg-slate-800 min-h-screen">
         <Card className="w-full max-w-sm p-4 bg-blue-100 dark:bg-slate-600 dark:text-white shadow sm:p-6 md:p-100">

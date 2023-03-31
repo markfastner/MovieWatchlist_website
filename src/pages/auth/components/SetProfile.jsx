@@ -12,7 +12,7 @@ import {Switch} from "@headlessui/react"
 import Switcher from "../../../features/profile/components/switcher";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import DarkMode from "../../../features/profile/components/darkMode";
-
+import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -148,8 +148,12 @@ export default function SetProfile() {
         }
     };
 
-
-
+    
+    const handleClick = (e) => {
+        e.preventDefault();
+        <ProfileUpload/>
+    };
+    
     // const handleSubmitPicture = () => {
     //     const imageRef = ref(storage, "image");
     //     uploadBytes(imageRef, image)
@@ -278,13 +282,26 @@ export default function SetProfile() {
         
         
 
+        <section>
+                <div className = "relative">
+                    <button onClick={handleClick}>
+                        <img src="" className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600"/>
+                        <span class="absolute h-7 w-7 rounded-full bg-red-500 border-2 border-gray-500 top-3 right-0" />
+                    </button>
+                    
+                </div>
+        </section>
+
 
         <section>
             <div>
                 {/* <Card className="bg-white dark:bg-slate-600 dark:text-white rounded-md justify-center">
                     Hello
                 </Card> */}
-                <ProfileUpload/>
+                
+            </div>
+            <div>
+                <ProfileUploadPopup/>
             </div>
         </section>
 
