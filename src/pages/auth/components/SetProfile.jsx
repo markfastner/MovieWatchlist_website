@@ -294,15 +294,12 @@ export default function SetProfile() {
 
 
         <section>
-            <div>
-                {/* <Card className="bg-white dark:bg-slate-600 dark:text-white rounded-md justify-center">
-                    Hello
-                </Card> */}
-                
-            </div>
-            <div>
-                <ProfileUploadPopup/>
-            </div>
+            <Card className="bg-white py-8 px-8 rounded-lg">
+                <div>
+                    <ProfileUploadPopup/>
+                </div>
+            </Card>
+
         </section>
 
         <section className="bg-white py-3 px-5 rounded-xl text-gray-500 dark:bg-slate-700 dark:text-white">
@@ -338,10 +335,10 @@ export default function SetProfile() {
                     </Switch>
                 </Card>
             </div>
-            <div className = "">
+            {/* <div className = "">
                 Color Picker
                 <CirclePicker/>
-            </div>
+            </div> */}
         </section>
         
     </div>    
