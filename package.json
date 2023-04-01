@@ -26,12 +26,12 @@
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^3.0.4",
+    "react-google-charts": "^4.0.0",
     "react-icons": "^4.8.0",
     "react-router": "^6.8.0",
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
     "react-toggle-dark-mode": "^1.1.1",
-    "stream": "^0.0.2",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
     "webfontloader": "^1.6.28"

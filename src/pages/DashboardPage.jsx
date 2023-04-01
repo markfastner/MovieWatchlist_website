@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "./auth/contexts/AuthContext";
 import {auth, database, db} from "../firebase"
-
+import {Chart} from 'react-google-charts';
 
 // Displaying the dashboard page
 // Dashboard page currently has the activity status card
@@ -25,6 +25,22 @@ function DashboardPage() {
   userRef.get().then((doc) => {
       if(doc.exists) {setSenderUsername(doc.data().username)}
   })
+
+
+  const exampleData = [
+    ['Watch time', 'Hours per day'],
+    ['Monday', 4],
+    ['Tuesday', 5],
+    ['Wednesday', 6],
+    ['Thursday', 7],
+    ['Friday', 8],
+    ['Saturday', 9],
+    ['Sunday', 10],
+  ];
+
+  const options = {
+    title: "Watch time per day",
+  };
 
     return (
       <div className="flex justify-start bg-blue-200 dark:bg-slate-800 min-h-screen">

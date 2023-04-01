@@ -5,7 +5,7 @@ import React from 'react';
 
 const ProfileUpload = () => (
     <div class="flex justify-center mt-8">
-        <div class="max-w-2xl rounded-lg shadow-xl bg-white dark:bg-slate-700 dark:text-white">
+        <div class="max-w-2xl rounded-lg shadow-xl bg-white dark:bg-slate-600 dark:text-white">
             <div class="m-4">
                 <label class="inline-block mb-2 text-gray-500 dark:text-white">File Upload</label>
                 <div class="flex items-center justify-center w-full">

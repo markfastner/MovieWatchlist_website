@@ -28,9 +28,7 @@ export const Navbar=()=>{
 
   // The Navigation bar which links to each component's url extension
   const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"] // senderUsername could be added here, but would need to link to profile
- 
   const navigate = useNavigate()
-
 
 
   // logs the user out
@@ -45,6 +43,7 @@ export const Navbar=()=>{
       setError = 'Logout not executed.'
     }
   }
+
   return(<nav className="flex justify-between px-8 py-4 bg-white dark:bg-slate-900">
     <div >
       <Link to='/' className="text-blue-900 dark:text-white tracking-wide px-8 py-4">
@@ -66,6 +65,7 @@ export const Navbar=()=>{
       }
     </ul>}
     </ul>
+    
     <ul className="flex items-center justify-end space-x-4">
             {currentUser ? (
             <button onClick={handleLogout} className="px-4 py-0.5 bg-blue-900 text-white dark:bg-white dark:text-blue-900 hover:bg-blue-200 rounded duration-500 dark:duration-500 dark:hover:bg-blue-200">Log Out</button>

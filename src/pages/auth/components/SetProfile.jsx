@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
@@ -10,7 +10,9 @@ import ProfileUpload from "../../../features/profile/components/ProfileUpload"
 import { CirclePicker } from "react-color";
 import {Switch} from "@headlessui/react"
 import Switcher from "../../../features/profile/components/switcher";
-
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import DarkMode from "../../../features/profile/components/darkMode";
+import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
 
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
@@ -46,6 +48,30 @@ export default function SetProfile() {
 
     const [enabled, setEnabled] = useState(false)
     
+    // for light/dark mode to save state
+    const [colorTheme, setTheme] = DarkMode();
+    const [darkMode, setDarkMode] = useState(
+        colorTheme === "light" ? true : false
+    );
+
+    const toggleDarkMode = (checked) => {
+        setTheme(colorTheme);
+        setDarkMode(checked);
+    };
+
+    // useEffect(() =>{
+    //     if(darkMode === true) {
+    //         localStorage.setItem("darkMode", JSON.stringify(true))
+    //         document.body.style.background = 'dark'
+    //         console.log('dark mode enabled') 
+    //     }
+    //     else{
+    //         localStorage.setItem("darkMode", JSON.stringify(false))
+    //         document.body.style.background = 'light'
+    //         console.log('dark mode disabled')
+    //     }
+    // }, [darkMode]) 
+
     function isAlphanumeric(str) {
         return /^[a-zA-Z0-9]+$/.test(str);
     }      
@@ -58,6 +84,7 @@ export default function SetProfile() {
             setLastName(doc.data().lastName)
             setUsername(doc.data().username)
             setGenre(doc.data().genre)
+            colorTheme(doc.data().colorTheme)
             
         } else {
             // doc.data() will be undefined in this case
@@ -91,7 +118,8 @@ export default function SetProfile() {
                 lastName: lastNameRef.current.value,
                 username: usernameRef.current.value,
                 genre: genreRef.current.value,
-                uid: user.uid
+                uid: user.uid,
+                colorTheme: colorTheme.current.value
 
             }))
             Promise.all(promises).then(() => {
@@ -120,8 +148,12 @@ export default function SetProfile() {
         }
     };
 
-
-
+    
+    const handleClick = (e) => {
+        e.preventDefault();
+        <ProfileUpload/>
+    };
+    
     // const handleSubmitPicture = () => {
     //     const imageRef = ref(storage, "image");
     //     uploadBytes(imageRef, image)
@@ -250,14 +282,24 @@ export default function SetProfile() {
         
         
 
+        <section>
+                <div className = "relative">
+                    <button onClick={handleClick}>
+                        <img src="" className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600"/>
+                        <span class="absolute h-7 w-7 rounded-full bg-red-500 border-2 border-gray-500 top-3 right-0" />
+                    </button>
+                    
+                </div>
+        </section>
+
 
         <section>
-            <div>
-                {/* <Card className="bg-white dark:bg-slate-600 dark:text-white rounded-md justify-center">
-                    Hello
-                </Card> */}
-                <ProfileUpload/>
-            </div>
+            <Card className="bg-white dark:bg-slate-700 py-8 px-8 rounded-lg">
+                <div>
+                    <ProfileUploadPopup/>
+                </div>
+            </Card>
+
         </section>
 
         <section className="bg-white py-3 px-5 rounded-xl text-gray-500 dark:bg-slate-700 dark:text-white">
@@ -267,8 +309,18 @@ export default function SetProfile() {
                     <div>
                     Light Mode/Dark Mode
                     </div>
-                    <Switcher/>
-                    
+                    <>
+                        <DarkModeSwitch
+                            
+                            style={{ marginBottom: "2rem" }}
+                            checked={darkMode}
+                            onChange={toggleDarkMode}
+                            size={40}
+                            // ref={colorTheme}
+                        />
+                    </>
+
+
                     <div>
                         Enable Activity Status
                     </div>
@@ -285,10 +337,10 @@ export default function SetProfile() {
                     </Switch>
                 </Card>
             </div>
-            <div className = "">
+            {/* <div className = "">
                 Color Picker
                 <CirclePicker/>
-            </div>
+            </div> */}
         </section>
         
     </div>    
