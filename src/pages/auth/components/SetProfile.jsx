@@ -294,7 +294,7 @@ export default function SetProfile() {
 
 
         <section>
-            <Card className="bg-white py-8 px-8 rounded-lg">
+            <Card className="bg-white dark:bg-slate-700 py-8 px-8 rounded-lg">
                 <div>
                     <ProfileUploadPopup/>
                 </div>
@@ -311,10 +311,12 @@ export default function SetProfile() {
                     </div>
                     <>
                         <DarkModeSwitch
+                            
                             style={{ marginBottom: "2rem" }}
                             checked={darkMode}
                             onChange={toggleDarkMode}
                             size={40}
+                            // ref={colorTheme}
                         />
                     </>
 
