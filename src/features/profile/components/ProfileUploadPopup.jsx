@@ -7,7 +7,7 @@ function ProfileUploadPopup(){
 
     return(
         <div>
-            <button className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600 dark:bg-white" onClick={() => setIsOpen(true)}>Profile Icon</button>
+            <button className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600 dark:bg-white text-white" onClick={() => setIsOpen(true)}>Profile Icon</button>
 
             {isOpen && (
                 <div className="my-6">
@@ -19,6 +19,7 @@ function ProfileUploadPopup(){
             )}
         </div>
     );
+
 }
 
 export default ProfileUploadPopup;
