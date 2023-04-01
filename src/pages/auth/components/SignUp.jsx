@@ -19,6 +19,8 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false)
     const navigation = useNavigate()
     
+    // var nodemailer = require('nodemailer'); // email handling
+    
     // Submission handler
     async function handleSubmit(e) {
         e.preventDefault()
