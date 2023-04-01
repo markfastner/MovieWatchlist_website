@@ -1,7 +1,7 @@
-import { data } from "autoprefixer"
-import firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/firestore"
+//import { data } from "autoprefixer"
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
 // Initializes a connection with team's Firebase project
 const app = firebase.initializeApp({

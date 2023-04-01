@@ -23,25 +23,31 @@ export default function App() {
     );
 }
 
-function ChatRoom() {
-
-    const messagesRef = db.collection('messages');
-    const query = messagesRef.orderBy('createdAt').limit(25);
-
-    const [messages] = useCollectionData(query, {idField: 'id'})
-
-    const [formValue, setFormValue] = useState('');
+function ChatRoom = ({ userId, friendId }) => {
+    const [messages, setMessages] = useState([]);   
+    useEffect(() => {
+      const unsubscribe = db
+        .users
+        .doc(userId)
+        .collection("friends")
+        .doc(friendId)
+        .collection("messages")
+        .onSnapshot((snapshot) => {
+            const messagesList = snapshot.docs.map((doc) => doc.data().message);
+            setMessages(messagesList);
+        });
+        return unsubscribe;
+    }, [userId, friendId]);
 
     const sendMessage = async(e) => {
         e.preventDefault();
 
-        const { uid, photoURL } = auth.currentUser;
+        const { uid } = currentUser.uid;
 
         await messagesRef.add({
             text: formValue,
-            createdAt: db.firestore.FieldValue.serverTimestamp(),
+            createdAt: db.FieldValue.serverTimestamp(),
             uid,
-            photoURL
         })
 
         setFormValue('');
@@ -49,6 +55,14 @@ function ChatRoom() {
 
     return (
         <>
+        <div>
+        <h2>Messages List</h2>
+        <ul>
+        {messages.map((message) => (
+            <li key={message}>{message}</li>
+        ))}
+        </ul>
+        </div>
             <div>
                 {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
             </div>
