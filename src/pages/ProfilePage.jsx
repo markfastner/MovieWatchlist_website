@@ -18,7 +18,7 @@ function ProfilePage() {
         {/* Render the friends list */}
         <div>
           <Card className = "relative flex-col bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-10 gap-1 mx-10 my-10 max-w-screen">
-                <div className = "bg-blue-400">
+                <div className = "">
                     <button>
                         <img src="" className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600"/>
                     </button>
@@ -34,9 +34,7 @@ function ProfilePage() {
           </Card>
         </div>
 
-        <Card className="bg-white relative flex-col shadow-lg rounded-md max-w-screen p-10 gap-1 mx-10 my-10">
-          Hello
-        </Card>
+        
       </div>
     );
 }

@@ -1,20 +1,22 @@
-import React, {useState, useEffect, useContext} from "react";
-import { Link, useNavigate } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "./auth/contexts/AuthContext";
-import {auth, database, db} from "../firebase"
-import {Chart} from 'react-google-charts';
-import {Statistic} from 'semantic-ui-react'
+import { auth, database, db } from "../firebase";
+import { Chart } from "react-google-charts";
 // import FriendsList from './FriendsList';
 import { WatchlistContext } from "./auth/contexts/WatchlistState";
 // import { RenderFriendsList } from "./FriendsPage";
-import { FaCircle, FaMoon } from 'react-icons/fa';
-import { IoIosMoon, IoIosRadioButtonOn, IoIosRadioButtonOff } from 'react-icons/io';
+import { FaCircle, FaMoon } from "react-icons/fa";
+import {
+  IoIosMoon,
+  IoIosRadioButtonOn,
+  IoIosRadioButtonOff,
+} from "react-icons/io";
+
+import {Cog6ToothIcon} from '@heroicons/react/24/solid';
 // import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
-const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
-
-
-
+const API_URL = "http://www.omdbapi.com?apikey=c4a9a1cc";
 
 // Displaying the dashboard page
 // Dashboard page currently has the activity status card
@@ -30,57 +32,63 @@ const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 //     );
 // }
 
+
+// adding functionality to have the friend's list and the activity status in
 function DashboardPage() {
-  const [error, setError] = useState("")
-  const {currentUser} = useAuth()
-  const user = auth.currentUser
-  const userRef = db.users.doc(user.uid)
-  const userId = user.uid
+  const [error, setError] = useState("");
+  const { currentUser } = useAuth();
+  const user = auth.currentUser;
+  const userRef = db.users.doc(user.uid);
+  const userId = user.uid;
 
   const [friends, setFriends] = useState([]);
-  const [friendMessage, setFriendMessage] = useState('')
-  const [senderUsername, setSenderUsername] = useState('')
-  const [activityStatus, setActivityStatus] = useState('')
+  const [friendMessage, setFriendMessage] = useState("");
+  const [senderUsername, setSenderUsername] = useState("");
+  const [activityStatus, setActivityStatus] = useState("");
   const [filteredFriends, setFilteredFriends] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showPrompt, setShowPrompt] = useState(false);
   const [friendToRemove, setFriendToRemove] = useState(null);
 
-  const [selectedStatus, setSelectedStatus] = useState('Online');
-  const activityStatuses = ['Online', 'Idle', 'Do Not Disturb', 'Invisible'];
-  
+  const [selectedStatus, setSelectedStatus] = useState("Online");
+  const activityStatuses = ["Online", "Idle", "Do Not Disturb", "Invisible"];
+
   const handleChange = (event) => {
-    const newStatus = event.target.value
+    const newStatus = event.target.value;
     setSelectedStatus(newStatus);
-    db.users.doc(user.uid).update({visibility: newStatus})
+    db.users.doc(user.uid).update({ visibility: newStatus });
   };
 
-  
   userRef.get().then((doc) => {
-      if(doc.exists) {setSenderUsername(doc.data().username)}
-  })
-
+    if (doc.exists) {
+      setSenderUsername(doc.data().username);
+    }
+  });
 
   useEffect(() => {
-    const unsubscribe = db
-      .users
+    const unsubscribe = db.users
       .doc(userId)
       .collection("friends")
       .onSnapshot(async (snapshot) => {
         const friendsList = snapshot.docs.map(async (doc) => {
-          const recipientSnapshot = await db.users.where("username", "==", doc.data().friend).get();
-          const recipientId = recipientSnapshot.docs[0].id
-          const friendDoc = await db.users.doc(recipientId).get()
+          const recipientSnapshot = await db.users
+            .where("username", "==", doc.data().friend)
+            .get();
+          const recipientId = recipientSnapshot.docs[0].id;
+          const friendDoc = await db.users.doc(recipientId).get();
           const friendActivityStatus = friendDoc.data().visibility;
           let newActivityStatus = friendActivityStatus;
-          if (friendActivityStatus === 'Invisible' || friendActivityStatus === 'Offline') {
-            newActivityStatus = 'Offline';
+          if (
+            friendActivityStatus === "Invisible" ||
+            friendActivityStatus === "Offline"
+          ) {
+            newActivityStatus = "Offline";
           }
           const data = {
             ...doc.data(),
             id: doc.id, // Add the document ID to the data object
-            visibility: friendDoc.data().visibility
-          }
+            visibility: friendDoc.data().visibility,
+          };
           return data;
         });
         const friendsData = await Promise.all(friendsList);
@@ -88,7 +96,6 @@ function DashboardPage() {
       });
     return unsubscribe;
   }, [userId, setFriends]);
-  
 
   useEffect(() => {
     // Listen for changes in activityStatus and update the friends list accordingly
@@ -96,18 +103,19 @@ function DashboardPage() {
       return {
         ...friend,
         activityIcon: getActivityIcon(friend.visibility),
-      }
+      };
     });
     setFriends(friendsWithStatus);
   }, [activityStatus]);
 
+  // function for the activity status for the friends list
   function getActivityIcon(status) {
-    switch(status) {
-      case 'Online':
+    switch (status) {
+      case "Online":
         return <FaCircle className="text-green-500" />;
-      case 'Do Not Disturb':
+      case "Do Not Disturb":
         return <FaCircle className="text-red-500" />;
-      case 'Idle':
+      case "Idle":
         return <IoIosMoon className="text-yellow-500" />;
       default:
         return <FaCircle className="text-gray-500" />;
@@ -124,191 +132,226 @@ function DashboardPage() {
   }, [friends, searchTerm]);
 
   useEffect(() => {
-  const unsubscribe = userRef.onSnapshot((doc) => {
-    setActivityStatus(doc.data().visibility);
-  });
-  return unsubscribe;
-}, [userRef]);
+    const unsubscribe = userRef.onSnapshot((doc) => {
+      setActivityStatus(doc.data().visibility);
+    });
+    return unsubscribe;
+  }, [userRef]);
 
-  
   userRef.get().then((doc) => {
-      if(doc.exists) {setSenderUsername(doc.data().username)}
-  })
+    if (doc.exists) {
+      setSenderUsername(doc.data().username);
+    }
+  });
 
-  function BarChartPopup(){
+  // function to open up the barchart 
+  function BarChartPopup() {
     const [isOpen, setIsOpen] = useState(false);
-    return(
-        <div>
-            <button className="text-white" onClick={() => setIsOpen(true)}>Bar Chart</button>
+    return (
+      <div classname="rounded-xl">
+        <button className="text-black" onClick={() => setIsOpen(true)}>
+          Bar Chart
+        </button>
 
-            {isOpen && (
-                <div className="my-6">
-                    <div className="my-6">
-                    <Chart
-                      chartType = "BarChart"
-                      data = {exampleData}
-                      options = {options}
-                      width={"100%"}
-                      height={"400px"}
-                    />
-                    </div>
-                    <button className = "text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg" onClick={() => setIsOpen(false)}>Close</button>
-                </div>
-            )}
-        </div>
-    );
-}
-
-function BarChartGenrePopup(){
-  const [isOpen, setIsOpen] = useState(false);
-  return(
-      <div>
-          <button className="text-white" onClick={() => setIsOpen(true)}>Bar Chart</button>
-
-          {isOpen && (
-              <div className="my-6">
-                  <div className="my-6">
-                  <Chart
-                    chartType = "BarChart"
-                    data = {exampleData}
-                    options = {options}
-                    width={"100%"}
-                    height={"400px"}
-                  />
-                  </div>
-                  <button className = "text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg" onClick={() => setIsOpen(false)}>Close</button>
-              </div>
-          )}
+        {isOpen && (
+          <div className="my-6">
+            <div className="my-6">
+              <Chart
+                chartType="BarChart"
+                data={exampleData}
+                options={options}
+                width={"100%"}
+                height={"400px"}
+              />
+            </div>
+            <button
+              className="text-white dark:text-black dark:bg-white bg-blue-500 px-4 rounded-lg py-2 relative left-4 bottom-4"
+              onClick={() => setIsOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        )}
       </div>
-  );
-}
-  const {watchlist} = useContext(WatchlistContext);
+    );
+  }
 
-  function listOfMovies(movie){
+  // function for the genre bar chart
+  function BarChartGenrePopup() {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+      <div>
+        <button className="text-white" onClick={() => setIsOpen(true)}>
+          Bar Chart
+        </button>
 
+        {isOpen && (
+          <div className="my-6">
+            <div className="my-6">
+              <Chart
+                chartType="BarChart"
+                data={exampleData}
+                options={options}
+                width={"100%"}
+                height={"400px"}
+              />
+            </div>
+            <button
+              className="text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg"
+              onClick={() => setIsOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+  const { watchlist } = useContext(WatchlistContext);
+  
+  // function that loops through the movies in your watchlist
+  function listOfMovies(movie) {
     const titles = [];
     const genres = [];
 
     watchlist.forEach((movie) => {
       console.log(movie);
-      
+
       // const currentGenre = genres.find(movie.genre_id => movie.genre_id === movie.genre_id);
-      
-
-
     });
   }
 
   const exampleData = [
-    ['Watch time', 'Hours per day'],
-    ['Monday', 4],
-    ['Tuesday', 5],
-    ['Wednesday', 6],
-    ['Thursday', 7],
-    ['Friday', 8],
-    ['Saturday', 9],
-    ['Sunday', 10],
+    ["Watch time", "Hours per day"],
+    ["Monday", 4],
+    ["Tuesday", 5],
+    ["Wednesday", 6],
+    ["Thursday", 7],
+    ["Friday", 8],
+    ["Saturday", 9],
+    ["Sunday", 10],
   ];
 
   const options = {
     title: "Watch time per day",
   };
 
+  const MovieTimes = {};
 
-  const MovieTimes ={
-    
-  }
+  const MovieTimesOptions = {
+    title: "Watch time per genre",
+  };
 
-  const MovieTimesOptions ={
-    title: "Watch time per genre"
-  }
+  const MovieGenre = {};
 
-  const MovieGenre ={
+  const MovieGenreOptions = {
+    title: "Movies per genre",
+  };
 
-  }
+  // Key performance indicators for the watchlist
+  const WatchlistStats = () => {
+    return (
+      <div className="flex flex-col space-y-2 w-full rounded-lg bg-blue-100 px-4 py-2">
+        <label className="text-xl">
+          Completed Movies: <span>40</span> movies
+        </label>
+        <label className="text-xl">
+          Movies to Watch: <span>{watchlist.length}</span> movies
+        </label>
+      </div>
+    );
+  };
 
-  const MovieGenreOptions={
-    title: "Movies per genre"
-  }
+  // changing the active status of the user
+  const activeColor = ({ status }) => {
+    let color = '';
+    const setColor = (status) => {
+      if(status === 'online')  color = 'bg-green-500';
 
-  const WatchlistStats = () => (
-    <div className="">
-      <Card style={{width:'18rem'}} className="rounded-lg bg-green-400">
-        <Statistic.Group>
-          <Statistic>
-            <Statistic.Value>{watchlist.length}</Statistic.Value>
-            <Statistic.Label>Movies in Watchlist</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value>31</Statistic.Value>
-            <Statistic.Label>Pending Movies</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value>22</Statistic.Value>
-            <Statistic.Label>Watchlists</Statistic.Label>
-          </Statistic>
-        </Statistic.Group>
-      </Card>
-      
-    </div>
-  )
+      else if(status === 'Do Not Disturb') color = 'bg-red-500';
+
+      else if(status === 'Idle') color = 'bg-yellow-400';
+
+      else if(status === 'Invisible') color = 'bg-slate-900';
+    }
 
     return (
-      
-      <div className="justify-start bg-blue-200 dark:bg-slate-800 min-h-screen">
-        {listOfMovies()}
-        <div className="max-h-screen">
-          <Card className="w-full max-w-sm p-4 bg-blue-100 dark:bg-slate-600 dark:text-white shadow sm:p-6 md:p-100">
-            <select value={selectedStatus} onChange={handleChange}>
-          {activityStatuses.map((status) => (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
-        <p>You are currently {selectedStatus}.</p>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <strong>Email: </strong>{currentUser.email}
-              <br></br>
-              <strong>Username: </strong>{senderUsername}
-              <div>
-              <Link to="/set-profile">Update Profile</Link>
-              </div>
-            {/* <ShowFriendsList /> */}
+      <div className={`w-4 h-4 rounded-full ${color}`} />
+    );
+  }
 
-            <ul className="friend-list">
-          {friends.map((friend) => (
-              <li key={friend.id}>
+  // styling all of the components
+  return (
+    <div className="flex relative min-h-screen bg-blue-200 dark:bg-slate-800 w-full">
+      {/* {listOfMovies()} */}
+      <Card className="relative w-full h-[50vh] left-8 my-8 rounded-xl shadow-md max-w-sm p-4 px-4 bg-blue-100 dark:bg-slate-600 dark:text-white sm:p-6 md:p-100">
+        <p>You are currently {selectedStatus}.</p>
+          {error && <Alert variant="danger">{error}</Alert>}
+        <strong>Email: </strong>
+          {currentUser.email}
+        <br></br>
+        <strong>Username: </strong>
+          {senderUsername}
+        {/* <ShowFriendsList /> */}
+        
+        <section className="bg-white rounded-xl py-4 px-8">
+          <div className="text-xl">
+            Friends Activity
+          </div>
+          <ul className="friend-list">
+            {friends.map((friend) => (
+              <li className="flex items-center space-x-2" key={friend.id}>
                 <span>{friend.friend}</span>
                 <span>{getActivityIcon(friend.visibility)}</span>
-              
               </li>
             ))}
-        </ul>
-          </Card>
+          </ul>
+        </section>
+
+        <div className='absolute w-3/4 bottom-4 space-y-2'>
+          <div className='flex flex-row items-center bg-white w-full rounded-lg p-2'>
+            <p>{senderUsername}</p>
+
+            <div className='flex flex-row space-x-2'>
+            <select className='w-full' value={selectedStatus} onChange={handleChange}>
+            {activityStatuses.map((status) => (
+                  <option key={status} value={status}>
+                    <activeColor status={status} />
+                  </option>
+                ))}
+              </select>
+
+              <Link to="/set-profile">
+                <Cog6ToothIcon className='w-5 h-5' />
+              </Link>
+            </div>
             
           </div>
-        
-          <div>
-            <Card className="bg-gray-300">
-              {WatchlistStats()}
-            </Card>
-          </div>
 
-          <div>
-            <Card className="bg-blue-800">
+          
+        </div>
+      </Card>
+
+      <div className="flex-col flex relative left-16 w-3/4 my-8 overflow-x-hidden rounded-xl">
+        <div>
+          <WatchlistStats />
+        </div>
+
+        <div>
+          <Card className="bg-white">
             <Chart
-              chartType = "PieChart"
-              data = {exampleData}
-              options = {options}
+              chartType="PieChart"
+              data={exampleData}
+              options={options}
               width={"100%"}
               height={"400px"}
             />
             <BarChartPopup />
-            </Card>
-          </div>
+          </Card>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default DashboardPage;
