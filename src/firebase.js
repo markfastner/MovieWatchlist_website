@@ -2,6 +2,7 @@
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
+import {getStorage} from "firebase/storage"
 
 // Initializes a connection with team's Firebase project
 const app = firebase.initializeApp({
@@ -27,4 +28,7 @@ export const db = {
   comments: database.collection('comments'),
   profiles: database.collection('profiles')
 }
+
+export const storage = getStorage(app);
+
 export default app

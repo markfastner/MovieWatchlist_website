@@ -16,10 +16,15 @@ function ProfilePage() {
     return (
       <div className ="bg-blue-200 dark:bg-slate-800 flex relative min-h-screen gap-4">
         {/* Render the friends list */}
-              
         <div>
           <Card className = "relative flex-col bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-10 gap-1 mx-10 my-10 max-w-screen">
-
+                <div className = "bg-blue-400">
+                    <button>
+                        <img src="" className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600"/>
+                    </button>
+                    
+                </div>
+              
               {currentUser.email}
             <Link to="/set-profile">
               <button className="bg-blue-800 text-white p-2 hover:text-blue-900 hover:bg-blue-200 dark:bg-slate-400 dark:hover:bg-blue-200 dark:text-white  dark:hover:text-blue-800 duration-300 rounded-md my-8 mx-6">
@@ -28,6 +33,10 @@ function ProfilePage() {
             </Link>
           </Card>
         </div>
+
+        <Card className="bg-white relative flex-col shadow-lg rounded-md max-w-screen p-10 gap-1 mx-10 my-10">
+          Hello
+        </Card>
       </div>
     );
 }
