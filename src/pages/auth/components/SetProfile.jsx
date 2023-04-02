@@ -129,7 +129,7 @@ export default function SetProfile() {
             Promise.all(promises).then(() => {
                 navigate('/dashboard')
             }).catch(() => {
-                setError('Failed to update acccount')
+                setError('Failed to update account')
             }).finally(() =>  {
                 setLoading(false)
             })
