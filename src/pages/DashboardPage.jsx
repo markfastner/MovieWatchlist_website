@@ -14,7 +14,7 @@ import {
   IoIosRadioButtonOff,
 } from "react-icons/io";
 
-import {Cog6ToothIcon} from '@heroicons/react/24/solid';
+import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 // import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
 const API_URL = "http://www.omdbapi.com?apikey=c4a9a1cc";
 
@@ -31,7 +31,6 @@ const API_URL = "http://www.omdbapi.com?apikey=c4a9a1cc";
 //       </div>
 //     );
 // }
-
 
 // adding functionality to have the friend's list and the activity status in
 function DashboardPage() {
@@ -51,7 +50,7 @@ function DashboardPage() {
   const [friendToRemove, setFriendToRemove] = useState(null);
 
   const [selectedStatus, setSelectedStatus] = useState("Online");
-  const activityStatuses = ["Online", "Idle", "Do Not Disturb", "Invisible"];
+  const activityStatuses = ["Online", "Away", "Busy", "Offline"];
 
   const handleChange = (event) => {
     const newStatus = event.target.value;
@@ -144,7 +143,7 @@ function DashboardPage() {
     }
   });
 
-  // function to open up the barchart 
+  // function to open up the barchart
   function BarChartPopup() {
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -208,7 +207,7 @@ function DashboardPage() {
     );
   }
   const { watchlist } = useContext(WatchlistContext);
-  
+
   // function that loops through the movies in your watchlist
   function listOfMovies(movie) {
     const titles = [];
@@ -263,22 +262,27 @@ function DashboardPage() {
   };
 
   // changing the active status of the user
-  const activeColor = ({ status }) => {
-    let color = '';
-    const setColor = (status) => {
-      if(status === 'online')  color = 'bg-green-500';
 
-      else if(status === 'Do Not Disturb') color = 'bg-red-500';
+  const ActiveColor = ({ selectedStatus }) => {
+    const [color, setColor] = useState("bg-green-500")
 
-      else if(status === 'Idle') color = 'bg-yellow-400';
-
-      else if(status === 'Invisible') color = 'bg-slate-900';
+    const changeColor = (color) => {
+      setColor(color);
     }
 
-    return (
-      <div className={`w-4 h-4 rounded-full ${color}`} />
-    );
-  }
+    useEffect(() => {
+      const run = () => {
+        if (selectedStatus === "Online") changeColor("bg-green-500");
+        else if (selectedStatus === "Busy") changeColor("bg-red-500");
+        else if (selectedStatus === "Away") changeColor("bg-yellow-400");
+        else if (selectedStatus === "Offline") changeColor("bg-gray-400");
+      };
+
+      run();
+    }, [color]);
+
+    return <div className={`w-3 h-3 rounded-full ${color}`} />;
+  };
 
   // styling all of the components
   return (
@@ -286,18 +290,13 @@ function DashboardPage() {
       {/* {listOfMovies()} */}
       <Card className="relative w-full h-[50vh] left-8 my-8 rounded-xl shadow-md max-w-sm p-4 px-4 bg-blue-100 dark:bg-slate-600 dark:text-white sm:p-6 md:p-100">
         <p>You are currently {selectedStatus}.</p>
-          {error && <Alert variant="danger">{error}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
         <strong>Email: </strong>
-          {currentUser.email}
-        <br></br>
-        <strong>Username: </strong>
-          {senderUsername}
+        {currentUser.email}
         {/* <ShowFriendsList /> */}
-        
+
         <section className="bg-white rounded-xl py-4 px-8">
-          <div className="text-xl">
-            Friends Activity
-          </div>
+          <div className="text-xl">Friends Activity</div>
           <ul className="friend-list">
             {friends.map((friend) => (
               <li className="flex items-center space-x-2" key={friend.id}>
@@ -308,27 +307,37 @@ function DashboardPage() {
           </ul>
         </section>
 
-        <div className='absolute w-3/4 bottom-4 space-y-2'>
-          <div className='flex flex-row items-center bg-white w-full rounded-lg p-2'>
-            <p>{senderUsername}</p>
+        <div className="absolute w-11/12 left-1/2 -translate-x-1/2 bottom-4 space-y-2">
+          <div className="flex flex-row items-center justify-between bg-white w-full rounded-md p-2">
+            <div className='flex space-x-1.5 items-center '>
+              <div className='flex items-center justify-center h-10 w-10 rounded-full bg-gray-500'>
+                <p>img</p>
+              </div>
+              
+              <div className='flex flex-col'>
+                <p className='font-bold'>{senderUsername.length > 15 ? senderUsername.substring(0, 13) : senderUsername}</p>
+                <ActiveColor selectedStatus={selectedStatus}z />
+              </div>
+            </div>
 
-            <div className='flex flex-row space-x-2'>
-            <select className='w-full' value={selectedStatus} onChange={handleChange}>
-            {activityStatuses.map((status) => (
+            <div className="bg-gray-200 px-4 py-2 rounded-md flex flex-row gap-x-2">
+              <select
+                className="w-20"
+                value={selectedStatus}
+                onChange={handleChange}
+              >
+                {activityStatuses.map((status) => (
                   <option key={status} value={status}>
-                    <activeColor status={status} />
+                    {status}
                   </option>
                 ))}
               </select>
 
               <Link to="/set-profile">
-                <Cog6ToothIcon className='w-5 h-5' />
+                <Cog6ToothIcon className="w-7 h-7" />
               </Link>
             </div>
-            
           </div>
-
-          
         </div>
       </Card>
 
