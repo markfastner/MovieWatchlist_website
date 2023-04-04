@@ -123,7 +123,6 @@ export default function SetProfile() {
                 username: usernameRef.current.value,
                 genre: genreRef.current.value,
                 uid: user.uid,
-                colorTheme: colorTheme.current.value
 
             }))
             Promise.all(promises).then(() => {
