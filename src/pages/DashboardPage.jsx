@@ -112,9 +112,9 @@ function DashboardPage() {
     switch (status) {
       case "Online":
         return <FaCircle className="text-green-500" />;
-      case "Do Not Disturb":
+      case "Busy":
         return <FaCircle className="text-red-500" />;
-      case "Idle":
+      case "Away":
         return <IoIosMoon className="text-yellow-500" />;
       default:
         return <FaCircle className="text-gray-500" />;
