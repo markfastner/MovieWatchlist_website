@@ -124,11 +124,6 @@ function App() {
             <Route path='/watchlist' element={<PrivateRoute><WatchListPage/></PrivateRoute>}/>
             <Route path='/dashboard' element={<PrivateRoute><DashboardPage/></PrivateRoute>}/>
             <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/>
-            {/* <Route path='/friends'  element={<FriendsPage/>}/> */}
-            {/* <Route path='/profile' element={<ProfilePage/>}/> */}
-            {/* <Route path='/watchlist' element={<WatchListPage/>}/> */}
-            {/* <Route path='/dashboard' element={<DashboardPage/>}/> */}
-            {/* <Route path='/ratings' element={<RatingsPage/>}/> */}
             <Route path='/support' element={<Support/>}/>
             <Route path='/terms and conditions' element={<TermsAndConditions/>}/>
             <Route path='/about' element={<About/>}/>

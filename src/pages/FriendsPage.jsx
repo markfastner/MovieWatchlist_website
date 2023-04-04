@@ -7,12 +7,13 @@ import { useAuth } from "./auth/contexts/AuthContext";
 import { auth, db } from '../firebase';
 import FriendsList from './FriendsList';
 import Chat from '../components/chat/Chat.jsx';
+import emailjs from 'emailjs-com'
 
 export default function FriendsPage() {
     const usernameRef = useRef()
     const {currentUser} = useAuth()
     const [inputValue, setInputValue] = useState('')
-
+    const formRef = useRef();
     const [username, setUsername] = useState('');
 
     const [addFriendError, setAddFriendError] = useState('')
@@ -20,8 +21,25 @@ export default function FriendsPage() {
     const userRef = db.users.doc(currentUser.uid);
     const [senderUsername, setSenderUsername] = useState('')
     const [acceptFriendError, setAcceptFriendError] = useState('')
+    const [userEmail, setUserEmail] = useState('')
 
     const [error, setError] = useState('')
+
+    const sendEmail = (e) => {
+      e.preventDefault();
+    
+      emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
+        .then((result) => {
+            console.log(result.text);
+            console.log("message sent")
+            e.target.reset() // this resets the forms 
+        }, (error) => {
+            console.log(error.text);
+            console.log("unable to send message")
+            e.target.reset() // this resets the forms 
+        });
+      }
+
 
     const handleClearClick = () =>
     {
@@ -58,6 +76,9 @@ export default function FriendsPage() {
             {
                 const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
                 pendingCollection.add({pending: senderUsername})
+                setUserEmail((await db.users.doc(recipientId).get()).data.email)
+                sendEmail(e)
+                setAddFriendError("Request Sent!")
             } else {
                 setAddFriendError("Your friend request is pending, please wait.")
                 return
@@ -118,6 +139,7 @@ export default function FriendsPage() {
     <div className="w-full md:w-1/2 flex flex-col items-center md:order-1">
       <h2 className="text-xl font-semibold mb-4">Add a Friend</h2>
       {addFriendError && <p className="text-red-600 mb-4">{addFriendError}</p>}
+      {userEmail}
       <form onSubmit={handleAddFriend} className="flex flex-col items-center">
         <input
           type="text"

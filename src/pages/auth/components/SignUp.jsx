@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { db, auth} from "../../../firebase"
 import { Link, useNavigate } from "react-router-dom"
+import emailjs from 'emailjs-com'
 import "firebase/firestore"
 // import { DarkModeSwitch } from "react-toggle-dark-mode"
 
@@ -13,13 +14,29 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
+    const formRef = useRef();
+
     
     const {signup, signin, currentUser}  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigation = useNavigate()
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+      
+        emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
+          .then((result) => {
+              console.log(result.text);
+              console.log("message sent")
+              e.target.reset() // this resets the forms 
+          }, (error) => {
+              console.log(error.text);
+              console.log("unable to send message")
+              e.target.reset() // this resets the forms 
+          });
+        }
     
-    // var nodemailer = require('nodemailer'); // email handling
     
     // Submission handler
     async function handleSubmit(e) {
@@ -38,7 +55,8 @@ export default function SignUp() {
             const userRef = db.users.doc(user.uid)
             const friendRef = db.users.doc(user.uid).collection('friends')
             const pendingFriendRef = db.users.doc(user.uid).collection('pending-friends')
-
+            sendEmail(e)
+           
             userRef.set({
                 email: emailRef.current.value,
                 firstName: "",
@@ -72,13 +90,14 @@ export default function SignUp() {
                 <div></div>
                 <h2 className="card-header flex text-center mb-4" style={{fontWeight:'bold'}}>Sign Up</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form ref={formRef} onSubmit={handleSubmit}>
                 <Form.Group id="email" className="block text-gray-700 text-sm font-bold mb-2">
                     <Form.Label>Email Address </Form.Label>
                     <br></br>                   
                     <Form.Control 
                     className="shadow appearance-none h-10 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="email" 
+                    name='user_email'
                     placeholder="Enter your Email Address" 
                     ref={emailRef} required />
                 </Form.Group>
