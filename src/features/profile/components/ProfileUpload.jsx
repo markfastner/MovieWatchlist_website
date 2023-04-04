@@ -1,7 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
+// import { useState } from 'react';
+
 
 // This component is used to upload a profile picture 
 // This component will be used with a modal and that when the user clicks on the default avatar and hover with the mouse click, it will allow the user to select a file from their workstation
+
+// const [image, setImage] = useState(null);
+
+
+// const handleImageChange = (e) => {
+//     if(e.target.files[0]) {
+//         setImage(e.target.files[0]);
+//     }
+// };
+// console.log(image);
+
+// const handleSubmit = () => {
+
+// }
 
 const ProfileUpload = () => (
     <div class="flex justify-center mt-8">
@@ -21,7 +37,7 @@ const ProfileUpload = () => (
                                 Attach a file
                             </p>
                         </div>
-                        <input type="file" class="opacity-0" />
+                        <input type="file" class="opacity-0"  />
                     </label>
                 </div>
             </div>

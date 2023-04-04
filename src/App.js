@@ -10,7 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 import WatchListPage from './pages/WatchListPage'
 import SignIn from './pages/auth/components/SignIn'
 import SignUp from './pages/auth/components/SignUp';
-
+import DarkMode from "./features/profile/components/darkMode";
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
 import {auth, db} from './firebase'
 
@@ -40,6 +40,9 @@ function App() {
       setError = 'Logout not executed.'
     }
   }
+
+  const [colorTheme, setTheme] = DarkMode();
+  
 
   // logged in status
   const [loggedIn, setLoggedIn] = useState(true)
