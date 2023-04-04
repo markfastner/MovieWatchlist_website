@@ -77,7 +77,7 @@ export default function SetProfile() {
             setLastName(doc.data().lastName)
             setUsername(doc.data().username)
             setGenre(doc.data().genre)
-            colorTheme(doc.data().colorTheme)
+            // colorTheme(doc.data().colorTheme)
             
         } else {
             // doc.data() will be undefined in this case
