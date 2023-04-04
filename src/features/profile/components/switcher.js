@@ -16,6 +16,8 @@ export default function Switcher() {
         setDarkMode(checked);
     };
 
+    
+    
     return (
         <>
             <DarkModeSwitch

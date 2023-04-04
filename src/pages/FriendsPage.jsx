@@ -89,7 +89,6 @@ export default function FriendsPage() {
         }
       }
 
-     
     const friendRequestsRef = userRef.collection('pending-friends');
     const [friendRequests, setFriendRequests] = useState([]);
     
