@@ -5,8 +5,6 @@ const OpenAIButton = () => {
   const [response, setResponse] = useState('');
   const [prompt, setPrompt] = useState('Im a fan of the movie Titanic. Recommend me a similiar movie.');
   const model = 'text-davinci-002'; // replace with your desired OpenAI model, e.g. 'text-davinci-002'
-  const apiKey = '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'
-  //const apiKey = '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'
   const handleClick = async () => {
     try {
       const response = await axios.post(
@@ -19,7 +17,7 @@ const OpenAIButton = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`,
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           },
         }
       );
