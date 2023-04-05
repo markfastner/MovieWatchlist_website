@@ -7,7 +7,7 @@ import DarkMode from "../../../features/profile/components/darkMode";
 // and the DarkModeSwitch from the react-toggle-dark-mode package so we can switch from sun and moon with a transition
 export default function Switcher() {
     const [colorTheme, setTheme] = DarkMode();
-    const [darkSide, setDarkMode] = useState(
+    const [darkMode, setDarkMode] = useState(
         colorTheme === "light" ? true : false
     );
 
@@ -16,11 +16,13 @@ export default function Switcher() {
         setDarkMode(checked);
     };
 
+    
+    
     return (
         <>
             <DarkModeSwitch
                 style={{ marginBottom: "2rem" }}
-                checked={darkSide}
+                checked={darkMode}
                 onChange={toggleDarkMode}
                 size={30}
             />

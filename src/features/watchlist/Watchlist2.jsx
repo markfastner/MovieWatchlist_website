@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 import MovieCard from './MovieCard';
 import MovieCard2 from './MovieCard2';
-import RemoveFromWatchlsitButton from './RemoveFromWatchlistButton';
+import RemoveFromWatchlistButton from './RemoveFromWatchlistButton';
 import "./MovieSearch2.css"
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
@@ -25,7 +25,7 @@ function displayCardPlusRemoveButton(movie){
               releaseDate={movie.release_date}
               type = {movie.media_type}
             />
-            <RemoveFromWatchlsitButton movie={movie} />
+            <RemoveFromWatchlistButton movie={movie} />
               
     </div>
   )

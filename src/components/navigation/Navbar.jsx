@@ -5,31 +5,45 @@ import './Navbar.css';
 import '../../App.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../pages/auth/contexts/AuthContext.js';
+import { auth, db, storage } from "../../firebase"
 
 
 export const Navbar=()=>{
-  // The Navigation bar which links to each component's url extension
-  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"]
+
   const emailRef = useRef()
   const passwordRef = useRef()
   const nameRef = useRef()
   const {signin, currentUser, signout} = useAuth()
+  if(currentUser)
+  {
+    const userRef = db.users.doc(auth.currentUser.uid)
+  }
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
 
+  // const [senderUsername, setSenderUsername] = useState('')
+  //   userRef.get().then((doc) => {
+  //       if(doc.exists) {setSenderUsername(doc.data().username)}
+  //   })
+
+  // The Navigation bar which links to each component's url extension
+  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"] // senderUsername could be added here, but would need to link to profile
+  const navigate = useNavigate()
 
 
   // logs the user out
   async function handleLogout(){
     setError('')
     try {
+      await db.users.doc(auth.currentUser.uid).update({signed_in: false, 
+        visibility: 'Offline'})
       await signout()
       navigate('/')
     } catch {
       setError = 'Logout not executed.'
     }
   }
+
   return(<nav className="flex justify-between px-8 py-4 bg-white dark:bg-slate-900">
     <div >
       <Link to='/' className="text-blue-900 dark:text-white tracking-wide px-8 py-4">
@@ -51,6 +65,7 @@ export const Navbar=()=>{
       }
     </ul>}
     </ul>
+    
     <ul className="flex items-center justify-end space-x-4">
             {currentUser ? (
             <button onClick={handleLogout} className="px-4 py-0.5 bg-blue-900 text-white dark:bg-white dark:text-blue-900 hover:bg-blue-200 rounded duration-500 dark:duration-500 dark:hover:bg-blue-200">Log Out</button>

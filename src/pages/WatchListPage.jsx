@@ -39,14 +39,14 @@ function WatchlistPage() {
           
         </div>
         
-        { <div clas = "MovieGenreList">
+        { <div class = "MovieGenreList">
           <h1>Genre Recommendation for Action Movies</h1>
           <MovieGenreList 
           genreID = {28}/>
         </div> }
 
 
-        { <div clas = "recommendations">
+        { <div class = "recommendations">
           <h1>Most Popular Movies Now!</h1>
           <MostPopularMoviesList />
         </div> }
