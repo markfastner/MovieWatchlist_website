@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
@@ -30,7 +29,7 @@ function App() {
   const [error, setError] = useState("")
   const {currentUser} = useAuth() || {}
   
-  // logs the user out
+  // Logs the user out
   async function handleLogout(){
     setError('')
     try {
@@ -42,19 +41,22 @@ function App() {
     }
   }
 
-  // dark mode/ light mode
+  // Dark mode/ light mode
   const[colorTheme, setTheme] = DarkMode();
 
-  // logged in status
+  // Logged in status
   const [loggedIn, setLoggedIn] = useState(true)
   
-  // check for inactivity and log out
+  // Check for inactivity and log out
   const checkForInactivity = () => {
 
     // Get expiretime from local storage
     const expireTime = localStorage.getItem('expireTime')
 
-    // if no user, keep expiretime at 0
+    // Get idletime from local storage
+    const idleTime = localStorage.getItem('idleTime')
+
+    // If no user, keep expiretime at 0
     if(!currentUser) {
       updateExpireTime()
       setLoggedIn(false)
@@ -65,16 +67,25 @@ function App() {
       setLoggedIn(false)
       handleLogout()
     }
+    else if (idleTime < Date.now()) {
+      db.users.doc(auth.currentUser.uid).update({visibility: 'Idle'})
+    }
   }
 
-  // function to update expire time
+  // Function to update expire time
   const updateExpireTime = () => {
     
-    // set expire time to 10 seconds of inactivity, from current time
+    // Set expire time to 30 minutes of inactivity from current time
     const expireTime = Date.now() + 1800000
 
-    // set expire time in local storage
+    // Set idle time to 90 seconds of inactivity from current time
+    const idleTime = Date.now() + 90000
+
+    // Set expire time in local storage
     localStorage.setItem('expireTime', expireTime)
+
+    // Set idle time in local storage
+    localStorage.setItem('idleTime', idleTime)
   }
 
   // use effect to set interval to check for inactivity

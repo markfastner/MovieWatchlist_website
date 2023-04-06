@@ -1,3 +1,4 @@
+// Importing necessary libraries and components
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
@@ -8,31 +9,46 @@ import {auth, db} from "../../../firebase"
 // Export function to sign users in
 export default function SignIn() {
 
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const nameRef = useRef()
-    const {signin, currentUser} = useAuth()
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    const history = useNavigate()
+   // Declare variables using the useRef hook 
+const emailRef = useRef()
+const passwordRef = useRef()
 
-    // Submission handler
-    async function handleSubmit(e) {
-    e.preventDefault()
+// Get the sign-in function and the current user using the useAuth hook
+const {signin} = useAuth()
 
-    try {
-        setError("")
-        setLoading(true)
-        await signin(emailRef.current.value, passwordRef.current.value)
-        await db.users.doc(auth.currentUser.uid).update({signed_in: true, 
-            visibility: 'Online'})        
-        history("/dashboard")
-    } catch {
-        setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")
-    }
+// Declare variables to handle errors and loading
+const [error, setError] = useState("")
+const [loading, setLoading] = useState(false)
 
-    setLoading(false)
-    }
+// Use the useNavigate hook to change page
+const history = useNavigate()
+
+// Submission handler
+async function handleSubmit(e) {
+e.preventDefault()
+
+try {
+    // Clear any errors and set loading to true
+    setError("")
+    setLoading(true)
+
+    // Sign in the user with the email and password values from the input refs
+    await signin(emailRef.current.value, passwordRef.current.value)
+
+    // Update the signed_in and visibility fields in the user's document in the database
+    await db.users.doc(auth.currentUser.uid).update({signed_in: true, 
+        visibility: 'Online'})        
+    
+    // Navigate to the dashboard page
+    history("/dashboard")
+} catch {
+    // Set an error message if login failed
+    setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")
+}
+
+// Set loading to false
+setLoading(false)
+}
 
      // return the component
     return (
