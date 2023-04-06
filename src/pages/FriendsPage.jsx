@@ -28,7 +28,7 @@ export default function FriendsPage() {
     const sendEmail = (e) => {
       e.preventDefault();
     
-      emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
+      emailjs.sendForm('service_suja8ie', 'template_3ydzvgp', formRef.current, 'aTcrb5DqFR0itcrPi')
         .then((result) => {
             console.log(result.text);
             console.log("message sent")
@@ -40,6 +40,9 @@ export default function FriendsPage() {
         });
       }
 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    }
 
     const handleClearClick = () =>
     {
@@ -76,7 +79,7 @@ export default function FriendsPage() {
             {
                 const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
                 pendingCollection.add({pending: senderUsername})
-                setUserEmail((await db.users.doc(recipientId).get()).data.email)
+                setUserEmail((await db.users.doc(recipientId).get()).data().email)
                 sendEmail(e)
                 setAddFriendError("Request Sent!")
             } else {
@@ -154,6 +157,10 @@ export default function FriendsPage() {
         >
           Add Friend
         </button>
+      </form>
+           <form ref={formRef} onSubmit={handleSubmit} style={{display:'none'}}>
+        <input type="email" value={userEmail} name="email" />
+        <input type="text" defaultValue={senderUsername} name="name" />
       </form>
       {acceptFriendError && <p className="text-red-600 mb-4">{acceptFriendError}</p>}
       {friendRequests.length > 0 && (
