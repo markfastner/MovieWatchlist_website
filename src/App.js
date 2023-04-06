@@ -13,7 +13,7 @@ import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
 import {auth, db} from './firebase'
 
-import DarkMode from "./features/profile/components/darkMode";
+// import DarkMode from "./features/profile/components/darkMode";
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
@@ -31,21 +31,21 @@ function App() {
   
   // Logs the user out
   async function handleLogout(){
-    setError('')
+    setError('logged out')
     try {
       await db.users.doc(auth.currentUser.uid).update({signed_in: false, 
         visibility: 'Offline'})
       await auth.signOut()
     } catch {
-      setError = 'Logout not executed.'
+      setError('Logout not executed.')
     }
   }
 
   // Dark mode/ light mode
-  const[colorTheme, setTheme] = DarkMode();
+  // const[colorTheme, setTheme] = DarkMode();
 
   // Logged in status
-  const [loggedIn, setLoggedIn] = useState(true)
+  // const [loggedIn, setLoggedIn] = useState(true)
   
   // Check for inactivity and log out
   const checkForInactivity = () => {
@@ -59,12 +59,12 @@ function App() {
     // If no user, keep expiretime at 0
     if(!currentUser) {
       updateExpireTime()
-      setLoggedIn(false)
+      // setLoggedIn(false)
     }
 
     // If expire time is earlier than current time, log out
     if (expireTime < Date.now()) { //  && loggedIn
-      setLoggedIn(false)
+      // setLoggedIn(false)
       handleLogout()
     }
     else if (idleTime < Date.now()) {
@@ -128,6 +128,7 @@ function App() {
   // Returns the app component which handles the routing of the application
   return (
     <>
+    {error}
         <Router>
           <AuthProvider> 
           <WatchlistProvider>
