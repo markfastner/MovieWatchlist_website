@@ -1,85 +1,89 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { db, auth} from "../../../firebase"
-import { Link, useNavigate } from "react-router-dom"
-import emailjs from 'emailjs-com'
-import "firebase/firestore"
+// Importing necessary libraries and components
+import React, { useRef, useState } from "react"; 
+import { Form, Button, Card, Alert } from "react-bootstrap"; 
+import { useAuth } from "../contexts/AuthContext"; 
+import { db, auth} from "../../../firebase"; 
+import { Link, useNavigate } from "react-router-dom"; 
+import emailjs from 'emailjs-com'; 
+import "firebase/firestore"; 
+
+
 // import { DarkModeSwitch } from "react-toggle-dark-mode"
 
 
 //Export function to sign users up
 export default function SignUp() {
     
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
-    const formRef = useRef();
+    // Creating references to form fields
+const emailRef = useRef()
+const passwordRef = useRef()
+const passwordConfirmRef = useRef()
+const formRef = useRef();
 
+// Destructuring variables from useAuth hook and initializing state variables
+const {signup, signin}  = useAuth()
+const [error, setError] = useState("")
+const [loading, setLoading] = useState(false)
+const navigation = useNavigate()
+
+// Email sending function using emailjs
+const sendEmail = (e) => {
+    e.preventDefault();
+  
+    emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
+      .then((result) => {
+          console.log(result.text);
+          console.log("message sent")
+          e.target.reset() // this resets the forms 
+      }, (error) => {
+          console.log(error.text);
+          console.log("unable to send message")
+          e.target.reset() // this resets the forms 
+      });
+    }
+
+// Submission handler
+async function handleSubmit(e) {
+    e.preventDefault()
     
-    const {signup, signin, currentUser}  = useAuth()
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    const navigation = useNavigate()
-
-    const sendEmail = (e) => {
-        e.preventDefault();
-      
-        emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
-          .then((result) => {
-              console.log(result.text);
-              console.log("message sent")
-              e.target.reset() // this resets the forms 
-          }, (error) => {
-              console.log(error.text);
-              console.log("unable to send message")
-              e.target.reset() // this resets the forms 
-          });
-        }
+    // Checking if passwords match
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+        return setError("Passwords do not match")
+    }
     
-    
-    // Submission handler
-    async function handleSubmit(e) {
-        e.preventDefault()
-        
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-            return setError("Passwords do not match")
-        }
-        
-        try {
-            setError("")
-            setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
-            await signin(emailRef.current.value, passwordRef.current.value)
-            const user = auth.currentUser
-            const userRef = db.users.doc(user.uid)
-            const friendRef = db.users.doc(user.uid).collection('friends')
-            const pendingFriendRef = db.users.doc(user.uid).collection('pending-friends')
-            // sendEmail(e)
-           
-            userRef.set({
-                email: emailRef.current.value,
-                firstName: "",
-                lastName: "",
-                username: "",
-                genre: "",
-                uid: user.uid,
-                profilePic: "",
-                colorTheme: "light",
-                signed_in: true, 
-                visibility: 'Online'
-            })
+    try {
+        // Setting state and calling sign up and sign in functions
+        setError("")
+        setLoading(true)
+        await signup(emailRef.current.value, passwordRef.current.value)
+        await signin(emailRef.current.value, passwordRef.current.value)
 
-            
-            
+        // Getting the current user and setting their info in the database
+        const user = auth.currentUser
+        const userRef = db.users.doc(user.uid)
+        sendEmail(e)
+       
+        userRef.set({
+            email: emailRef.current.value,
+            firstName: "",
+            lastName: "",
+            username: "",
+            genre: "",
+            uid: user.uid,
+            profilePic: "",
+            colorTheme: "light",
+            signed_in: true, 
+            visibility: 'Online'
+        })
 
+        // Navigating to the set-profile page
         navigation("/set-profile")
     } catch {
         setError("Failed to create an account")
     }
 
     setLoading(false)
-    }
+}
 
     // return the component
     return (

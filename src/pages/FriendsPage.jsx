@@ -1,4 +1,3 @@
-import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import React, { useRef, useState, useEffect } from 'react';
@@ -10,77 +9,73 @@ import Chat from '../components/chat/Chat.jsx';
 import emailjs from 'emailjs-com'
 
 export default function FriendsPage() {
-    const usernameRef = useRef()
-    const {currentUser} = useAuth()
-    const [inputValue, setInputValue] = useState('')
-    const formRef = useRef();
-    const [username, setUsername] = useState('');
-
-    const [addFriendError, setAddFriendError] = useState('')
-    const user = auth.currentUser;
-    const userRef = db.users.doc(currentUser.uid);
-    const [senderUsername, setSenderUsername] = useState('')
-    const [acceptFriendError, setAcceptFriendError] = useState('')
-    const [userEmail, setUserEmail] = useState('')
-
-    const [error, setError] = useState('')
-
-    const sendEmail = (e) => {
-      e.preventDefault();
-    
-      emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
-        .then((result) => {
-            console.log(result.text);
-            console.log("message sent")
-            e.target.reset() // this resets the forms 
-        }, (error) => {
-            console.log(error.text);
-            console.log("unable to send message")
-            e.target.reset() // this resets the forms 
-        });
-      }
+  const usernameRef = useRef() // Create a reference to the username input element
+  const {currentUser} = useAuth() // Get the current user from the authentication context
+  const [inputValue, setInputValue] = useState('') // Create state for the input value
+  const formRef = useRef(); // Create a reference to the form element
 
 
-    const handleClearClick = () =>
-    {
-        setInputValue('')
+  const [addFriendError, setAddFriendError] = useState('') // Create state for the add friend error message
+  const user = auth.currentUser; // Get the current user
+  const userRef = db.users.doc(currentUser.uid); // Get the user's reference in the database
+  const [senderUsername, setSenderUsername] = useState('') // Create state for the sender's username
+  const [acceptFriendError, setAcceptFriendError] = useState('') // Create state for the accept friend error message
+  const [userEmail, setUserEmail] = useState('') // Create state for the user's email  
+  
+  const sendEmail = (e) => { // Function to send an email using emailjs-com
+    e.preventDefault();
+  
+    emailjs.sendForm('service_suja8ie', 'template_3ydzvgp', formRef.current, 'aTcrb5DqFR0itcrPi')
+      .then((result) => {
+          console.log(result.text);
+          console.log("message sent")
+          e.target.reset() // Reset the form
+      }, (error) => {
+          console.log(error.text);
+          console.log("unable to send message")
+          e.target.reset() // Reset the form
+      });
     }
-
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-    
-    userRef.get().then((doc) => {
-        if(doc.exists) {setSenderUsername(doc.data().username)}
-    })
-    async function handleAddFriend(e) {
-        e.preventDefault()
-        const queriedUsername = usernameRef.current.value;
-        const recipientSnapshot = await db.users.where("username", "==", queriedUsername).get();
-        
-        if(!(recipientSnapshot.empty)) {
-            const recipientId = recipientSnapshot.docs[0].id
+  
+  const handleSubmit = (e) => { // Function to handle form submission
+    e.preventDefault();
+  }
+  
+  const handleInputChange = (event) => { // Function to handle input changes
+      setInputValue(event.target.value);
+  };
+  
+  userRef.get().then((doc) => { // Get the sender's username from the database
+      if(doc.exists) {setSenderUsername(doc.data().username)}
+  })
+  async function handleAddFriend(e) { // Function to handle adding a friend
+      e.preventDefault()
+      const queriedUsername = usernameRef.current.value; // Get the queried username from the input field
+      const recipientSnapshot = await db.users.where("username", "==", queriedUsername).get(); // Get the recipient's snapshot from the database
+      
+      if(!(recipientSnapshot.empty)) { // If the recipient exists
+          const recipientId = recipientSnapshot.docs[0].id // Get the recipient's ID
             const recipientPendingRequest = await db.users.doc(recipientId).collection('pending-friends').where('pending', '==', senderUsername).get()
             const friend_exists = (await db.users.doc(auth.currentUser.uid).collection('friends').where('friend', '==', queriedUsername).get())
-            if(!friend_exists.empty)
+            if(!friend_exists.empty) // If the user exists in the current user's friends subcollection, error
             {
                 setAddFriendError("User is in your friends list.")
                 return
             }
-            if(senderUsername == queriedUsername)
+            if(senderUsername === queriedUsername) // If the user is attempting to send themselves a friend request
             {
-                setAddFriendError("That is you.")
+                setAddFriendError("That is you.") // Error
                 return
             }
-            if((recipientPendingRequest.empty))
+            if((recipientPendingRequest.empty)) // If the user exists, but does not show up in the pending list
             {
-                const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
-                pendingCollection.add({pending: senderUsername})
-                setUserEmail((await db.users.doc(recipientId).get()).data.email)
-                // sendEmail(e)
-                setAddFriendError("Request Sent!")
-            } else {
-                setAddFriendError("Your friend request is pending, please wait.")
+                const pendingCollection = db.users.doc(recipientId).collection('pending-friends'); // Get pending friends reference
+                pendingCollection.add({pending: senderUsername}) // Add the pending-friend's username to the recipients 'pending-friends'
+                setUserEmail((await db.users.doc(recipientId).get()).data().email) // Sets the useremail 
+                sendEmail(e) // Sends the friend request notification email 
+                setAddFriendError("Request Sent!") 
+            } else { // The user is already in the pending list
+                setAddFriendError("Your friend request is pending, please wait.") 
                 return
             }
         } else {
@@ -89,9 +84,9 @@ export default function FriendsPage() {
         }
       }
 
-    const friendRequestsRef = userRef.collection('pending-friends');
-    const [friendRequests, setFriendRequests] = useState([]);
+    const [friendRequests, setFriendRequests] = useState([]); // Create state for the friend request list
     
+    // Use effect to populate the friend request list
     useEffect(() => {
         const unsubscribe = db
           .users
@@ -110,6 +105,7 @@ export default function FriendsPage() {
         return unsubscribe;
       }, [currentUser.uid]);
 
+    // Handle accept the friend request
     const acceptFriendRequest = async (friendRequest) => {
         const recipientSnapshot = await db.users.where("username", "==", friendRequest.pending).get();
         const recipientId = recipientSnapshot.docs[0].id
@@ -119,9 +115,10 @@ export default function FriendsPage() {
       setAcceptFriendError("Friend Added.")
       };
 
+    // Handle decline the friend request
     const declineFriendRequest = async (friendRequest) => {
-        const a = db.users.doc(currentUser.uid).collection('pending-friends').doc(friendRequest.id).delete();
-        setAcceptFriendError("Friend Declined.")
+      db.users.doc(currentUser.uid).collection('pending-friends').doc(friendRequest.id).delete();
+      setAcceptFriendError("Friend Declined.")
     };
 
     return (
@@ -154,6 +151,10 @@ export default function FriendsPage() {
         >
           Add Friend
         </button>
+      </form>
+           <form ref={formRef} onSubmit={handleSubmit} style={{display:'none'}}>
+        <input type="email" value={userEmail} name="email" />
+        <input type="text" defaultValue={senderUsername} name="name" />
       </form>
       {acceptFriendError && <p className="text-red-600 mb-4">{acceptFriendError}</p>}
       {friendRequests.length > 0 && (

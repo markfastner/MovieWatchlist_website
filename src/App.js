@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
@@ -14,7 +13,7 @@ import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
 import {auth, db} from './firebase'
 
-import DarkMode from "./features/profile/components/darkMode";
+// import DarkMode from "./features/profile/components/darkMode";
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
@@ -30,51 +29,63 @@ function App() {
   const [error, setError] = useState("")
   const {currentUser} = useAuth() || {}
   
-  // logs the user out
+  // Logs the user out
   async function handleLogout(){
-    setError('')
+    setError('logged out')
     try {
       await db.users.doc(auth.currentUser.uid).update({signed_in: false, 
         visibility: 'Offline'})
       await auth.signOut()
     } catch {
-      setError = 'Logout not executed.'
+      setError('Logout not executed.')
     }
   }
 
-  // dark mode/ light mode
-  const[colorTheme, setTheme] = DarkMode();
+  // Dark mode/ light mode
+  // const[colorTheme, setTheme] = DarkMode();
 
-  // logged in status
-  const [loggedIn, setLoggedIn] = useState(true)
+  // Logged in status
+  // const [loggedIn, setLoggedIn] = useState(true)
   
-  // check for inactivity and log out
+  // Check for inactivity and log out
   const checkForInactivity = () => {
 
     // Get expiretime from local storage
     const expireTime = localStorage.getItem('expireTime')
 
-    // if no user, keep expiretime at 0
+    // Get idletime from local storage
+    const idleTime = localStorage.getItem('idleTime')
+
+    // If no user, keep expiretime at 0
     if(!currentUser) {
       updateExpireTime()
-      setLoggedIn(false)
+      // setLoggedIn(false)
     }
 
     // If expire time is earlier than current time, log out
     if (expireTime < Date.now()) { //  && loggedIn
-      setLoggedIn(false)
+      // setLoggedIn(false)
       handleLogout()
+    }
+    else if (idleTime < Date.now()) {
+      db.users.doc(auth.currentUser.uid).update({visibility: 'Idle'})
     }
   }
 
-  // function to update expire time
+  // Function to update expire time
   const updateExpireTime = () => {
     
-    // set expire time to 10 seconds of inactivity, from current time
+    // Set expire time to 30 minutes of inactivity from current time
     const expireTime = Date.now() + 1800000
 
-    // set expire time in local storage
+    // Set idle time to 90 seconds of inactivity from current time
+    const idleTime = Date.now() + 90000
+
+    // Set expire time in local storage
     localStorage.setItem('expireTime', expireTime)
+
+    // Set idle time in local storage
+    localStorage.setItem('idleTime', idleTime)
   }
 
   // use effect to set interval to check for inactivity
@@ -117,6 +128,7 @@ function App() {
   // Returns the app component which handles the routing of the application
   return (
     <>
+    {error}
         <Router>
           <AuthProvider> 
           <WatchlistProvider>

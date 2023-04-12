@@ -1,15 +1,13 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 // Export function to sign users in
 export default function ForgotPassword() {
 
     const emailRef = useRef()
-    const passwordRef = useRef()
-    const nameRef = useRef()
     const {resetPassword} = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
