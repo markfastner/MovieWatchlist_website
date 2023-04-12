@@ -55,7 +55,7 @@ export default function SignUp() {
             const userRef = db.users.doc(user.uid)
             const friendRef = db.users.doc(user.uid).collection('friends')
             const pendingFriendRef = db.users.doc(user.uid).collection('pending-friends')
-            sendEmail(e)
+            // sendEmail(e)
            
             userRef.set({
                 email: emailRef.current.value,

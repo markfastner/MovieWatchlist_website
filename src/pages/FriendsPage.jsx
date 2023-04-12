@@ -77,7 +77,7 @@ export default function FriendsPage() {
                 const pendingCollection = db.users.doc(recipientId).collection('pending-friends');
                 pendingCollection.add({pending: senderUsername})
                 setUserEmail((await db.users.doc(recipientId).get()).data.email)
-                sendEmail(e)
+                // sendEmail(e)
                 setAddFriendError("Request Sent!")
             } else {
                 setAddFriendError("Your friend request is pending, please wait.")
