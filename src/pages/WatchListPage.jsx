@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 //import "../features/watchlist/watchlist.css";
 import {useState, useEffect} from "react";
 //import MovieSearch from "../features/watchlist/MovieSearch.js";
-import Watchlist from "../features/watchlist/watchlist.jsx";
 import AppReducer from "./auth/contexts/WatchlistReducer";
 import { WatchlistProvider } from "./auth/contexts/WatchlistState";
 import MostPopularMoviesList from "../features/watchlist/MostPopularMoviesList.jsx";
@@ -17,31 +16,44 @@ import {useAuth} from "./auth/contexts/AuthContext";
 import { WatchlistContext } from "./auth/contexts/WatchlistState";
 //const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
-function AddWatchlistToDB(userId, watchlistRef, watchlist) {
-  console.log("WWWatchlist: " + watchlist)
+function UpdateWatchlistDB(userId, watchlistRef, watchlist) {
+  //loop through watchlist and add to watchlistRef
   watchlist.length > 0 ? (
     watchlist.map((movie) => {
-      //can add if statement to see if doc exists yet
-      watchlistRef.doc(movie.id.toString()).set({
-        title: movie.title ,
-        releaseDate: movie.release_date,
-        movie_poster: movie.poster_path,
-        movie_id: movie.id,
-      });
+      //if statement to check if movie is already in db so duplicate movies arent added
+      if(!watchlistRef.doc(movie.id.toString()).exists) {
+        watchlistRef.doc(movie.id.toString()).set({
+          title: movie.title ,
+          releaseDate: movie.release_date,
+          movie_poster: movie.poster_path,
+          movie_id: movie.id,
+        });
+      }
     })    
   ):(console.log("no movies in watchlist")
   )
+  //watchlistRef.doc('76600').delete();
+  deleteEverythingFromWatchlistDBnotInWatchlist(userId, watchlistRef, watchlist);
 }
 
-export function AddMovieToWatchlistDatabase(movie, userId, watchlistRef) {
-  watchlistRef.doc(movie.id.toString()).set({
-    title: movie.title ,
-    releaseDate: movie.release_date,
-    movie_poster: movie.poster_path,
-    movie_id: movie.id,
-  });
-}
+function deleteEverythingFromWatchlistDBnotInWatchlist(userId, watchlistRef, watchlist) {
+  //loop through watchlistRef and delete everything that is not in watchlist
+  watchlistRef.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      let exists = false//assume the movie in db doesnt exist in watchlist
+      watchlist.map((movie) => {
+        if(doc.id == movie.id.toString()) {
+          exists = true
+        }
+      })
+      if(!exists) {//if the movie in db doesnt exist in watchlist, delete it
+        watchlistRef.doc(doc.id).delete();
+      }
+    });
+  }
+  );
 
+}
 
 
 function WatchlistPage() {
@@ -51,7 +63,8 @@ function WatchlistPage() {
     const userId = currentUser.uid;
     const {watchlist} = useContext(WatchlistContext);
     const watchlistRef = db.users.doc(userId).collection("watchlist");
-    AddWatchlistToDB(userId, watchlistRef, watchlist);
+    //UpdateWatchlistDB(userId, watchlistRef, watchlist);
+    
     return (
       // this will be a list of movies that the user has added to their watchlist
       // the user will be able to add movies to their watchlist from the movie details page

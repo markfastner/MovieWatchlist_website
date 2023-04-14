@@ -30,7 +30,7 @@ const OpenAIButton = () => {
     }
   };
 
-  console.log('Component rendered');
+  //console.log('Component rendered');
 
   return (
     <div>

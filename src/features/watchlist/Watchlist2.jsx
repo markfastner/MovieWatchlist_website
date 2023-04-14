@@ -1,9 +1,12 @@
-import React, {useContext} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
-import MovieCard from './MovieCard';
 import MovieCard2 from './MovieCard2';
 import RemoveFromWatchlistButton from './RemoveFromWatchlistButton';
 import "./MovieSearch2.css"
+import axios from "axios";
+import { db, auth } from "../../firebase";
+import {useAuth} from "../../pages/auth/contexts/AuthContext";
+import { wait } from '@testing-library/user-event/dist/utils';
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
@@ -14,11 +17,16 @@ import "./MovieSearch2.css"
 
 
 function Watchlist2(){
-const {removeMovieFromWatchlist, watchlist} = useContext(WatchlistContext);
+const {removeMovieFromWatchlist, addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
+const { currentUser } = useAuth();
+const userId = currentUser.uid;
+const watchlistRef = db.users.doc(userId).collection('watchlist');
+const API_KEY = '02949da4b2212ad21636aad608287a04';
 
+//helper function to display the MovieCard and the RemoveFromWatchlistButton
 function displayCardPlusRemoveButton(movie){
   return(
-    <div class = "movie-item">
+    <div key={movie.id} class = "movie-item">
               <MovieCard2
               posterPath={movie.poster_path}
               title={movie.title}
@@ -30,17 +38,49 @@ function displayCardPlusRemoveButton(movie){
     </div>
   )
 }
+//helper function that will return a movie given the movie id
+async function GetMovieByID(id) {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+  );
+  //console.log("RD" + response.data.title);
+  return response.data;
+}
+
+//loadwatchlist function which updates the watchlist state based of database
+const [movies, setMovies] = useState([]);
+
+  async function loadWatchlist(){
+    const watchlistSnapshot = await watchlistRef.get();
+    const movies = await Promise.all(watchlistSnapshot.docs.map(async (doc) => {
+      const movie = await GetMovieByID(doc.id);
+      return movie;
+    }));
+    setMovies(movies);
+  }
+
+  useEffect(() => {
+    loadWatchlist();
+
+    // Listen for changes to the watchlist
+    const unsubscribe = watchlistRef.onSnapshot(() => {
+      loadWatchlist();
+    });
+
+    // Unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   return(
     <div>
       <h1>Your Watchlist</h1>
-      {watchlist.length > 0 ? (
-      <div class = "movie-list"> 
-            {watchlist.map(displayCardPlusRemoveButton)}         
+      <div class="movie-list"> 
+        {movies.map((movie) => (
+          <div key={movie.id}>
+            {displayCardPlusRemoveButton(movie)}
+          </div>
+        ))}
       </div>
-      ) : (
-        <h2>Your watchlist is empty. Go find some movies!</h2>
-      )}
     </div>
   )
 }

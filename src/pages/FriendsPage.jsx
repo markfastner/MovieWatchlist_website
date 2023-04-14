@@ -10,6 +10,7 @@ import Chat from '../components/chat/Chat.jsx';
 import emailjs from 'emailjs-com'
 
 export default function FriendsPage() {
+  console.log("friends page")
     const usernameRef = useRef()
     const {currentUser} = useAuth()
     const [inputValue, setInputValue] = useState('')
