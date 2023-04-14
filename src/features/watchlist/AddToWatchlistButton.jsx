@@ -27,9 +27,10 @@ export default function AddToWatchlistButton(props) {
 }
 
 function Add(movie, watchlistRef, addMovieToWatchlist){
-
+//add to local storage
   addMovieToWatchlist(movie)
   
+  //add to db
   if(!watchlistRef.doc(movie.id.toString()).exists) {
     watchlistRef.doc(movie.id.toString()).set({
       title: movie.title ,
