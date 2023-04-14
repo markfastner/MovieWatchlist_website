@@ -14,6 +14,7 @@ import MovieGenreList from "../features/watchlist/MovieGenreList.jsx";
 import { db, auth } from "../firebase"; // import your Firestore instance here
 import {useAuth} from "./auth/contexts/AuthContext";
 import { WatchlistContext } from "./auth/contexts/WatchlistState";
+import WatchedList from "../features/watchlist/WatchedList.jsx";
 //const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 function UpdateWatchlistDB(userId, watchlistRef, watchlist) {
@@ -85,6 +86,10 @@ function WatchlistPage() {
         </div>
         <div class = "movie-list">
           <Watchlist2 />
+        </div>
+
+        <div class = "watched-list">
+          <WatchedList />
         </div>
         
         { <div class = "MovieGenreList">

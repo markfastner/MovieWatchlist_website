@@ -16,12 +16,22 @@ import { wait } from '@testing-library/user-event/dist/utils';
 //the user will be able to remove movies from their watchlist using the remove button after each MovieCard
 
 
+//helper function that will return a movie given the movie id
+export async function GetMovieByID(id) {
+  const API_KEY = '02949da4b2212ad21636aad608287a04';
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+  );
+  //console.log("RD" + response.data.title);
+  return response.data;
+}
+
 function Watchlist2(){
 const {removeMovieFromWatchlist, addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
 const { currentUser } = useAuth();
 const userId = currentUser.uid;
 const watchlistRef = db.users.doc(userId).collection('watchlist');
-const API_KEY = '02949da4b2212ad21636aad608287a04';
+
 
 //helper function to display the MovieCard and the RemoveFromWatchlistButton
 function displayCardPlusRemoveButton(movie){
@@ -38,14 +48,7 @@ function displayCardPlusRemoveButton(movie){
     </div>
   )
 }
-//helper function that will return a movie given the movie id
-async function GetMovieByID(id) {
-  const response = await axios.get(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
-  );
-  //console.log("RD" + response.data.title);
-  return response.data;
-}
+
 
 //loadwatchlist function which updates the watchlist state based of database
 const [movies, setMovies] = useState([]);

@@ -10,17 +10,20 @@ function RemoveFromWatchlistButton(props) {
     const {currentUser} = useAuth()
     const userId = currentUser.uid;
     const watchlistRef = db.users.doc(userId).collection("watchlist");
+    const watchedlistRef = db.users.doc(userId).collection("watchedlist");
   return (
     <div className="flex justify-center items-end mb-4">
-        <button onClick={() => Remove(removeMovieFromWatchlist, watchlistRef, movie) } className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">remove from Watchlist</button>
+        <button onClick={() => Remove(removeMovieFromWatchlist, watchlistRef, watchedlistRef, movie) } className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">remove from Watchlist</button>
       
     </div>
   );
 }
 
-function Remove(removeMovieFromWatchlist, watchlistRef, movie){
+function Remove(removeMovieFromWatchlist, watchlistRef, watchedlistRef, movie){
+  //remove from local storage
   removeMovieFromWatchlist(movie.id)
 
+  //remove from db
   watchlistRef.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       if(doc.id == movie.id.toString()) {
@@ -29,6 +32,14 @@ function Remove(removeMovieFromWatchlist, watchlistRef, movie){
     });
   }
   );
+
+  //add to watched list
+    watchedlistRef.doc(movie.id.toString()).set({
+    title: movie.title ,
+    releaseDate: movie.release_date,
+    movie_poster: movie.poster_path,
+    movie_id: movie.id,
+  });
 
 }
 
