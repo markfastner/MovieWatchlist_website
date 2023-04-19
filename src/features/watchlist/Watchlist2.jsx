@@ -7,6 +7,7 @@ import axios from "axios";
 import { db, auth } from "../../firebase";
 import {useAuth} from "../../pages/auth/contexts/AuthContext";
 import { wait } from '@testing-library/user-event/dist/utils';
+import ShareWithFriend from './ShareWithFriendButton';
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
@@ -31,7 +32,7 @@ const {removeMovieFromWatchlist, addMovieToWatchlist, watchlist} = useContext(Wa
 const { currentUser } = useAuth();
 const userId = currentUser.uid;
 const watchlistRef = db.users.doc(userId).collection('watchlist');
-
+const watchlistSRef = db.users.doc(userId).collection("watchlists");
 
 //helper function to display the MovieCard and the RemoveFromWatchlistButton
 function displayCardPlusRemoveButton(movie){
@@ -51,41 +52,52 @@ function displayCardPlusRemoveButton(movie){
 
 
 //loadwatchlist function which updates the watchlist state based of database
-const [movies, setMovies] = useState([]);
 
-  async function loadWatchlist(){
-    const watchlistSnapshot = await watchlistRef.get();
-    const movies = await Promise.all(watchlistSnapshot.docs.map(async (doc) => {
-      const movie = await GetMovieByID(doc.id);
-      return movie;
-    }));
-    setMovies(movies);
+
+  const [watchlists, setWatchlists] = useState([]);
+  async function loadWatchlistsS() {
+    const watchlistSSnapshot = await watchlistSRef.get();
+    const watchlists = await Promise.all(
+      watchlistSSnapshot.docs.map(async (doc) => {
+        const watchlist = doc.data();
+        return watchlist;
+      })
+    );
+    setWatchlists(watchlists);
   }
 
+
   useEffect(() => {
-    loadWatchlist();
-
-    // Listen for changes to the watchlist
-    const unsubscribe = watchlistRef.onSnapshot(() => {
-      loadWatchlist();
+    loadWatchlistsS();
+  
+    // Listen for changes to the watchlists
+    const unsubscribe = watchlistSRef.onSnapshot(() => {
+      loadWatchlistsS();
     });
-
+  
     // Unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
   }, []);
-
-  return(
-    <div>
-      <h1>Your Watchlist</h1>
-      <div class="movie-list"> 
-        {movies.map((movie) => (
-          <div key={movie.id}>
-            {displayCardPlusRemoveButton(movie)}
+  
+  return (
+    <div className="watchlists">
+      <h1>Watchlists</h1>
+      {watchlists.map((watchlist) => (
+        <div key={watchlist.id}>
+          <h1>{watchlist.title}</h1>
+          <ShareWithFriend watchlist={watchlist}/>
+          <div className="movie-list">
+            {watchlist.movies.map((movie) => (
+              <div key={movie.id}>
+                {displayCardPlusRemoveButton(movie)}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
-  )
+  );
+  
 }
 
 export default Watchlist2

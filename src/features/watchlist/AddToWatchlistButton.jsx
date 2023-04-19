@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState} from 'react';
 import { WatchlistContext } from "../../pages/auth/contexts/WatchlistState";
 import {useAuth} from "../../pages/auth/contexts/AuthContext";
 import { db, auth } from "../../firebase";
@@ -10,18 +10,57 @@ export default function AddToWatchlistButton(props) {
   const {currentUser} = useAuth()
   const userId = currentUser.uid;
   const watchlistRef = db.users.doc(userId).collection("watchlist");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+
+  function handleClick(selectedWatchlist) {
+    // addMovieToWatchlist(movie, selectedWatchlist);
+    // watchlistsRef.doc(selectedWatchlist.id).collection("movies").doc(movie.id.toString()).set({
+    //   title: movie.title,
+    //   releaseDate: movie.release_date,
+    //   movie_poster: movie.poster_path,
+    //   movie_id: movie.id,
+    // });
+    // setDropdownOpen(false);
+  }
+
+
   return (
     <div className="flex justify-center items-end mb-4">
-      {!watchlist.find((watchlist) => watchlist.id === movie.id) ? (
+      <div className="relative">
         <button
-          onClick={() => Add(movie, watchlistRef, addMovieToWatchlist)}
           className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          onMouseEnter={() => setDropdownOpen(true)}
+          onMouseLeave={() => setDropdownOpen(false)}
         >
           Add to Watchlist
         </button>
-      ) : (
-        <h2 className="after-click">Added</h2>
-      )}
+        {dropdownOpen && (
+  <div className="absolute z-10 top-full mt-2 w-full bg-white rounded-lg shadow-lg">
+    <ul className="py-2">
+      <li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        onClick={() => handleClick(watchlist[0])}
+      >
+        {watchlist[0].name}
+      </li>
+      <li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        onClick={() => handleClick(watchlist[1])}
+      >
+        {watchlist[1].name}
+      </li>
+      <li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        onClick={() => handleClick(watchlist[2])}
+      >
+        {watchlist[2].name}
+      </li>
+    </ul>
+  </div>
+)}
+
+      </div>
     </div>
   );
 }
