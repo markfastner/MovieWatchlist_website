@@ -85,7 +85,7 @@ function displayCardPlusRemoveButton(movie){
       {watchlists.map((watchlist) => (
         <div key={watchlist.id}>
           <h1>{watchlist.title}</h1>
-          <ShareWithFriend watchlist={watchlist}/>
+          
           <div className="movie-list">
             {watchlist.movies.map((movie) => (
               <div key={movie.id}>
