@@ -35,7 +35,7 @@ const watchlistRef = db.users.doc(userId).collection('watchlist');
 const watchlistSRef = db.users.doc(userId).collection("watchlists");
 
 //helper function to display the MovieCard and the RemoveFromWatchlistButton
-function displayCardPlusRemoveButton(movie){
+function displayCardPlusRemoveButton(movie, watchlistTitle){
   return(
     <div key={movie.id} class = "movie-item">
               <MovieCard2
@@ -44,10 +44,22 @@ function displayCardPlusRemoveButton(movie){
               releaseDate={movie.release_date}
               type = {movie.media_type}
             />
-            <RemoveFromWatchlistButton movie={movie} />
+            <RemoveFromWatchlistButton movie={movie}
+            watchlistTitle = {watchlistTitle} />
               
     </div>
   )
+}
+
+//helper function that gets the username of the current user
+async function getUsername(userId){
+  const userRef = db.users.doc(userId);
+  const doc = await userRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    return doc.data().username;
+  }
 }
 
 
@@ -64,6 +76,17 @@ function displayCardPlusRemoveButton(movie){
       })
     );
     setWatchlists(watchlists);
+
+
+    //if watchlists is empty, then we need to create a default watchlist
+    if (watchlists.length == 0) {
+      console.log("creating default watchlist");
+      const username = await getUsername(userId);
+      watchlistSRef.doc(username + "'s Watchlist").set({
+        title: username + "'s Watchlist",
+        movies: [],
+      });
+    }
   }
 
 
@@ -79,17 +102,45 @@ function displayCardPlusRemoveButton(movie){
     return () => unsubscribe();
   }, []);
   
+  function removeWatchlist(watchlist) {
+    console.log("removing watchlist");
+    watchlistSRef.doc(watchlist.title).delete();
+  }
   return (
     <div className="watchlists">
-      <h1>Watchlists</h1>
+      <h1>Your Watchlists</h1>
       {watchlists.map((watchlist) => (
         <div key={watchlist.id}>
-          <h1>{watchlist.title}</h1>
-          
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h1 style={{ marginRight: '10px' }}>{watchlist.title}</h1>
+            <button
+              onClick={() => removeWatchlist(watchlist)}
+              style={{
+                backgroundColor: 'red',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '5px 10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                textDecoration: 'none',
+              }}
+            >
+              delete watchlist
+            </button>
+
+            <ShareWithFriend 
+            watchlistTitle = {watchlist.title}
+            watchlistMovies = {watchlist.movies}
+            name = {"monkey"}
+            />
+
+          </div>
           <div className="movie-list">
             {watchlist.movies.map((movie) => (
               <div key={movie.id}>
-                {displayCardPlusRemoveButton(movie)}
+                {displayCardPlusRemoveButton(movie, watchlist.title)}
               </div>
             ))}
           </div>
@@ -97,6 +148,7 @@ function displayCardPlusRemoveButton(movie){
       ))}
     </div>
   );
+  
   
 }
 

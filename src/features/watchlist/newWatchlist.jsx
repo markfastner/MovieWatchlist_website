@@ -11,7 +11,7 @@ function NewWatchlist(){
 
     function handleClick(name){
         watchlistSRef.doc(name).set({
-            title: "watchlist1",
+            title: name,
             movies: [],
         });
         
