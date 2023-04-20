@@ -16,14 +16,14 @@ export default function AddToWatchlistButton(props) {
     if (!fetchWatchlists) return;
 
     async function loadWatchlistsS() {
-      console.log("Fetching watchlists...");
+      //console.log("Fetching watchlists...");
       try {
         const watchlistSSnapshot = await watchlistSRef.get();
 
         const watchlists = await Promise.all(
           watchlistSSnapshot.docs.map(async (doc) => {
             const watchlist = doc.data();
-            console.log(watchlist);
+            //console.log(watchlist);
             return watchlist;
           })
         );
@@ -39,22 +39,65 @@ export default function AddToWatchlistButton(props) {
   }, [fetchWatchlists]); // fetchWatchlists as a dependency
 
   const handleDropdownFocus = () => {
-    if (watchlists.length === 0) {
       setFetchWatchlists(true);
-    }
   };
+
+  const handleSelection = async (event) => {
+    const selectedOption = event.target.value;
+    console.log("Selected option:", selectedOption);
+  
+    // Check if the selected option is not the default one ("Add to Watchlist")
+    if (selectedOption !== "Add to Watchlist") {
+      try {
+        // Get the watchlist document
+        const watchlistDoc = await watchlistSRef.doc(selectedOption).get();
+  
+        if (watchlistDoc.exists) {
+          // Get the current movies in the watchlist
+          const watchlistData = watchlistDoc.data();
+          const currentMovies = watchlistData.movies || [];
+          
+          // Check if the movie is already in the watchlist
+          const movieExists = currentMovies.some(
+            (currentMovie) => currentMovie.id === movie.id
+          );
+
+          if(movieExists){
+            console.log("Movie already in the watchlist:", selectedOption);
+            return;
+          }
+          // Add the selected movie to the movie list
+          const updatedMovies = [...currentMovies, movie];
+  
+          // Update the watchlist with the new movie list
+          await watchlistSRef.doc(selectedOption).update({
+            movies: updatedMovies,
+          });
+  
+          console.log("Movie added to the watchlist:", selectedOption);
+        } else {
+          console.error("Watchlist not found:", selectedOption);
+        }
+      } catch (error) {
+        console.error("Error updating watchlist:", error);
+      }
+    }
+
+    // Reset the dropdown selection
+    event.target.value = "Add to Watchlist";
+  };
+  
+  
 
   return (
     <div>
-      <select className="bg-white" onFocus={handleDropdownFocus}>
+      <select className="bg-white" onFocus={handleDropdownFocus} onChange={handleSelection}>
         <option selected>Add to Watchlist</option>
         {watchlists.map((watchlist) => (
           <option key={watchlist.title} value={watchlist.title}>
             {watchlist.title}
           </option>
         ))}
-        <option value="test">testy</option>
-        <option value="test">test</option>
       </select>
     </div>
   );
