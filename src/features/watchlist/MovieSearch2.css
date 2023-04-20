@@ -119,3 +119,12 @@
     border-color: #0070f3;
   }
   
+
+  .ShareWithFriend{
+    padding: "8px 16px";
+    background-color: "#4CAF50";
+    color: "#fff";
+    border: "none";
+    border-radius: "4px";
+    cursor: "pointer"
+  }
