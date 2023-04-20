@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 function ShareWithFriend(watchlist, name){
     return(
         <div className="ShareWithFriend">
-            <button onClick = {handleClick(watchlist, name)} style={{padding: "8px 16px", backgroundColor: "#4CAF50", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer"}}>sharewithfriend button</button>
+            <button onClick = {handleClick(watchlist, name)}>Share with a Friend</button>
         </div>
                 
     )
@@ -31,4 +31,6 @@ function handleClick(watchlist, name){
         movies: [],
     });
 }
+
+
 export default ShareWithFriend;

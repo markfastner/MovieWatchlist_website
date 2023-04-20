@@ -16,7 +16,9 @@ import {useAuth} from "./auth/contexts/AuthContext";
 import { WatchlistContext } from "./auth/contexts/WatchlistState";
 import WatchedList from "../features/watchlist/WatchedList.jsx";
 import NewWatchlist from "../features/watchlist/newWatchlist";
+import ShareWithFriend from "../features/watchlist/ShareWithFriendButton";
 //const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
+
 
 // function UpdateWatchlistDB(userId, watchlistRef, watchlist) {
 //   //loop through watchlist and add to watchlistRef
@@ -80,7 +82,7 @@ function WatchlistPage() {
         <h1 class="header">
         Watchlist Page
         </h1>
-        
+        {/* <ShareWithFriend /> */}
         <div>
           <OpenAIButton />
           
