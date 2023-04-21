@@ -3,9 +3,8 @@ import axios from 'axios';
 
 const OpenAIButton = () => {
   const [response, setResponse] = useState('');
-  const [prompt, setPrompt] = useState('Im a fan of the movie Titanic. Recommend me a similiar movie.');
+  const [prompt, setPrompt] = useState('Im a fan of the movie Titanic. Recommend me a similar movie.');
   const model = 'text-davinci-002'; // replace with your desired OpenAI model, e.g. 'text-davinci-002'
-
   const handleClick = async () => {
     try {
       const response = await axios.post(
@@ -31,7 +30,7 @@ const OpenAIButton = () => {
     }
   };
 
-  console.log('Component rendered');
+  //console.log('Component rendered');
 
   return (
     <div>

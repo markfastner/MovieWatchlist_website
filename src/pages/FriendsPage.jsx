@@ -9,10 +9,12 @@ import Chat from '../components/chat/Chat.jsx';
 import emailjs from 'emailjs-com'
 
 export default function FriendsPage() {
+
   const usernameRef = useRef() // Create a reference to the username input element
   const {currentUser} = useAuth() // Get the current user from the authentication context
   const [inputValue, setInputValue] = useState('') // Create state for the input value
   const formRef = useRef(); // Create a reference to the form element
+
 
 
   const [addFriendError, setAddFriendError] = useState('') // Create state for the add friend error message

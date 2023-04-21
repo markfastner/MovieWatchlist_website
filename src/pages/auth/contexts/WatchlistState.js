@@ -28,6 +28,7 @@ export const WatchlistProvider = (props) => {
 
   // actions
   const addMovieToWatchlist = (movie) => {
+    //console.log("INVOKED")
     dispatch({ type: "ADD_MOVIE_TO_WATCHLIST", payload: movie });
   };
 

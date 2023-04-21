@@ -53,4 +53,6 @@ function MovieSearch() {
   );
 }
 
+
+
 export default MovieSearch;
