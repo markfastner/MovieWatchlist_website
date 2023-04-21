@@ -1,37 +1,24 @@
-import React, {useState, useRef, useEffect} from 'react';
-import LoginButtons from './Button.js';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import '../../App.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../pages/auth/contexts/AuthContext.js';
-import { auth, db, storage } from "../../firebase"
+import { auth, db } from "../../firebase"
 
 
 export const Navbar=()=>{
 
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const nameRef = useRef()
-  const {signin, currentUser, signout} = useAuth()
-  if(currentUser)
-  {
-    const userRef = db.users.doc(auth.currentUser.uid)
-  }
+  const {currentUser, signout} = useAuth()
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
 
-  // const [senderUsername, setSenderUsername] = useState('')
-  //   userRef.get().then((doc) => {
-  //       if(doc.exists) {setSenderUsername(doc.data().username)}
-  //   })
 
   // The Navigation bar which links to each component's url extension
-  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"] // senderUsername could be added here, but would need to link to profile
+  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"]
   const navigate = useNavigate()
 
 
-  // logs the user out
+  // Logs the user out
   async function handleLogout(){
     setError('')
     try {
@@ -40,7 +27,7 @@ export const Navbar=()=>{
       await signout()
       navigate('/')
     } catch {
-      setError = 'Logout not executed.'
+      setError('Logout not executed.')
     }
   }
 
@@ -50,6 +37,7 @@ export const Navbar=()=>{
         Runtime <i className="fa-thin fa-camera-movie text-white" />
       </Link>
     </div>
+    {error}
     <div className="flex justify-center items-center space-x-8">
     <ul className="flex items-center justify-end space-x-4">
       {!currentUser ? (

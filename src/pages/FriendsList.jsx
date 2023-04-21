@@ -1,9 +1,7 @@
-import { async } from "q";
 import React, { useEffect, useState } from "react";
-import { auth, db } from '../firebase.js';
-import { useAuth } from "./auth/contexts/AuthContext";
-import { FaCircle, FaMoon } from 'react-icons/fa';
-import { IoIosMoon, IoIosRadioButtonOn, IoIosRadioButtonOff } from 'react-icons/io';
+import {  db } from '../firebase.js';
+import { FaCircle } from 'react-icons/fa';
+import { IoIosMoon } from 'react-icons/io';
 
 const FriendsList = ({ userId }) => {
   const [friends, setFriends] = useState([]);

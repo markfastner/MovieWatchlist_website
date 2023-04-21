@@ -1,15 +1,11 @@
-import React, { useRef, useState, useEffect, Component } from "react"
+import React, { useRef, useState } from "react"
 import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { auth, db, storage } from "../../../firebase"
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import "firebase/compat/firestore"
-import firebase from "firebase/compat/app"
-// import ProfileUpload from "../../../features/profile/components/ProfileUpload"
-import { CirclePicker } from "react-color";
 import {Switch} from "@headlessui/react"
-import Switcher from "../../../features/profile/components/switcher";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import DarkMode from "../../../features/profile/components/darkMode";
 // import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
@@ -29,7 +25,6 @@ export default function SetProfile() {
     //added
 
     const emailRef = useRef()
-    const [email, setEmail] = useState()
 
     const firstNameRef = useRef()
     const [firstName, setFirstName] = useState()
@@ -44,7 +39,6 @@ export default function SetProfile() {
     const [genre, setGenre] = useState()
 
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
     const [usernameError, setUsernameError] = useState("")
 
     const [enabled, setEnabled] = useState(false)
@@ -72,12 +66,11 @@ export default function SetProfile() {
     userRef.get().then((doc) => {
         if(doc.exists) {
             console.log("Document data:", doc.data());
-            setEmail(doc.data().email)
             setFirstName(doc.data().firstName)
             setLastName(doc.data().lastName)
             setUsername(doc.data().username)
             setGenre(doc.data().genre)
-            colorTheme(doc.data().colorTheme)
+            // colorTheme(doc.data().colorTheme)
             
         } else {
             // doc.data() will be undefined in this case
@@ -107,7 +100,6 @@ export default function SetProfile() {
 
     const promises = []
     setError("")
-    setLoading(true)
 
     if(emailRef.current.value !== currentUser.email) {
         promises.push(updateEmail(emailRef.current.value))
@@ -115,7 +107,7 @@ export default function SetProfile() {
     
     const snapshot = await db.users.where("username", "==", usernameRef.current.value).get();
     if(isAlphanumeric(usernameRef.current.value)) {
-        if(snapshot.empty || usernameRef.current.value == username) {
+        if(snapshot.empty || usernameRef.current.value === username) {
             promises.push(userRef.update({
                 email: emailRef.current.value,
                 firstName: firstNameRef.current.value,
@@ -130,7 +122,7 @@ export default function SetProfile() {
             }).catch(() => {
                 setError('Failed to update account')
             }).finally(() =>  {
-                setLoading(false)
+            
             })
         } else {
             setUsernameError("Username taken")
@@ -162,11 +154,6 @@ export default function SetProfile() {
         }).catch(error => {
             console.log(error.message);
         });
-    };
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        ProfileUpload();
     };
     
     const ProfileUpload = () => (
@@ -304,7 +291,7 @@ export default function SetProfile() {
                 </label>
             <select className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none focus:shadow-outline appearance-none focus:border-indigo-600"
             ref={genreRef}>
-                {genre !="" ? <option selected disabled>{genre} </option>
+                {genre !=="" ? <option selected disabled>{genre} </option>
                 :
                 <option selected>None</option>}
                 <option>Action</option>
