@@ -117,14 +117,13 @@ async function getUsername(userId){
               onClick={() => removeWatchlist(watchlist)}
               style={{
                 backgroundColor: 'red',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '5px 10px',
+                border: '1px solid #ccc',
+                borderRadius: '50px',
+                padding: '8px 12px',
+                fontSize: '16px',
+                outline: 'none',
+                appearance: 'none',
                 cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                textDecoration: 'none',
               }}
             >
               delete watchlist

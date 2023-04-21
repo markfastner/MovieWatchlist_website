@@ -71,7 +71,7 @@ function ShareWithFriend({ watchlistTitle, watchlistMovies, name }) {
             style={{
               backgroundColor: 'lightblue',
               border: '1px solid #ccc',
-              borderRadius: '5px',
+              borderRadius: '50px',
               padding: '8px 12px',
               fontSize: '16px',
               outline: 'none',

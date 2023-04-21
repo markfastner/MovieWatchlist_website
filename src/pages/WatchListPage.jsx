@@ -83,7 +83,14 @@ function WatchlistPage() {
         Watchlist Page
         </h1>
         {/* <ShareWithFriend /> */}
-        <div>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
           <OpenAIButton />
           
         </div>
