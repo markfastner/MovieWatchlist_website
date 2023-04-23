@@ -77,7 +77,7 @@ function WatchlistPage() {
       // the watchlist page will be a list of movies that the user has added to their watchlist
       
   
-      <div class="watchlist-container">
+      <div class="watchlist-container dark:bg-slate-700 bg-blue-50">
         {/* Render the friends list */}
         <h1 class="header">
         Watchlist Page
@@ -106,8 +106,11 @@ function WatchlistPage() {
           <WatchedList />
         </div>
         
-        { <div class = "MovieGenreList">
+        { <div class = "MovieGenreList bg-green-400">
           <h1>Genre Recommendation for Action Movies</h1>
+          <select class="genre">
+            <option value="28">Action</option>
+          </select>
           <MovieGenreList 
           genreID = {28}/>
         </div> }
