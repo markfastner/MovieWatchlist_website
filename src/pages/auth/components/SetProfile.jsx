@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { useNavigate } from "react-router-dom"
@@ -156,6 +156,37 @@ export default function SetProfile() {
         });
     };
     
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const uploadFile = async (uid) =>{
+        const storageRef = ref(storage, `users/${uid}/profilePicture`);
+        const snapshot = await uploadBytes(storageRef, file);
+        console.log("File uploaded");
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        uploadFile(currentUser.uid);
+    };
+
+    const[profilePictureUrl, setProfilePictureUrl] = useState('');
+
+    useEffect(() => {
+        const storageRef = ref(storage, `users/${currentUser.uid}/profilePicture`);
+        getDownloadURL(storageRef).then((url) => {
+            setProfilePictureUrl(url);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }, [currentUser.uid]);
+
+
     const ProfileUpload = () => (
         <div class="flex justify-center mt-8">
             <Avatar
@@ -179,7 +210,8 @@ export default function SetProfile() {
                                     Attach a file
                                 </p>
                             </div>
-                            <input type="file" onChange={handleImageChange} class="opacity-0"/>
+                            <input type="file" onChange={handleFileChange} class="opacity-0"/>
+                            <img src={profilePictureUrl}/>
                         </label>
                     </div>
                 </div>
@@ -332,7 +364,7 @@ export default function SetProfile() {
             <Card className="bg-white dark:bg-slate-700 py-8 px-8 rounded-lg">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-white text-center">Profile Picture</h1>
-                        <div>
+                        {/* <div>
                             <button className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600 dark:bg-white text-white" onClick={() => setIsOpen(true)}>Profile Icon</button>
 
                             {isOpen && (
@@ -343,7 +375,7 @@ export default function SetProfile() {
                                     <button className = "text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg" onClick={() => setIsOpen(false)}>Close</button>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                     {ProfileUpload()}
                 </div>
             </Card>

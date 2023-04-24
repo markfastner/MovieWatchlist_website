@@ -284,6 +284,8 @@ function DashboardPage() {
     return <div className={`w-3 h-3 rounded-full ${color}`} />;
   };
 
+  
+
   // styling all of the components
   return (
     <div className="flex relative min-h-screen bg-blue-200 dark:bg-slate-800 w-full">
@@ -294,7 +296,6 @@ function DashboardPage() {
         <strong>Email: </strong>
         {currentUser.email}
         {/* <ShowFriendsList /> */}
-
         <section className="bg-white dark:bg-slate-700 rounded-xl py-4 px-8">
           <div className="text-xl">Friends Activity</div>
           <ul className="friend-list">
