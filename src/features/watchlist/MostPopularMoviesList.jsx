@@ -21,7 +21,6 @@ function MostPopularMoviesList() {
 
   return (
     <div>
-      <h2>Most Popular Movies</h2>
         {movies.map((movie) => (
           <div className="movie-item" key={movie.id}>
             <MovieCard2

@@ -107,12 +107,13 @@ async function getUsername(userId){
     watchlistSRef.doc(watchlist.title).delete();
   }
   return (
-    <div className="watchlists">
+    <div className="watchlists" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h1>Your Watchlists</h1>
-      {watchlists.map((watchlist) => (
-        <div key={watchlist.id}>
+      {watchlists.map((watchlist, index) => (
+        <div key={watchlist.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <h1 style={{ marginRight: '10px' }}>{watchlist.title}</h1>
+            <h2 style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '1.5rem' }}>{`${index + 1}: ${watchlist.title}`}</h2>
+  
             <button
               onClick={() => removeWatchlist(watchlist)}
               style={{
@@ -124,17 +125,18 @@ async function getUsername(userId){
                 outline: 'none',
                 appearance: 'none',
                 cursor: 'pointer',
+                color: 'white',
               }}
             >
               delete watchlist
             </button>
-
+  
             <ShareWithFriend 
-            watchlistTitle = {watchlist.title}
-            watchlistMovies = {watchlist.movies}
-            name = {"monkey"}
+              watchlistTitle={watchlist.title}
+              watchlistMovies={watchlist.movies}
+              name={"monkey"}
             />
-
+  
           </div>
           <div className="movie-list">
             {watchlist.movies.map((movie) => (
@@ -147,6 +149,8 @@ async function getUsername(userId){
       ))}
     </div>
   );
+  
+
   
   
 }

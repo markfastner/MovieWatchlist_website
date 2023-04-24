@@ -79,9 +79,6 @@ function WatchlistPage() {
   
       <div class="watchlist-container">
         {/* Render the friends list */}
-        <h1 class="header">
-        Watchlist Page
-        </h1>
         {/* <ShareWithFriend /> */}
         <div
         style={{
@@ -94,34 +91,51 @@ function WatchlistPage() {
           <OpenAIButton />
           
         </div>
-        <div class = "movie-list">
-          <Watchlist2 />
-        </div>
 
         <div>
           <NewWatchlist />
         </div>
 
+        <div class = "movie-list"
+        style = {{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+          <Watchlist2
+          />
+        </div>
+
+        
+
         <div class = "watched-list">
           <WatchedList />
         </div>
         
-        { <div class = "MovieGenreList">
-          <h1>Genre Recommendation for Action Movies</h1>
-          <MovieGenreList 
-          genreID = {28}/>
-        </div> }
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <a href="/discover Movies" style={{ 
+            padding: '20px 40px', 
+            backgroundColor: '#FFD700', 
+            color: '#fff', 
+            borderRadius: '50px', 
+            textDecoration: 'none', 
+            textTransform: 'uppercase', 
+            fontWeight: 'bold', 
+            fontSize: '2rem',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+            transition: 'background-color 0.3s ease',
+          }}>
+            Discover Movies To Add
+          </a>
+        </div>
 
 
-        { <div class = "recommendations">
-          <h1>Most Popular Movies Now!</h1>
-          <MostPopularMoviesList />
-        </div> }
+
 
         
-        <div class = "movie-search">
-          <MovieSearch />
-        </div>
 
 
         

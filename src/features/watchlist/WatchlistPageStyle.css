@@ -25,3 +25,8 @@ h1 {
     -webkit-text-fill-color: transparent;
     width: fit-content;
   }
+
+  body{
+    background-color: lightskyblue;
+  }
+  

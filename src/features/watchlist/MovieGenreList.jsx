@@ -20,7 +20,7 @@ function MovieGenreList({ genreId }) {
 
   return (
     <div>
-      <h2>Movies of genre {genreId}:</h2>
+      {/* <h2>Movies of genre {genreId}:</h2> */}
       <ul>
         {movies.map(movie => (
           <div className="movie-item" key={movie.id}>

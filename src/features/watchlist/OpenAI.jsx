@@ -34,30 +34,49 @@ const OpenAIButton = () => {
 
   return (
     <div>
-      <label>
-        <h1>Ask movie-bot a question: </h1>
-        <input 
-        type="text" 
-        value={prompt} 
-        onChange={(e) => setPrompt(e.target.value)} 
-        style={{ 
-        width: "500px", 
-        height: "40px", 
-        fontSize: "18px", 
-        padding: "10px", 
-        borderRadius: "20px", 
-        border: "2px solid #ccc", 
-        boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.1)", 
-        outline: "none" 
-      }} 
-    />
-      </label>
-      <br />
-      <button onClick={handleClick} style={{backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold'}}>Send</button>
+      <h1>Ask Movie-Bot a Question: </h1>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <label>
+          <input
+            type="text"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            style={{
+              width: "500px",
+              height: "40px",
+              fontSize: "18px",
+              padding: "10px",
+              borderRadius: "20px",
+              border: "2px solid #ccc",
+              boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.1)",
+              outline: "none",
+              marginRight: "10px",
+            }}
+          />
+        </label>
+        <button
+          onClick={handleClick}
+          style={{
+            backgroundColor: "lightblue",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Send
+        </button>
+      </div>
+      <p style={{ fontFamily: 'Courier New, monospace', wordWrap: 'break-word', maxWidth: '50ch' }}>
+      Movie-Bot: {response}
+      </p>
 
-      <p>Movie-Bot: {response}</p>
+
     </div>
   );
+  
 };
 
 export default OpenAIButton;

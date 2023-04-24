@@ -23,6 +23,7 @@ import TermsAndConditions from './pages/TermsAndConditionsPage';
 import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
 import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
+import DiscoverMoviesPage from './pages/DiscoverMoviesPage';
 
 // App component which runs the whole application
 function App() {
@@ -138,6 +139,7 @@ function App() {
             <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
             <Route path='/profile' element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
             <Route path='/watchlist' element={<PrivateRoute><WatchListPage/></PrivateRoute>}/>
+            <Route path='/discover Movies' element={<PrivateRoute><DiscoverMoviesPage/></PrivateRoute>}/>
             <Route path='/dashboard' element={<PrivateRoute><DashboardPage/></PrivateRoute>}/>
             <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/>
             <Route path='/support' element={<Support/>}/>
