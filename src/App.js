@@ -24,6 +24,20 @@ import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
 import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
 
+import {useTranslation} from 'react-i18next';
+
+const languages = [
+  {value: '', text: "Options"},
+  {value: 'en', text: "English"},
+  {value: 'zh', text: "Chinese"},
+  {value: 'de', text: "German"},
+  {value: 'ja', text: "Japanese"},
+  {value: 'ko', text: "Korean"},
+  {value: 'es', text: "Spanish"},
+  {value: 'tl', text: "Tagalog"}
+]
+
+
 // App component which runs the whole application
 function App() {
   const [error, setError] = useState("")
@@ -143,7 +157,7 @@ function App() {
             <Route path='/support' element={<Support/>}/>
             <Route path='/terms and conditions' element={<TermsAndConditions/>}/>
             <Route path='/about' element={<About/>}/>
-            <Route path='/contact us' element={<Contact/>}/>
+            {/* <Route path='/contact us' element={<Contact/>}/> */}
             <Route path='/signin' element={<SignIn/>}/>
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/set-profile' element={<PrivateRoute><SetProfile/></PrivateRoute>}/>
