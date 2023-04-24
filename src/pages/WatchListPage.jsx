@@ -60,6 +60,28 @@ import ShareWithFriend from "../features/watchlist/ShareWithFriendButton";
 // }
 
 
+const genre = [
+  {id: 28, name: "Action"},
+  {id: 12, name: "Adventure"},
+  {id: 16, name: "Animation"},
+  {id: 35, name: "Comedy"},
+  {id: 80, name: "Crime"},
+  {id: 99, name: "Documentary"},
+  {id: 18, name: "Drama"},
+  {id: 10751, name: "Family"},
+  {id: 14, name: "Fantasy"},
+  {id: 36, name: "History"},
+  {id: 27, name: "Horror"},
+  {id: 10402, name: "Music"},
+  {id: 9648, name: "Mystery"},
+  {id: 10749, name: "Romance"},
+  {id: 878, name: "Science Fiction"},
+  {id: 10770, name: "TV Movie"},
+  {id: 53, name: "Thriller"},
+  {id: 10752, name: "War"},
+  {id: 37, name: "Western"}
+]
+
 function WatchlistPage() {
     const {currentUser} = useAuth()
     const user = auth.currentUser;
@@ -69,7 +91,20 @@ function WatchlistPage() {
     const watchlistRef = db.users.doc(userId).collection("watchlist");
     //UpdateWatchlistDB(userId, watchlistRef, watchlist);
     
+    const [name, setName] = useState("");
     const [value, setValue] = useState([]);
+
+    const handleChange = (event) => {
+      setValue(event.target.value);
+
+      for(let i = 0; i < genre.length; i++) {
+        if(genre[i].id == event.target.value) {
+          setName(genre[i].name);
+        }
+      }
+    }
+
+  
 
     return (
       // this will be a list of movies that the user has added to their watchlist
@@ -109,9 +144,10 @@ function WatchlistPage() {
         </div>
         
         { <div class = "MovieGenreList">
-          <h1>Genre Recommendation for Action Movies</h1>
+          <h1>Genre Recommendation for {name} Movies</h1>
           <select 
           value = {value}
+          onChange = {handleChange}
           class="genre">
             <option value="28">Action</option>
             <option value="12">Adventure</option>
@@ -134,7 +170,7 @@ function WatchlistPage() {
             <option value="37">Western</option>
           </select>
           <MovieGenreList 
-          genreID = {value}/>
+          genreId = {value}/>
         </div> }
 
 

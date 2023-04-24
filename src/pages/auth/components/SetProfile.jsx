@@ -446,10 +446,23 @@ export default function SetProfile() {
                     </Switch>
                 </Card>
             </div>
-            {/* <div className = "">
-                Color Picker
-                <CirclePicker/>
-            </div> */}
+        </section>
+        <section>
+            <div>
+                <Card className="bg-white dark:bg-slate-700 text-black dark:text-black py-8 px-8 rounded-lg">
+                    <label>{t('selector')}</label>
+
+                    <select value={lang} 
+                    onChange={handleChange}
+                    className="">
+                        {languages.map(item => {
+                            return(<option key ={item.value}
+                                value={item.value}>{item.text}</option>);
+                        })}
+                    </select>
+
+                </Card>    
+            </div>
         </section>
         
     </div>    
