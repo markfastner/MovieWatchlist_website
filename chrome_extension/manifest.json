@@ -2,15 +2,12 @@
     "name": "Runtime",
     "version": "1.0.0",
     "manifest_version": 3,
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": [
-                "content.js"
-            ]
-        }
-    ],
     "action": {
+<<<<<<< HEAD
         "default_popup": "index.html"
+=======
+        "default_popup": "index.html",
+        "default_title": "Open the popup"
+>>>>>>> 02d5b3773208001d9e0337525070fedd7e12b504
     }
 }

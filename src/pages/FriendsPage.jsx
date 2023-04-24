@@ -129,7 +129,7 @@ export default function FriendsPage() {
   <div className="flex flex-col items-center justify-end md:flex-row md:justify-between">
     <div className="w-full md:w-1/2 flex flex-col items-center md:order-3">
       <h2 className="text-xl font-semibold mb-4">Chat</h2>
-      <Chat user={user} />
+      <Chat/>
     </div>
     <div className="md:order-2">
       <RenderFriendsList />
