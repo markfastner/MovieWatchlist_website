@@ -163,7 +163,10 @@ function ProfilePage() {
           </Card>
 
           <Card className="bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-5 gap-1 mx-10 my-10 max-w-screen">
-
+            Status 
+            <form action="/action_page.php">
+              <textarea rows="100" cols="100" className="resize-full max-w-full w-full h-32 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-800 dark:bg-slate-700 dark:text-white dark:border-slate-400" placeholder="Update your status here..."></textarea>
+            </form>
           </Card>
         </div>
         <div>

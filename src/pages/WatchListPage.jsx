@@ -69,6 +69,8 @@ function WatchlistPage() {
     const watchlistRef = db.users.doc(userId).collection("watchlist");
     //UpdateWatchlistDB(userId, watchlistRef, watchlist);
     
+    const [value, setValue] = useState([]);
+
     return (
       // this will be a list of movies that the user has added to their watchlist
       // the user will be able to add movies to their watchlist from the movie details page
@@ -108,7 +110,9 @@ function WatchlistPage() {
         
         { <div class = "MovieGenreList">
           <h1>Genre Recommendation for Action Movies</h1>
-          <select class="genre">
+          <select 
+          value = {value}
+          class="genre">
             <option value="28">Action</option>
             <option value="12">Adventure</option>
             <option value="16">Animation</option>
@@ -130,7 +134,7 @@ function WatchlistPage() {
             <option value="37">Western</option>
           </select>
           <MovieGenreList 
-          genreID = {28}/>
+          genreID = {value}/>
         </div> }
 
 

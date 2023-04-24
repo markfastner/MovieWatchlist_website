@@ -10,7 +10,18 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import DarkMode from "../../../features/profile/components/darkMode";
 // import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
 import Avatar from '@mui/material/Avatar';
+import {useTranslation} from 'react-i18next';
 
+const languages = [
+    {value: '', text: "Options"},
+    {value: 'en', text: "English"},
+    {value: 'zh', text: "Chinese"},
+    {value: 'de', text: "German"},
+    {value: 'ja', text: "Japanese"},
+    {value: 'ko', text: "Korean"},
+    {value: 'es', text: "Spanish"},
+    {value: 'tl', text: "Tagalog"}
+]
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
 // the user will be able to add their first name, last name, username, and their favorite genre before heading to their profile page
@@ -239,6 +250,16 @@ export default function SetProfile() {
     //         console.log(error.message);
     //     });
     // }
+
+
+    const {t} = useTranslation();
+    const [lang, setLang] = useState('en');
+
+    const handleChange = e => { 
+        setLang(e.target.value);
+        let loc = "http://localhost:3000/";
+        window.location.replace(loc + "?lng=" + e.target.value);
+    }
 
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200 dark:bg-slate-800 gap-10">
