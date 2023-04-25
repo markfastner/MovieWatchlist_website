@@ -11,6 +11,8 @@ import DarkMode from "../../../features/profile/components/darkMode";
 // import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
 import Avatar from '@mui/material/Avatar';
 import {useTranslation} from 'react-i18next';
+import {v4 as uuid} from "uuid";
+
 
 const languages = [
     {value: '', text: "Options"},
@@ -197,6 +199,21 @@ export default function SetProfile() {
         });
     }, [currentUser.uid]);
 
+    // const [img, setImg] = useState(null);
+
+    // const handleSend = async () => {
+    //     if(img){
+
+    //     }else{
+    //         await updateDoc(doc(db, "users", currentUser.uid), {
+    //             profilePicture: img({
+    //                 id: uuid,
+    //                 userId: currentUser.uid,
+    //                 date: Timestamp.now()
+    //             })
+    //         });
+    //     }
+    // };
 
     const ProfileUpload = () => (
         <div class="flex justify-center mt-8">
@@ -230,27 +247,17 @@ export default function SetProfile() {
                     <button onClick={handleProfileSubmit} class="w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl">Upload</button>
                 </div>
             </div>
+            {/* <form>
+                <input style={{display:"none"}} type="file" id="file" onChange={e=>setImg(e.target.files[0])}/>
+                <label htmlFor="file">
+                    Profile Pic Upload
+                    <img src={img} alt="" />
+                </label>
+                <button onClick={handleSend}> Send </button>
+            </form> */}
+
         </div> 
     )
-
-    // const handleSubmitPicture = () => {
-    //     const imageRef = ref(storage, "image");
-    //     uploadBytes(imageRef, image)
-    //     .then(() =>{
-    //         getDownloadURL(imageRef)
-    //         .then((url) => {
-    //             setUrl(url);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error.message, "ERROR getting image URL");
-    //         });
-    //         setImage(null);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error.message);
-    //     });
-    // }
-
 
     const {t} = useTranslation();
     const [lang, setLang] = useState('');
