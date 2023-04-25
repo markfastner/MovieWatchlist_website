@@ -105,6 +105,7 @@ function WatchlistPage() {
           height: '100%',
         }}>
           <Watchlist2
+          userId = {userId}
           />
         </div>
 

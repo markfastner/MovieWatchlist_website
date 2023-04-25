@@ -92,7 +92,7 @@ function ShareWithFriend({ watchlistTitle, watchlistMovies, name }) {
       
 }
 
-    async function getUIDFromName(name) {
+    export async function getUIDFromName(name) {
     const userRef = db.users.where("username", "==", name);
     const querySnapshot = await userRef.get();
     if (!querySnapshot.empty) {

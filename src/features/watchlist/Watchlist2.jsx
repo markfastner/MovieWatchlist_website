@@ -8,6 +8,7 @@ import { db, auth } from "../../firebase";
 import {useAuth} from "../../pages/auth/contexts/AuthContext";
 import { wait } from '@testing-library/user-event/dist/utils';
 import ShareWithFriend from './ShareWithFriendButton';
+import AddToWatchlistButton from './AddToWatchlistButton';
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
@@ -27,115 +28,138 @@ export async function GetMovieByID(id) {
   return response.data;
 }
 
-function Watchlist2(){
+function Watchlist2(props){
+  const userId = props.userId;
+  const isFriend = props.isFriend;
+  console.log("userid: " + userId);
 const {removeMovieFromWatchlist, addMovieToWatchlist, watchlist} = useContext(WatchlistContext);
-const { currentUser } = useAuth();
-const userId = currentUser.uid;
-const watchlistRef = db.users.doc(userId).collection('watchlist');
+//const { currentUser } = useAuth();
+//const userId = currentUser.uid;
+//const watchlistRef = db.users.doc(userId).collection('watchlist');
 const watchlistSRef = db.users.doc(userId).collection("watchlists");
 
 //helper function to display the MovieCard and the RemoveFromWatchlistButton
-function displayCardPlusRemoveButton(movie, watchlistTitle){
-  return(
-    <div key={movie.id} class = "movie-item">
-              <MovieCard2
-              posterPath={movie.poster_path}
-              title={movie.title}
-              releaseDate={movie.release_date}
-              type = {movie.media_type}
-            />
-            <RemoveFromWatchlistButton movie={movie}
-            watchlistTitle = {watchlistTitle} />
-              
+function displayCardPlusRemoveButton(movie, watchlistTitle) {
+  return (
+    <div key={movie.id} class="movie-item">
+      <MovieCard2
+        posterPath={movie.poster_path}
+        title={movie.title}
+        releaseDate={movie.release_date}
+        type={movie.media_type}
+      />
+      {!isFriend &&
+        <RemoveFromWatchlistButton movie={movie} watchlistTitle={watchlistTitle} />
+      }
+      {isFriend &&
+        <AddToWatchlistButton movie={movie}/>
+      }
     </div>
-  )
+  );
 }
 
-//helper function that gets the username of the current user
-async function getUsername(userId){
+const [user, setUser] = useState([]);
+async function getUser() {
+  console.log("getting user");
   const userRef = db.users.doc(userId);
   const doc = await userRef.get();
   if (!doc.exists) {
-    console.log('No such document!');
+    console.log('No such user!');
+  } else {
+    console.log("user: " + doc.data());
+    setUser(doc.data());
+  }
+}
+
+//helper function that gets the username of the current user
+async function getUsername(userId) {
+  const userRef = db.users.doc(userId);
+  const doc = await userRef.get();
+  if (!doc.exists) {
+    console.log('No such username');
   } else {
     return doc.data().username;
   }
 }
 
 
-//loadwatchlist function which updates the watchlist state based of database
+const [watchlists, setWatchlists] = useState([]);
+async function loadWatchlistsS(userId) {
+  console.log("loading watchlists");
+  const watchlistSRef = db.users.doc(userId).collection("watchlists");
+  const watchlistSSnapshot = await watchlistSRef.get();
+  const watchlists = await Promise.all(
+    watchlistSSnapshot.docs.map(async (doc) => {
+      console.log("watchlist: " + doc.data());
+      const watchlist = doc.data();
+      return watchlist;
+    })
+  );
+  setWatchlists(watchlists);
+  console.log("watchlists: " + watchlists);
 
-
-  const [watchlists, setWatchlists] = useState([]);
-  async function loadWatchlistsS() {
-    const watchlistSSnapshot = await watchlistSRef.get();
-    const watchlists = await Promise.all(
-      watchlistSSnapshot.docs.map(async (doc) => {
-        const watchlist = doc.data();
-        return watchlist;
-      })
-    );
-    setWatchlists(watchlists);
-
-
-    //if watchlists is empty, then we need to create a default watchlist
-    if (watchlists.length == 0) {
-      console.log("creating default watchlist");
-      const username = await getUsername(userId);
-      watchlistSRef.doc(username + "'s Watchlist").set({
-        title: username + "'s Watchlist",
-        movies: [],
-      });
-    }
+  //if watchlists is empty, then we need to create a default watchlist
+  if (watchlists.length == 0) {
+    console.log("creating default watchlist");
+    const username = await getUsername(userId);
+    watchlistSRef.doc(username + "'s default Watchlist").set({
+      title: username + "'s default Watchlist",
+      movies: [],
+    });
   }
+}
+
 
 
   useEffect(() => {
-    loadWatchlistsS();
-  
-    // Listen for changes to the watchlists
+    getUser();
+    //console.log("user: " + user);
+    loadWatchlistsS(userId);
     const unsubscribe = watchlistSRef.onSnapshot(() => {
-      loadWatchlistsS();
+      loadWatchlistsS(userId);
     });
-  
-    // Unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
-  }, []);
+  }, [userId]);
+  
   
   function removeWatchlist(watchlist) {
     console.log("removing watchlist");
     watchlistSRef.doc(watchlist.title).delete();
   }
+
+  
   return (
     <div className="watchlists" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-      <h1>Your Watchlists</h1>
+      <h1>{user.username}'s Watchlists</h1>
       {watchlists.map((watchlist, index) => (
         <div key={watchlist.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <h2 style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '1.5rem' }}>{`${index + 1}: ${watchlist.title}`}</h2>
-  
-            <button
-              onClick={() => removeWatchlist(watchlist)}
-              style={{
-                backgroundColor: 'red',
-                border: '1px solid #ccc',
-                borderRadius: '50px',
-                padding: '8px 12px',
-                fontSize: '16px',
-                outline: 'none',
-                appearance: 'none',
-                cursor: 'pointer',
-                color: 'white',
-              }}
-            >
-              delete watchlist
-            </button>
-  
-            <ShareWithFriend 
-              watchlistTitle={watchlist.title}
-              watchlistMovies={watchlist.movies}
-              name={"monkey"}
-            />
+            {!isFriend &&
+              <button
+                onClick={() => removeWatchlist(watchlist)}
+                style={{
+                  backgroundColor: 'red',
+                  border: '1px solid #ccc',
+                  borderRadius: '50px',
+                  padding: '8px 12px',
+                  fontSize: '16px',
+                  outline: 'none',
+                  appearance: 'none',
+                  cursor: 'pointer',
+                  color: 'white',
+                }}
+              >
+                delete watchlist
+              </button>
+            }
+            {!isFriend &&
+              <ShareWithFriend 
+                watchlistTitle={watchlist.title}
+                watchlistMovies={watchlist.movies}
+                name={"monkey"}
+              />
+            }
   
           </div>
           <div className="movie-list">
