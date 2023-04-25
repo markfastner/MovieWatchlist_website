@@ -253,7 +253,7 @@ export default function SetProfile() {
 
 
     const {t} = useTranslation();
-    const [lang, setLang] = useState('en');
+    const [lang, setLang] = useState('');
 
     const handleChange = e => { 
         setLang(e.target.value);

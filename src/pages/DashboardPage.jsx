@@ -15,8 +15,12 @@ import {
 } from "react-icons/io";
 
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
+
+import { useTranslation } from "react-i18next";
 // import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
 const API_URL = "http://www.omdbapi.com?apikey=c4a9a1cc";
+
+
 
 // Displaying the dashboard page
 // Dashboard page currently has the activity status card
@@ -51,6 +55,8 @@ function DashboardPage() {
 
   const [selectedStatus, setSelectedStatus] = useState("Online");
   const activityStatuses = ["Online", "Away", "Busy", "Offline"];
+
+  const {t} = useTranslation();
 
   const handleChange = (event) => {
     const newStatus = event.target.value;

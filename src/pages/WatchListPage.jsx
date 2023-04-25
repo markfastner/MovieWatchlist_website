@@ -17,6 +17,8 @@ import { WatchlistContext } from "./auth/contexts/WatchlistState";
 import WatchedList from "../features/watchlist/WatchedList.jsx";
 import NewWatchlist from "../features/watchlist/newWatchlist";
 import ShareWithFriend from "../features/watchlist/ShareWithFriendButton";
+
+import { useTranslation } from "react-i18next";
 //const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 
@@ -94,6 +96,8 @@ function WatchlistPage() {
     const [name, setName] = useState("");
     const [value, setValue] = useState([]);
 
+    const {t} = useTranslation();
+
     const handleChange = (event) => {
       setValue(event.target.value);
 
@@ -117,7 +121,7 @@ function WatchlistPage() {
       <div class="watchlist-container dark:bg-slate-700 bg-blue-50">
         {/* Render the friends list */}
         <h1 class="header">
-        Watchlist Page
+        {t('wlpage')}
         </h1>
         {/* <ShareWithFriend /> */}
         <div
@@ -144,30 +148,30 @@ function WatchlistPage() {
         </div>
         
         { <div class = "MovieGenreList">
-          <h1>Genre Recommendation for {name} Movies</h1>
+          <h1>{t('genrerectext')} {name} {t('movies')}</h1>
           <select 
           value = {value}
           onChange = {handleChange}
           class="genre">
-            <option value="28">Action</option>
-            <option value="12">Adventure</option>
-            <option value="16">Animation</option>
-            <option value="35">Comedy</option>
-            <option value="80">Crime</option>
-            <option value="99">Documentary</option>
-            <option value="18">Drama</option>
-            <option value="10751">Family</option>
-            <option value="14">Fantasy</option>
-            <option value="36">History</option>
-            <option value="27">Horror</option>
-            <option value="10402">Music</option>
-            <option value="9648">Mystery</option>
-            <option value="10749">Romance</option>
-            <option value="878">Science Fiction</option>
-            <option value="10770">TV Movie</option>
-            <option value="53">Thriller</option>
-            <option value="10752">War</option>
-            <option value="37">Western</option>
+            <option value="28">{t('action')}</option>
+            <option value="12">{t('adventure')}</option>
+            <option value="16">{t('animation')}</option>
+            <option value="35">{t('comedy')}</option>
+            <option value="80">{t('crime')}</option>
+            <option value="99">{t('documentary')}</option>
+            <option value="18">{t('drama')}</option>
+            <option value="10751">{t('family')}</option>
+            <option value="14">{t('fantasy')}</option>
+            <option value="36">{t('history')}</option>
+            <option value="27">{t('horror')}</option>
+            <option value="10402">{t('music')}</option>
+            <option value="9648">{t('mystery')}</option>
+            <option value="10749">{t('romance')}</option>
+            <option value="878">{t('sciencefiction')}</option>
+            <option value="10770">{t('tvmovie')}</option>
+            <option value="53">{t('thriller')}</option>
+            <option value="10752">{t('war')}</option>
+            <option value="37">{t('western')}</option>
           </select>
           <MovieGenreList 
           genreId = {value}/>
@@ -175,7 +179,7 @@ function WatchlistPage() {
 
 
         { <div class = "recommendations">
-          <h1>Most Popular Movies Now!</h1>
+          <h1>{t('mpvn')}</h1>
           <MostPopularMoviesList />
         </div> }
 
