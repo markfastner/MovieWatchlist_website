@@ -1,13 +1,27 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+import { useAuth } from '../../pages/auth/contexts/AuthContext'
+import { ChatContext } from '../../pages/auth/contexts/ChatContext';
 
-const Message = () => {
+const Message = ({ message }) => {
+
+    const { currentUser } = useAuth();
+    const { data } = useContext(ChatContext);
+
+    const ref = useRef();
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+        
   return (
-    <div className='message owner'>
+    <div ref={ref}
+      className={`message ${message.senderId === currentUser.uid && "owner"}`}
+      >
         <div className='messageInfo'>
             <span>Just now</span>
         </div>
         <div className='messageContent'>
-            <p>hello</p>
+            <p>{message.text}</p>
         </div>
     </div>
   )
