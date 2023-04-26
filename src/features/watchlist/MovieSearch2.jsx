@@ -66,6 +66,7 @@ function MovieSearch() {
                 key={movie.id}
                 posterPath={movie.poster_path}
                 title={movie.title}
+                releaseDate={movie.release_date}
               />
               <AddToWatchlistButton movie={movie} />
             </div>
