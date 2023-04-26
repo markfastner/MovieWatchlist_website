@@ -17,6 +17,8 @@ import { WatchlistContext } from "./auth/contexts/WatchlistState";
 import WatchedList from "../features/watchlist/WatchedList.jsx";
 import NewWatchlist from "../features/watchlist/newWatchlist";
 import ShareWithFriend from "../features/watchlist/ShareWithFriendButton";
+
+import { useTranslation } from "react-i18next";
 //const API_URL = 'http://www.omdbapi.com?apikey=c4a9a1cc'
 
 
@@ -60,6 +62,8 @@ import ShareWithFriend from "../features/watchlist/ShareWithFriendButton";
 // }
 
 
+
+
 function WatchlistPage() {
     const {currentUser} = useAuth()
     const user = auth.currentUser;
@@ -69,6 +73,14 @@ function WatchlistPage() {
     const watchlistRef = db.users.doc(userId).collection("watchlist");
     //UpdateWatchlistDB(userId, watchlistRef, watchlist);
     
+    const [name, setName] = useState("");
+    const [value, setValue] = useState([]);
+
+    const { t } = useTranslation();
+    
+
+  
+
     return (
       // this will be a list of movies that the user has added to their watchlist
       // the user will be able to add movies to their watchlist from the movie details page
@@ -77,8 +89,13 @@ function WatchlistPage() {
       // the watchlist page will be a list of movies that the user has added to their watchlist
       
   
-      <div class="watchlist-container">
+      <div class="watchlist-container dark:bg-slate-700 bg-blue-50">
         {/* Render the friends list */}
+
+        <h1 class="header">
+        {t('wlpage')}
+        </h1>
+
         {/* <ShareWithFriend /> */}
         <div
         style={{
@@ -115,6 +132,7 @@ function WatchlistPage() {
           <WatchedList />
         </div>
         
+
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <a href="/discover Movies" style={{ 

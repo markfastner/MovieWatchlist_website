@@ -15,8 +15,12 @@ import {
 } from "react-icons/io";
 
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
+
+import { useTranslation } from "react-i18next";
 // import Watchlist2 from "../features/watchlist/Watchlist2.jsx";
 const API_URL = "http://www.omdbapi.com?apikey=c4a9a1cc";
+
+
 
 // Displaying the dashboard page
 // Dashboard page currently has the activity status card
@@ -51,6 +55,8 @@ function DashboardPage() {
 
   const [selectedStatus, setSelectedStatus] = useState("Online");
   const activityStatuses = ["Online", "Away", "Busy", "Offline"];
+
+  const {t} = useTranslation();
 
   const handleChange = (event) => {
     const newStatus = event.target.value;
@@ -180,12 +186,12 @@ function DashboardPage() {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <div>
-        <button className="text-white" onClick={() => setIsOpen(true)}>
+        <button className="text-white dark:text-white" onClick={() => setIsOpen(true)}>
           Bar Chart
         </button>
 
         {isOpen && (
-          <div className="my-6">
+          <div className="my-6 dark:bg-slate-700">
             <div className="my-6">
               <Chart
                 chartType="BarChart"
@@ -196,7 +202,7 @@ function DashboardPage() {
               />
             </div>
             <button
-              className="text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg"
+              className="text-white dark:text-black dark:bg-blue-500 bg-blue-500 px-2 rounded-lg"
               onClick={() => setIsOpen(false)}
             >
               Close
@@ -250,7 +256,7 @@ function DashboardPage() {
   // Key performance indicators for the watchlist
   const WatchlistStats = () => {
     return (
-      <div className="flex flex-col space-y-2 w-full rounded-lg bg-blue-100 px-4 py-2">
+      <div className="flex flex-col space-y-2 w-full rounded-lg bg-blue-100 px-4 py-2 dark:text-white dark:bg-slate-600 overflow-x-hidden">
         <label className="text-xl">
           Completed Movies: <span>40</span> movies
         </label>
@@ -284,6 +290,8 @@ function DashboardPage() {
     return <div className={`w-3 h-3 rounded-full ${color}`} />;
   };
 
+  
+
   // styling all of the components
   return (
     <div className="flex relative min-h-screen bg-blue-200 dark:bg-slate-800 w-full">
@@ -294,8 +302,7 @@ function DashboardPage() {
         <strong>Email: </strong>
         {currentUser.email}
         {/* <ShowFriendsList /> */}
-
-        <section className="bg-white rounded-xl py-4 px-8">
+        <section className="bg-white dark:bg-slate-700 rounded-xl py-4 px-8">
           <div className="text-xl">Friends Activity</div>
           <ul className="friend-list">
             {friends.map((friend) => (
@@ -308,7 +315,7 @@ function DashboardPage() {
         </section>
 
         <div className="absolute w-11/12 left-1/2 -translate-x-1/2 bottom-4 space-y-2">
-          <div className="flex flex-row items-center justify-between bg-white w-full rounded-md p-2">
+          <div className="flex flex-row items-center justify-between bg-white w-full dark:bg-slate-700 rounded-md p-2">
             <div className='flex space-x-1.5 items-center '>
               <div className='flex items-center justify-center h-10 w-10 rounded-full bg-gray-500'>
                 <p>img</p>
@@ -320,9 +327,9 @@ function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-gray-200 px-4 py-2 rounded-md flex flex-row gap-x-2">
+            <div className="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-md flex flex-row gap-x-2">
               <select
-                className="w-20"
+                className="w-20 dark:bg-slate-500"
                 value={selectedStatus}
                 onChange={handleChange}
               >
@@ -354,6 +361,7 @@ function DashboardPage() {
               options={options}
               width={"100%"}
               height={"400px"}
+              className = "dark:bg-slate-700"
             />
             <BarChartPopup />
           </Card>
