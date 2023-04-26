@@ -38,8 +38,7 @@ function DiscoverMoviesPage(){
           </div>
       
           <div class="MovieGenreList">
-            <h1 style={{ alignSelf: 'center' }}>Genre Recommendation for Action Movies</h1>
-            <MovieGenreList genreID={28} />
+            <MovieGenreList />
           </div>
       
           <div class="recommendations">
