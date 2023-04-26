@@ -42,7 +42,8 @@ const OpenAIButton = () => {
         <label>
           <input
             type="text"
-            value={prompt}
+            placeholder='Im a fan of the movie Titanic. Recommend me a similar movie.'
+            //value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             style={{
               width: "500px",
