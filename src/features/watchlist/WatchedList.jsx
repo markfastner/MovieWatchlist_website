@@ -32,50 +32,69 @@ function displayCardPlusRemoveButton(movie, watchedlistRef){
   }
 
 
-function WatchedList(){
-
+  function WatchedList() {
     const { currentUser } = useAuth();
     const userId = currentUser.uid;
     const watchedlistRef = db.users.doc(userId).collection('watchedlist');
-
+  
     const [movies, setMovies] = useState([]);
-
-    async function loadWatchedlist(){
-        const watchedlistSnapshot = await watchedlistRef.get();
-        const movies = await Promise.all(watchedlistSnapshot.docs.map(async (doc) => {
-        const movie = await GetMovieByID(doc.id);
-        return movie;
-    }));
-    setMovies(movies);
+    const [showWatchedList, setShowWatchedList] = useState(false);
+  
+    async function loadWatchedlist() {
+      const watchedlistSnapshot = await watchedlistRef.get();
+      const movies = await Promise.all(
+        watchedlistSnapshot.docs.map(async (doc) => {
+          const movie = await GetMovieByID(doc.id);
+          return movie;
+        })
+      );
+      setMovies(movies);
     }
-
+  
     useEffect(() => {
+      loadWatchedlist();
+  
+      // Listen for changes to the watchlist
+      const unsubscribe = watchedlistRef.onSnapshot(() => {
         loadWatchedlist();
-    
-        // Listen for changes to the watchlist
-        const unsubscribe = watchedlistRef.onSnapshot(() => {
-          loadWatchedlist();
-        });
-    
-        // Unsubscribe from the listener when the component unmounts
-        return () => unsubscribe();
-      }, []);
-
-
-return(
-    <div>
+      });
+  
+      // Unsubscribe from the listener when the component unmounts
+      return () => unsubscribe();
+    }, []);
+  
+    function handleShowWatchedList() {
+      setShowWatchedList(true);
+    }
+  
+    function handleHideWatchedList() {
+      setShowWatchedList(false);
+    }
+  
+    return (
+      <div>
         <h1>Watched List</h1>
-
-        <div class="movie-list"> 
-        {movies.map((movie) => (
-          <div key={movie.id}>
-            {displayCardPlusRemoveButton(movie, watchedlistRef)}
+        {!showWatchedList && (
+          <button onClick={handleShowWatchedList} style={{backgroundColor: "#4caf50", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>
+          Reveal Your Watched List
+        </button>
+        
+        )}
+        {showWatchedList && (
+          <div>
+            
+            <button onClick={handleHideWatchedList} style={{backgroundColor: "#4caf50", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>
+            Hide Your Watched List</button>
+            <div class="movie-list">
+              {movies.map((movie) => (
+                <div key={movie.id}>{displayCardPlusRemoveButton(movie, watchedlistRef)}</div>
+              ))}
+            </div>
           </div>
-        ))}
+        )}
       </div>
-
-    </div>
-)
-}
+    );
+  }
+  
 
 export default WatchedList;

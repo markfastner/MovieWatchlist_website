@@ -14,7 +14,7 @@ export const Navbar=()=>{
 
 
   // The Navigation bar which links to each component's url extension
-  const NavBarLinks = ["Dashboard", "Profile", "Watchlist", "Ratings", "Friends"]
+  const NavBarLinks = ["Dashboard", "Profile", "Discover Movies", "Watchlist", "Ratings", "Friends"]
   const navigate = useNavigate()
 
 

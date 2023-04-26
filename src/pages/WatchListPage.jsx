@@ -91,9 +91,11 @@ function WatchlistPage() {
   
       <div class="watchlist-container dark:bg-slate-700 bg-blue-50">
         {/* Render the friends list */}
+
         <h1 class="header">
         {t('wlpage')}
         </h1>
+
         {/* <ShareWithFriend /> */}
         <div
         style={{
@@ -106,33 +108,53 @@ function WatchlistPage() {
           <OpenAIButton />
           
         </div>
-        <div class = "movie-list">
-          <Watchlist2 />
-        </div>
 
         <div>
           <NewWatchlist />
         </div>
 
+        <div class = "movie-list"
+        style = {{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+          <Watchlist2
+          userId = {userId}
+          />
+        </div>
+
+        
+
         <div class = "watched-list">
           <WatchedList />
         </div>
         
-        
-        <div>
-          <MovieGenreList />
+
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <a href="/discover Movies" style={{ 
+            padding: '20px 40px', 
+            backgroundColor: '#FFD700', 
+            color: '#fff', 
+            borderRadius: '50px', 
+            textDecoration: 'none', 
+            textTransform: 'uppercase', 
+            fontWeight: 'bold', 
+            fontSize: '2rem',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+            transition: 'background-color 0.3s ease',
+          }}>
+            Discover Movies To Add
+          </a>
         </div>
 
 
-        { <div class = "recommendations">
-          <h1>{t('mpvn')}</h1>
-          <MostPopularMoviesList />
-        </div> }
+
 
         
-        <div class = "movie-search">
-          <MovieSearch />
-        </div>
 
 
         

@@ -6,6 +6,7 @@ import { db, auth } from "../../firebase";
 
 export default function AddToWatchlistButton(props) {
   const { movie } = props; // destructure movie from props
+
   const { currentUser } = useAuth();
   const userId = currentUser.uid;
   const watchlistSRef = db.users.doc(userId).collection("watchlists");

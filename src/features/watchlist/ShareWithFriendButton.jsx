@@ -77,6 +77,7 @@ function ShareWithFriend({ watchlistTitle, watchlistMovies, name }) {
               outline: 'none',
               appearance: 'none',
               cursor: 'pointer',
+              color: 'white',
             }}
             onFocus={handleDropdownFocus}
             onChange={handleSelection}
@@ -85,14 +86,13 @@ function ShareWithFriend({ watchlistTitle, watchlistMovies, name }) {
             {friends.map((friend) => (
               <option>{friend.friend}</option>
             ))}
-            <option>friend 1</option>
           </select>
         </div>
       );
       
 }
 
-    async function getUIDFromName(name) {
+    export async function getUIDFromName(name) {
     const userRef = db.users.where("username", "==", name);
     const querySnapshot = await userRef.get();
     if (!querySnapshot.empty) {

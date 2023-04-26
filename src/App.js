@@ -23,6 +23,9 @@ import TermsAndConditions from './pages/TermsAndConditionsPage';
 import About from './pages/AboutMePage';
 import Contact from './pages/ContactPage';
 import { WatchlistProvider } from "./pages/auth/contexts/WatchlistState";
+
+import DiscoverMoviesPage from './pages/DiscoverMoviesPage';
+
 import { ChatContextProvider } from './pages/auth/contexts/ChatContext.js';
 
 import {useTranslation} from 'react-i18next';
@@ -37,6 +40,7 @@ const languages = [
   {value: 'es', text: "Spanish"},
   {value: 'tl', text: "Tagalog"}
 ]
+
 
 
 // App component which runs the whole application
@@ -154,6 +158,7 @@ function App() {
             <Route path='/friends'  element={<PrivateRoute><FriendsPage/></PrivateRoute>}/>
             <Route path='/profile' element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
             <Route path='/watchlist' element={<PrivateRoute><WatchListPage/></PrivateRoute>}/>
+            <Route path='/discover Movies' element={<PrivateRoute><DiscoverMoviesPage/></PrivateRoute>}/>
             <Route path='/dashboard' element={<PrivateRoute><DashboardPage/></PrivateRoute>}/>
             <Route path='/ratings' element={<PrivateRoute><RatingsPage/></PrivateRoute>}/>
             <Route path='/support' element={<Support/>}/>

@@ -31,9 +31,32 @@ function MovieSearch() {
 
   return (
     <div>
-      <h1>Find Movies</h1>
+      <h1
+      style={{
+        position: 'flex',
+        alignSelf: 'center',
+      }
+      }>Find Movies</h1>
       <form>
-        <input className ="rounded-full bg-yellow-400 text-black" type="text" placeholder="Search for a movie" value={query} onChange={handleInputChange} />
+      <input
+        className="rounded-full bg-yellow-400 text-black"
+        type="text"
+        placeholder="Search for a movie"
+        value={query}
+        onChange={handleInputChange}
+        style={{
+          width: '500px',
+          height: '70px',
+          fontSize: '24px',
+          padding: '10px',
+          borderRadius: '25px',
+          border: 'none',
+          outline: 'none',
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+          alignSelf: 'left',
+        }}
+      />
+
       </form>
       {results.length > 0 && (
         <div className="movie-list">

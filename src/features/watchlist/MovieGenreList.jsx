@@ -59,6 +59,7 @@ function MovieGenreList() {
 
   return (
     <div>
+
       { <div class = "MovieGenreList">
           <h1>{t('genrerectext')} {name} {t('movies')}</h1>
           <select 
