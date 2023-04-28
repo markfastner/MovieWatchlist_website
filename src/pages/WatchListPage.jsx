@@ -106,6 +106,7 @@ function WatchlistPage() {
         }}>
           <Watchlist2
           userId = {userId}
+          isFriend = {false}
           />
         </div>
 
