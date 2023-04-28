@@ -18,7 +18,8 @@ const app = firebase.initializeApp({
 //authentication
 export const auth = app.auth()
 //realtime db
-const database = app.firestore()
+// export database added 20:53 4/24
+export const database = app.firestore()
 export const db = {
   users: database.collection('users'),
   movies: database.collection('movies'),

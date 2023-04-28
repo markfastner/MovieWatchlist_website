@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const OpenAIButton = () => {
+  const {t} = useTranslation();
   const [response, setResponse] = useState('');
   const [prompt, setPrompt] = useState('Im a fan of the movie Titanic. Recommend me a similar movie.');
   const model = 'text-davinci-002'; // replace with your desired OpenAI model, e.g. 'text-davinci-002'
@@ -34,6 +36,7 @@ const OpenAIButton = () => {
 
   return (
     <div>
+
       <h1>Ask Movie-Bot a Question: </h1>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <label>
@@ -72,6 +75,7 @@ const OpenAIButton = () => {
       <p style={{ fontFamily: 'Courier New, monospace', wordWrap: 'break-word', maxWidth: '50ch' }}>
       Movie-Bot: {response}
       </p>
+
 
 
     </div>

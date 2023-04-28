@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { Alert, Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { useNavigate } from "react-router-dom"
@@ -10,7 +10,20 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import DarkMode from "../../../features/profile/components/darkMode";
 // import ProfileUploadPopup from "../../../features/profile/components/ProfileUploadPopup"
 import Avatar from '@mui/material/Avatar';
+import {useTranslation} from 'react-i18next';
+import {v4 as uuid} from "uuid";
 
+
+const languages = [
+    {value: '', text: "Options"},
+    {value: 'en', text: "English"},
+    {value: 'zh', text: "Chinese"},
+    {value: 'de', text: "German"},
+    {value: 'ja', text: "Japanese"},
+    {value: 'ko', text: "Korean"},
+    {value: 'es', text: "Spanish"},
+    {value: 'tl', text: "Tagalog"}
+]
 // profile creation page from the sign in page
 // rerouting from the sign in page to the profile creation page
 // the user will be able to add their first name, last name, username, and their favorite genre before heading to their profile page
@@ -156,6 +169,52 @@ export default function SetProfile() {
         });
     };
     
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const uploadFile = async (uid) =>{
+        const storageRef = ref(storage, `users/${uid}/profilePicture`);
+        const snapshot = await uploadBytes(storageRef, file);
+        console.log("File uploaded");
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        uploadFile(currentUser.uid);
+    };
+
+    const[profilePictureUrl, setProfilePictureUrl] = useState('');
+
+    useEffect(() => {
+        const storageRef = ref(storage, `users/${currentUser.uid}/profilePicture`);
+        getDownloadURL(storageRef).then((url) => {
+            setProfilePictureUrl(url);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }, [currentUser.uid]);
+
+    // const [img, setImg] = useState(null);
+
+    // const handleSend = async () => {
+    //     if(img){
+
+    //     }else{
+    //         await updateDoc(doc(db, "users", currentUser.uid), {
+    //             profilePicture: img({
+    //                 id: uuid,
+    //                 userId: currentUser.uid,
+    //                 date: Timestamp.now()
+    //             })
+    //         });
+    //     }
+    // };
+
     const ProfileUpload = () => (
         <div class="flex justify-center mt-8">
             <Avatar
@@ -179,7 +238,8 @@ export default function SetProfile() {
                                     Attach a file
                                 </p>
                             </div>
-                            <input type="file" onChange={handleImageChange} class="opacity-0"/>
+                            <input type="file" onChange={handleFileChange} class="opacity-0"/>
+                            <img src={profilePictureUrl}/>
                         </label>
                     </div>
                 </div>
@@ -187,26 +247,26 @@ export default function SetProfile() {
                     <button onClick={handleProfileSubmit} class="w-full px-4 py-2 text-white bg-blue-500 rounded shadow-xl">Upload</button>
                 </div>
             </div>
+            {/* <form>
+                <input style={{display:"none"}} type="file" id="file" onChange={e=>setImg(e.target.files[0])}/>
+                <label htmlFor="file">
+                    Profile Pic Upload
+                    <img src={img} alt="" />
+                </label>
+                <button onClick={handleSend}> Send </button>
+            </form> */}
+
         </div> 
     )
 
-    // const handleSubmitPicture = () => {
-    //     const imageRef = ref(storage, "image");
-    //     uploadBytes(imageRef, image)
-    //     .then(() =>{
-    //         getDownloadURL(imageRef)
-    //         .then((url) => {
-    //             setUrl(url);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error.message, "ERROR getting image URL");
-    //         });
-    //         setImage(null);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error.message);
-    //     });
-    // }
+    const {t} = useTranslation();
+    const [lang, setLang] = useState('');
+
+    const handleChange = e => { 
+        setLang(e.target.value);
+        let loc = "http://localhost:3000/";
+        window.location.replace(loc + "?lng=" + e.target.value);
+    }
 
     return(
     <div className="flex justify-center items-center relative min-h-screen bg-no-repeat w-full bg-cover bg-blue-200 dark:bg-slate-800 gap-10">
@@ -296,14 +356,23 @@ export default function SetProfile() {
                 <option selected>None</option>}
                 <option>Action</option>
                 <option>Adventure</option>
+                <option>Animation</option>
                 <option>Comedy</option>
+                <option>Crime</option>
                 <option>Documentary</option>
                 <option>Drama</option>
+                <option>Family</option>
+                <option>Fantasy</option>
+                <option>History</option>
                 <option>Horror</option>
+                <option>Music</option>
                 <option>Mystery</option>
                 <option>Romance</option>
                 <option>Sci-Fi</option>
+                <option>TV Movie</option>
                 <option>Thriller</option>
+                <option>War</option>
+                <option>Western</option>
             </select>
         </div>
             <button type="submit" class="btn btn-primary my-6 w-full duration-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" >Set Profile</button>
@@ -332,7 +401,7 @@ export default function SetProfile() {
             <Card className="bg-white dark:bg-slate-700 py-8 px-8 rounded-lg">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-white text-center">Profile Picture</h1>
-                        <div>
+                        {/* <div>
                             <button className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600 dark:bg-white text-white" onClick={() => setIsOpen(true)}>Profile Icon</button>
 
                             {isOpen && (
@@ -343,7 +412,7 @@ export default function SetProfile() {
                                     <button className = "text-white dark:text-black dark:bg-white bg-blue-500 px-2 rounded-lg" onClick={() => setIsOpen(false)}>Close</button>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                     {ProfileUpload()}
                 </div>
             </Card>
@@ -384,10 +453,23 @@ export default function SetProfile() {
                     </Switch>
                 </Card>
             </div>
-            {/* <div className = "">
-                Color Picker
-                <CirclePicker/>
-            </div> */}
+        </section>
+        <section>
+            <div>
+                <Card className="bg-white dark:bg-slate-700 text-black dark:text-black py-8 px-8 rounded-lg">
+                    <label>{t('selector')}</label>
+
+                    <select value={lang} 
+                    onChange={handleChange}
+                    className="">
+                        {languages.map(item => {
+                            return(<option key ={item.value}
+                                value={item.value}>{item.text}</option>);
+                        })}
+                    </select>
+
+                </Card>    
+            </div>
         </section>
         
     </div>    

@@ -12,7 +12,7 @@ import '../../App.css';
 
 
 export const Footer=()=>{
-    const FooterLinks = ["About", "Terms and Conditions", "Support", "Contact Us"]
+    const FooterLinks = ["About", "Terms and Conditions", "Support"]
     const navigate = useNavigate()
     
 
