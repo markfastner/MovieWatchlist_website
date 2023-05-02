@@ -135,14 +135,12 @@ async function loadWatchlistsS(userId) {
     <div className="watchlists" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h1>{user.username}'s Watchlists</h1>
       {watchlists.map((watchlist, index) => {
-        {console.log("OOO" + watchlist.visability)}
-        {console.log("F" + isFriend)}
         if (isFriend == true && watchlist.visability == false) {
         }
         else {
           return (
             <div key={watchlist.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'lightgrey', padding: '10px', borderRadius: '23px'}}>
                 <h2 style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '1.5rem' }}>{`${index + 1}: ${watchlist.title}`}</h2>
                 {!isFriend && (
                   <button
