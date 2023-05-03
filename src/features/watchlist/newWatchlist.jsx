@@ -13,6 +13,7 @@ function NewWatchlist(){
         watchlistSRef.doc(name).set({
             title: name,
             movies: [],
+            visability: true,
         });
         
     }

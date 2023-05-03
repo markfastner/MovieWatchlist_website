@@ -9,6 +9,7 @@ import {useAuth} from "../../pages/auth/contexts/AuthContext";
 import { wait } from '@testing-library/user-event/dist/utils';
 import ShareWithFriend from './ShareWithFriendButton';
 import AddToWatchlistButton from './AddToWatchlistButton';
+import ToggleWatchlistVisabilityButton from './ToggleWatchlistVisablityButton';
 //import "./Watchlist2.css"
 //import { useAuth } from "./auth/contexts/AuthContext";
 //import "./watchlist.css"
@@ -105,6 +106,7 @@ async function loadWatchlistsS(userId) {
     watchlistSRef.doc(username + "'s default Watchlist").set({
       title: username + "'s default Watchlist",
       movies: [],
+      visability: true,
     });
   }
 }
@@ -128,51 +130,64 @@ async function loadWatchlistsS(userId) {
   }
 
   
+
   return (
     <div className="watchlists" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h1>{user.username}'s Watchlists</h1>
-      {watchlists.map((watchlist, index) => (
-        <div key={watchlist.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <h2 style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '1.5rem' }}>{`${index + 1}: ${watchlist.title}`}</h2>
-            {!isFriend &&
-              <button
-                onClick={() => removeWatchlist(watchlist)}
-                style={{
-                  backgroundColor: 'red',
-                  border: '1px solid #ccc',
-                  borderRadius: '50px',
-                  padding: '8px 12px',
-                  fontSize: '16px',
-                  outline: 'none',
-                  appearance: 'none',
-                  cursor: 'pointer',
-                  color: 'white',
-                }}
-              >
-                delete watchlist
-              </button>
-            }
-            {!isFriend &&
-              <ShareWithFriend 
-                watchlistTitle={watchlist.title}
-                watchlistMovies={watchlist.movies}
-                name={"monkey"}
-              />
-            }
-  
-          </div>
-          <div className="movie-list">
-            {watchlist.movies.map((movie) => (
-              <div key={movie.id}>
-                {displayCardPlusRemoveButton(movie, watchlist.title)}
+      {watchlists.map((watchlist, index) => {
+        if (isFriend == true && watchlist.visability == false) {
+        }
+        else {
+          return (
+            <div key={watchlist.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'lightgrey', padding: '10px', borderRadius: '23px'}}>
+                <h2 style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '1.5rem' }}>{`${index + 1}: ${watchlist.title}`}</h2>
+                {!isFriend && (
+                  <button
+                    onClick={() => removeWatchlist(watchlist)}
+                    style={{
+                      backgroundColor: 'red',
+                      border: '1px solid #ccc',
+                      borderRadius: '50px',
+                      padding: '8px 12px',
+                      fontSize: '16px',
+                      outline: 'none',
+                      appearance: 'none',
+                      cursor: 'pointer',
+                      color: 'white',
+                    }}
+                  >
+                    delete watchlist
+                  </button>
+                )}
+                {!isFriend && (
+                  <ShareWithFriend 
+                    watchlistTitle={watchlist.title}
+                    watchlistMovies={watchlist.movies}
+                    name={"monkey"}
+                  />
+                )}
+
+                {!isFriend && (
+                  <ToggleWatchlistVisabilityButton
+                    watchlistTitle={watchlist.title}
+                  />
+                )}
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
+              <div className="movie-list">
+                {watchlist.movies.map((movie) => (
+                  <div key={movie.id}>
+                    {displayCardPlusRemoveButton(movie, watchlist.title)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        } 
+      })}
     </div>
   );
+
   
 
   
