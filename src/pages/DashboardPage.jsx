@@ -154,7 +154,9 @@ function DashboardPage() {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <div classname="rounded-xl">
-        <button className="text-black" onClick={() => setIsOpen(true)}>
+        <button 
+        className="text-white dark:text-black dark:bg-white bg-blue-500 px-4 rounded-lg py-2 relative left-4 bottom-4"
+        onClick={() => setIsOpen(true)}>
           Bar Chart
         </button>
 
@@ -164,7 +166,7 @@ function DashboardPage() {
               <Chart
                 chartType="BarChart"
                 data={exampleData}
-                options={options}
+                options={MovieGenreOptions}
                 width={"100%"}
                 height={"400px"}
               />
@@ -196,7 +198,7 @@ function DashboardPage() {
               <Chart
                 chartType="BarChart"
                 data={exampleData}
-                options={options}
+                options={MovieGenreOptions}
                 width={"100%"}
                 height={"400px"}
               />
@@ -226,15 +228,78 @@ function DashboardPage() {
     });
   }
 
+  //load all the movies from the watchlist into new array
+  //count how mnay times each genre appears in the array
+  //display the count in the bar chart
+  const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState({});
+ 
+  useEffect(() => {
+    const unsubscribe = db.users
+      .doc(userId)
+      .collection("watchlists")
+      .onSnapshot(async (snapshot) => {
+        const genres = {};
+        const watchlists = await Promise.all(snapshot.docs.map(async (doc) => {
+          const tempmovies = doc.data().movies;
+          tempmovies.forEach(movie => {
+            setMovies(movies => [...movies, movie]);
+            const genreIds = movie.genre_ids;
+            //console.log("GENIDS" + genreIds);
+            genreIds.forEach(genre => {
+              if (genre in genres) {
+                genres[genre] += 1;
+              } else {
+                genres[genre] = 1;
+              }
+            });
+          });
+        }));
+        setGenres(genres);
+      });
+
+    return unsubscribe;
+  }, [userId]);
+
+
+
+  
+//now i have all the movies in a state. so now i want to count how many times each genre appears in the array
+
+  
+  // function that loops through the movies in your watchlist
+
+
+          
+  const genrelist = [
+    {id: 28, name: "Action"},
+    {id: 12, name: "Adventure"},
+    {id: 16, name: "Animation"},
+    {id: 35, name: "Comedy"},
+    {id: 80, name: "Crime"},
+    {id: 99, name: "Documentary"},
+    {id: 18, name: "Drama"},
+    {id: 10751, name: "Family"},
+    {id: 14, name: "Fantasy"},
+    {id: 36, name: "History"},
+    {id: 27, name: "Horror"},
+    {id: 10402, name: "Music"},
+    {id: 9648, name: "Mystery"},
+    {id: 10749, name: "Romance"},
+    {id: 878, name: "Science Fiction"},
+    {id: 10770, name: "TV Movie"},
+    {id: 53, name: "Thriller"},
+    {id: 10752, name: "War"},
+    {id: 37, name: "Western"}
+  ]
+
   const exampleData = [
-    ["Watch time", "Hours per day"],
-    ["Monday", 4],
-    ["Tuesday", 5],
-    ["Wednesday", 6],
-    ["Thursday", 7],
-    ["Friday", 8],
-    ["Saturday", 9],
-    ["Sunday", 10],
+    ["Genre", "Count"],
+    ...Object.entries(genres).map(([genreName, count]) => {
+      const genre = genrelist.find(genre => genre.id == genreName);
+      const genreId = genre ? genre.name : genreName;
+      return [genreId, count];
+    })
   ];
 
   const options = {
@@ -253,15 +318,32 @@ function DashboardPage() {
     title: "Movies per genre",
   };
 
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = db.users
+      .doc(userId)
+      .collection("watchedlist")
+      .onSnapshot(snapshot => {
+        let totalCount = 0;
+        snapshot.docs.forEach(doc => {
+          totalCount += 1;
+        });
+        setCount(totalCount);
+      });
+    return unsubscribe;
+  }, [userId]);
+  
+
   // Key performance indicators for the watchlist
   const WatchlistStats = () => {
     return (
       <div className="flex flex-col space-y-2 w-full rounded-lg bg-blue-100 px-4 py-2 dark:text-white dark:bg-slate-600 overflow-x-hidden">
         <label className="text-xl">
-          Completed Movies: <span>40</span> movies
+          Completed Movies: <span>{count}</span> movies
         </label>
         <label className="text-xl">
-          Movies to Watch: <span>{watchlist.length}</span> movies
+          Movies to Watch: <span>{movies.length}</span> movies
         </label>
       </div>
     );
@@ -358,7 +440,7 @@ function DashboardPage() {
             <Chart
               chartType="PieChart"
               data={exampleData}
-              options={options}
+              options={MovieGenreOptions}
               width={"100%"}
               height={"400px"}
               className = "dark:bg-slate-700"

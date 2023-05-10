@@ -38,9 +38,8 @@ function DiscoverMoviesPage(){
           </div>
       
           <div class="MovieGenreList">
-            <MovieGenreList />
-          </div>
-      
+            <MovieGenreList genreID={28} />
+            <MovieGenreList />   
           <div class="recommendations">
             <h1 style={{ alignSelf: 'center' }}>Most Popular Movies Now!</h1>
             <MostPopularMoviesList />
