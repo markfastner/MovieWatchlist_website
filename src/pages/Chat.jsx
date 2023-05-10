@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, query, orderBy, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import SendMessage from "./SendMessage";
 import { database } from "../firebase.js";
 
@@ -8,7 +8,7 @@ const Chat = () => {
 
   useEffect(() => {
     const messagesRef = collection(database, "messages");
-    const q = query(messagesRef, orderBy("timestamp"));
+    const q = query(messagesRef, orderBy("timestamp") );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const fetchedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -23,7 +23,7 @@ const Chat = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col overflow-y-auto h-64">
       {messages.map((message, index) => (
         <div key={index}>
           <p>{message.text}</p>
