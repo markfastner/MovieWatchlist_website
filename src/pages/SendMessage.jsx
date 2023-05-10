@@ -4,6 +4,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const SendMessage = () => {
   const [message, setMessage] = useState("");
+    const currentUser = auth.currentUser; 
 
     const ref = useRef();
 
@@ -16,6 +17,7 @@ const SendMessage = () => {
     try {
       await addDoc(collection(database, "messages"), {
         text: message,
+        user: currentUser.uid,
         timestamp: serverTimestamp(),
       });
       setMessage("");
@@ -25,9 +27,9 @@ const SendMessage = () => {
   };
 
   return (
-    <form className="persistent">
+    <form className="flex flex-col items-center pt-2">
       <input
-        className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-3 py-2 border-gray-300 rounded-md"
+        className="flex flex-col border border-gray-300 p-2 rounded-md mb-4 w-full md:w-11/12 lg:w-11/12"
         placeholder="Type your message..." 
         value={message}
         onChange={(e) => setMessage(e.target.value)}
