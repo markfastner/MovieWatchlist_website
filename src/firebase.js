@@ -24,7 +24,7 @@ export const db = {
   users: database.collection('users'),
   movies: database.collection('movies'),
   watchlists: database.collection('watchlists'),
-  chats: database.collection('chats'),
+  messages: database.collection('messages'),
   ratings: database.collection('ratings'),
   comments: database.collection('comments'),
   profiles: database.collection('profiles')

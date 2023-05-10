@@ -5,7 +5,8 @@ import '../App.css';
 import { useAuth } from "./auth/contexts/AuthContext";
 import { auth, db } from '../firebase';
 import FriendsList from './FriendsList';
-import Chat from '../components/chat/Chat.jsx';
+//import Chat from '../components/chat/Chat.jsx';
+import Chat from './Chat';
 import emailjs from 'emailjs-com'
 
 export default function FriendsPage() {
