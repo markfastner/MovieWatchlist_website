@@ -50,8 +50,8 @@ function DiscoverMoviesPage(){
             <FriendsWatchingList />
           </div>
         </div>
-    );
-      
-      
+        </div>
+    );  
 }
+
 export default DiscoverMoviesPage;
