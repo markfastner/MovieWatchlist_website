@@ -216,7 +216,7 @@ export default function SetProfile() {
     // };
 
     const ProfileUpload = () => (
-        <div class="flex justify-center mt-8">
+        <div class="flex justify-center mt-8 space-x-10">
             <Avatar
                 alt="Profile Picture"
                 src={url}
@@ -456,8 +456,8 @@ export default function SetProfile() {
         </section>
         <section>
             <div>
-                <Card className="bg-white dark:bg-slate-700 text-black dark:text-black py-8 px-8 rounded-lg">
-                    <label>{t('selector')}</label>
+                <Card className="flex flex-col space-y-4 bg-white dark:bg-slate-700 text-black py-8 px-8 rounded-lg dark:placeholder:text-black">
+                    <label className="text-black dark:text-white">{t('selector')}</label>
 
                     <select value={lang} 
                     onChange={handleChange}

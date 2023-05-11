@@ -384,7 +384,7 @@ function DashboardPage() {
         <strong>Email: </strong>
         {currentUser.email}
         {/* <ShowFriendsList /> */}
-        <section className="bg-white dark:bg-slate-700 rounded-xl py-4 px-8">
+        <section className="bg-white dark:bg-slate-700 rounded-xl py-4 px-8 my-5">
           <div className="text-xl">Friends Activity</div>
           <ul className="friend-list">
             {friends.map((friend) => (
@@ -399,11 +399,11 @@ function DashboardPage() {
         <div className="absolute w-11/12 left-1/2 -translate-x-1/2 bottom-4 space-y-2">
           <div className="flex flex-row items-center justify-between bg-white w-full dark:bg-slate-700 rounded-md p-2">
             <div className='flex space-x-1.5 items-center '>
-              <div className='flex items-center justify-center h-10 w-10 rounded-full bg-gray-500'>
+              {/* <div className='flex items-center justify-center h-10 w-10 rounded-full bg-gray-500'>
                 <p>img</p>
-              </div>
+              </div> */}
               
-              <div className='flex flex-col'>
+              <div className='flex flex-row space-x-2 py-3'>
                 <p className='font-bold'>{senderUsername.length > 15 ? senderUsername.substring(0, 13) : senderUsername}</p>
                 <ActiveColor selectedStatus={selectedStatus}z />
               </div>
@@ -411,7 +411,7 @@ function DashboardPage() {
 
             <div className="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-md flex flex-row gap-x-2">
               <select
-                className="w-20 dark:bg-slate-500"
+                className="w-20 dark:bg-slate-500 rounded-lg"
                 value={selectedStatus}
                 onChange={handleChange}
               >

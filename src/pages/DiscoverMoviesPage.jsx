@@ -41,8 +41,8 @@ function DiscoverMoviesPage(){
             <MovieSearch />
           </div>
       
-          <div class="MovieGenreList">
-            <MovieGenreList genreID={28} />
+          <div class="MovieGenreList mx-10">
+            {/* <MovieGenreList genreID={28} /> */}
             <MovieGenreList />   
           <div class="recommendations">
             <h1 style={{ alignSelf: 'center' }}>Most Popular Movies Now!</h1>

@@ -72,7 +72,10 @@ function displayCardPlusRemoveButton(movie, watchedlistRef){
     }
   
     return (
-      <div>
+      <div className="justify justify-center p-10 space-x-7">
+        <div className="">
+
+        
         <h1>Watched List</h1>
         {!showWatchedList && (
           <button onClick={handleShowWatchedList} style={{backgroundColor: "#4caf50", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>
@@ -80,12 +83,13 @@ function displayCardPlusRemoveButton(movie, watchedlistRef){
         </button>
         
         )}
+        </div>
         {showWatchedList && (
-          <div>
+          <div className="">
             
             <button onClick={handleHideWatchedList} style={{backgroundColor: "#4caf50", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>
             Hide Your Watched List</button>
-            <div class="movie-list">
+            <div class="movie-list flex">
               {movies.map((movie) => (
                 <div key={movie.id}>{displayCardPlusRemoveButton(movie, watchedlistRef)}</div>
               ))}

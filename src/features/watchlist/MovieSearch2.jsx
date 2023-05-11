@@ -30,7 +30,7 @@ function MovieSearch() {
   };
 
   return (
-    <div className="flex-rows items-center py-10 text-center text-5xl text-blue-900 dark:text-white space-y-5">
+    <div className="flex-rows items-center py-10 text-center text-5xl text-teal-400 dark:text-teal-400 space-y-5">
       <p
       // style={{
       //   position: 'flex',

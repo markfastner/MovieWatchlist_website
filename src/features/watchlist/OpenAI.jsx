@@ -61,7 +61,7 @@ const OpenAIButton = () => {
         <button
           onClick={handleClick}
           style={{
-            backgroundColor: "lightblue",
+            backgroundColor: "#5e76cc",
             color: "white",
             padding: "10px 20px",
             border: "none",
@@ -73,7 +73,7 @@ const OpenAIButton = () => {
           Send
         </button>
       </div>
-      <p style={{ fontFamily: 'Courier New, monospace', wordWrap: 'break-word', maxWidth: '50ch' }}>
+      <p className="dark:text-white text-black" style={{ fontFamily: 'Courier New, monospace', wordWrap: 'break-word', maxWidth: '50ch' }}>
       Movie-Bot: {response}
       </p>
 

@@ -126,7 +126,7 @@ function FriendsWatchingList() {
       )}
       {showFriendsWatchList && (
         <div>
-          <button onClick = {handleHideFriendsWatchList} style={{backgroundColor: "#5e76cc", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>hide what your friends are watching</button>
+          <button className="" onClick = {handleHideFriendsWatchList} style={{backgroundColor: "#5e76cc", border: "none", color: "white", padding: "8px 16px", textAlign: "center", textDecoration: "none", display: "inline-block", fontSize: "16px", borderRadius: "50px", cursor: "pointer", transition: "background-color 0.3s ease"}}>hide what your friends are watching</button>
           <div>
             {friends.map((friend) => (
               <div>

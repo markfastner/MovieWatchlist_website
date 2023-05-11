@@ -5,6 +5,7 @@ import { auth, database, db } from "../firebase";
 import SendRating from "./SendRating";
 import { query, collection, onSnapshot, orderBy } from "firebase/firestore";
 import SendRatingReply from "./SendRatingReply";
+import { Card } from "react-bootstrap";
 
 const Comments = ({isNestedReply}) => {
 

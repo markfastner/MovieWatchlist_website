@@ -43,7 +43,7 @@ try {
     history("/dashboard")
 } catch {
     // Set an error message if login failed
-    setError("Failed to login: Be sure you have an account with this email, and that you are entering the correct password.")
+    setError(<font className="text-red-500">Failed to login: Be sure you have an account with this email and that you are entering the correct password.</font>)
 }
 
 // Set loading to false

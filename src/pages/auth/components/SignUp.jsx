@@ -29,17 +29,17 @@ const navigation = useNavigate()
 // Email sending function using emailjs
 const sendEmail = (e) => {
     e.preventDefault();
-  
+
     emailjs.sendForm('service_b0jkzjv', 'template_5vb42pf', formRef.current, 'NaDh7LvjYW0WKJJaU')
-      .then((result) => {
-          console.log(result.text);
-          console.log("message sent")
+    .then((result) => {
+        console.log(result.text);
+        console.log("message sent")
           e.target.reset() // this resets the forms 
-      }, (error) => {
-          console.log(error.text);
-          console.log("unable to send message")
+    }, (error) => {
+        console.log(error.text);
+        console.log("unable to send message")
           e.target.reset() // this resets the forms 
-      });
+    });
     }
 
 // Submission handler
@@ -62,7 +62,7 @@ async function handleSubmit(e) {
         const user = auth.currentUser
         const userRef = db.users.doc(user.uid)
         sendEmail(e)
-       
+
         userRef.set({
             email: emailRef.current.value,
             firstName: "",
@@ -79,7 +79,7 @@ async function handleSubmit(e) {
         // Navigating to the set-profile page
         navigation("/set-profile")
     } catch {
-        setError("Failed to create an account")
+        setError(<font className="text-red-500">Failed to create an account</font>)
     }
 
     setLoading(false)
@@ -99,7 +99,7 @@ async function handleSubmit(e) {
                     <Form.Label>Email Address </Form.Label>
                     <br></br>                   
                     <Form.Control 
-                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 text-gray-700 dark:text-white leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 dark:border-slate-700 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline"
                     type="email" 
                     name='user_email'
                     placeholder="Enter your Email Address" 
@@ -109,7 +109,7 @@ async function handleSubmit(e) {
                     <Form.Label>Password </Form.Label>
                     <br></br>
                     <Form.Control 
-                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline" 
+                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 dark:border-slate-700 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline" 
                     id="password form" 
                     placeholder="Enter your password" 
                     type="password" 
@@ -119,7 +119,7 @@ async function handleSubmit(e) {
                     <Form.Label>Password Confirmation </Form.Label>
                     <br></br>
                     <Form.Control 
-                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 dark:border-slate-700 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline"
                     type="password" 
                     placeholder="Re-enter your password" 
                     ref={passwordConfirmRef} 

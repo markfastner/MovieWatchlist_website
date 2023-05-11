@@ -92,10 +92,6 @@ function WatchlistPage() {
       <div class="watchlist-container dark:bg-slate-700 bg-blue-200">
         {/* Render the friends list */}
 
-        <h1 class="header">
-        {t('wlpage')}
-        </h1>
-
         {/* <ShareWithFriend /> */}
         <div
         style={{
@@ -129,7 +125,7 @@ function WatchlistPage() {
 
         
 
-        <div class = "watched-list">
+        <div class = "watched-list flex justify justify-center items-center ">
           <WatchedList />
         </div>
         

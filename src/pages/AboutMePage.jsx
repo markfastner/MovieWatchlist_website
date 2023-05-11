@@ -38,7 +38,7 @@ const teamMembers = [
 
 function About() {
 	return (
-	<div className=" bg-blue-200 dark:bg-slate-600 mx-auto py-2  min-h-screen">
+	<div className=" bg-blue-200 dark:bg-slate-600 mx-auto py-2 p-10 min-h-screen">
 		<div className="text-center py-2 my-2 items-center text-bold flex justify-center">
 			<h1 className="flex justify-center text-3xl font-bold">About the Runtime Team</h1>
 		</div>

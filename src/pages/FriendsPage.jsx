@@ -126,8 +126,8 @@ export default function FriendsPage() {
 
     return (
       <div className="dark:bg-slate-700 bg-blue-200">
-        <div className="relative min-h-screen flex-col bg-blue-200 dark:bg-slate-700 dark:text-white">
-          <h2 className="text-3xl font-bold text-center mt-8 mb-4">Friends</h2>
+        <div className="relative min-h-screen flex-col bg-blue-200 dark:bg-slate-700 dark:text-white space-x-10">
+          <h2 className="text-3xl font-bold text-center mb-4 py-5">Friends</h2>
             <div className="flex flex-col items-center justify-end md:flex-row md:justify-between">
               <div className="w-full md:w-1/2 flex flex-col items-center md:order-3">
                 <h2 className="text-xl font-semibold mb-4">Chat</h2>
@@ -136,7 +136,7 @@ export default function FriendsPage() {
             <div className="md:order-2">
               <RenderFriendsList />
             </div>
-            <div className="w-full md:w-1/2 flex flex-col items-center md:order-1">
+            <div className="w-full md:w-1/2 flex flex-col items-center md:order-1 py-10 rounded-lg">
               <h2 className="text-xl font-semibold mb-4">Add a Friend</h2>
               {addFriendError && <p className="text-red-600 mb-4">{addFriendError}</p>}
               {userEmail}
