@@ -26,7 +26,7 @@ const Chat = () => {
     <div className="flex flex-col overflow-y-auto h-64 rounded-sm px-10 py-5 dark:text-white ">
       {messages.map((message, index) => (
         <div key={index}>
-          <p>{message.text}</p>
+          <p>{message.username}: {message.text}</p>
         </div>
       ))}
       <SendMessage />

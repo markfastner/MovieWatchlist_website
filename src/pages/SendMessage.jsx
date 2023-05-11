@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { auth, db, database } from "../firebase.js";
+import { auth, database, db } from "../firebase.js";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const SendMessage = () => {
   const [message, setMessage] = useState("");
+    const [username, setUsername] = useState(null);
     const currentUser = auth.currentUser; 
 
     const ref = useRef();
@@ -12,12 +13,22 @@ const SendMessage = () => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
     });
 
+    const queryUsername = async () => {
+        const userDocRef = db.users.doc(currentUser.uid);
+
+        const userDocSnapshot = await userDocRef.get();
+        const username = userDocSnapshot.get('username');
+        console.log(username);
+        setUsername(username);
+    } 
+
   const handleSubmit = async (e) => {
+      queryUsername();
     e.preventDefault();
     try {
       await addDoc(collection(database, "messages"), {
         text: message,
-        user: currentUser.uid,
+        username: username,
         timestamp: serverTimestamp(),
       });
       setMessage("");
@@ -27,7 +38,7 @@ const SendMessage = () => {
   };
 
   return (
-    <form className="flex flex-col items-center pt-2">
+    <form className="flex flex-col items-center pt-6">
       <input
         className="flex flex-col border border-gray-300 p-2 rounded-md mb-4 w-full md:w-11/12 lg:w-11/12"
         placeholder="Type your message..." 
