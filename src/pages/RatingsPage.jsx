@@ -20,7 +20,7 @@ const Comments = () => {
   const addComment = (event) => {
     event.preventDefault();
     const newId = comments.length + 1;
-    setComments([...comments, { id: newId, content: newComment, replies: [] }]);
+    setComments([...comments, { id: newId, content: newComment, replies: [], timestamp: Date.now() }]);
     setNewComment('');
   };
 
@@ -29,8 +29,10 @@ const Comments = () => {
     if (commentToReply) {
       const newId = comments.length + 1;
       newReply.id = newId;
+      newReply.timestamp = Date.now();
       commentToReply.replies.push(newReply);
       setComments([...comments]);
+      
     }
   };
 
@@ -70,7 +72,7 @@ const Comment = ({ comment, addReply, isNestedReply }) => {
     event.preventDefault();
 
     // add new reply
-    addReply(comment.id, { content: newReply, replies: [] });
+    addReply(comment.id, { content: newReply, replies: [], timestamp: Date.now() });
 
     // reset reply form
     setShowReplyForm(false);
@@ -90,6 +92,7 @@ const Comment = ({ comment, addReply, isNestedReply }) => {
   return (
     <li key={comment.id} className="bg-white rounded-lg shadow-lg p-4 mb-4">
       <p className="text-gray-800">{comment.content}</p>
+      <span className="text-gray-500 text-sm">{new Date(comment.timestamp).toLocaleString()}</span>
       <div>
         <button onClick={handleLike} className="text-gray-600 hover:text-gray-800 focus:outline-none" >{likes}<FaThumbsUp className="h-4 w-4" />
         </button>
