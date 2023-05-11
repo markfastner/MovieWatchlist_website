@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { collection, query, orderBy, onSnapshot, getDocs } from "firebase/firestore";
-import SendMessage from "./SendMessage";
-import { db } from "../firebase.js";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import SendRating from "./SendRating";
+import { database } from "../firebase.js";
 
 const Ratings = () => {
   const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
-    const ratingsRef = db.ratings;
-    const q = query(ratingsRef, ("timestamp"));
+    const ratingsRef = collection(database, "ratings");
+    const q = query(ratingsRef, orderBy("timestamp") );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const fetchedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -23,18 +23,16 @@ const Ratings = () => {
   }, []);
 
   return (
-    <div>
-      {ratings.map((message, index) => (
+    <div className="flex flex-col overflow-y-auto h-64 rounded-sm px-10 py-5 dark:text-white">
+      {ratings.map((rating, index) => (
         <div key={index}>
-          <p>{message.text}</p>
+          <p>{rating.text}</p>
         </div>
       ))}
-      <SendMessage />
+      <SendRating />
     </div>
   );
 };
 
 export default Ratings;
-
-
 

@@ -3,6 +3,7 @@ import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
 import RatingsPage from './pages/RatingsPage'
+import RatingsPageJake from './pages/RatingsPageJake.jsx'
 import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
 import ProfilePage from './pages/ProfilePage'
