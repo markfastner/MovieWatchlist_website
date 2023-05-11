@@ -10,7 +10,7 @@ const Video = () => (
         <div className="flex relative min-h-screen bg-no-repeat w-full bg-cover justify-center
             bg-[url('/public/images/HomeLoginImages.jpg')]">
             <div className="items-center relative flex justify-center ">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/s6lPfuqcdsM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="1080" height="720" src="https://www.youtube.com/embed/s6lPfuqcdsM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
     </section>

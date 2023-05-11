@@ -153,8 +153,8 @@ const FriendsList = ({ userId }) => {
 </div>
       <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
         {friends.filter((friend) => friend.friend.toLowerCase().includes(searchTerm.toLowerCase())).map((friend) => (
-          <li key={friend.id} style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
-            <span>{friend.friend}</span>
+          <li key={friend.id} className="dark:text-black" style={{ fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', borderRadius: '5px', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', backgroundColor: '#fff' }}>
+            <span classname="">{friend.friend}</span>
             <span>{getActivityIcon(friend.visibility)}</span>
             <button
               type="button"

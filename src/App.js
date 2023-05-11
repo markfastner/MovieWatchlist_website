@@ -14,7 +14,7 @@ import SignUp from './pages/auth/components/SignUp';
 import {AuthProvider, useAuth} from './pages/auth/contexts/AuthContext.js';
 import {auth, db} from './firebase'
 
-// import DarkMode from "./features/profile/components/darkMode";
+import DarkMode from "./features/profile/components/darkMode";
 import PrivateRoute from './pages/auth/components/PrivateRoute';
 import SetProfile from './pages/auth/components/SetProfile';
 import ForgotPassword from './pages/auth/components/ForgotPassword';
@@ -62,7 +62,7 @@ function App() {
   }
 
   // Dark mode/ light mode
-  // const[colorTheme, setTheme] = DarkMode();
+  const[colorTheme, setTheme] = DarkMode();
 
   // Logged in status
   // const [loggedIn, setLoggedIn] = useState(true)

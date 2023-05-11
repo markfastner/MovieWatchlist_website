@@ -21,7 +21,17 @@ function SupportPage(){
   };
 
   return (
-    <div className="flex-row relative min-h-screen flex bg-blue-200 dark:bg-slate-800">
+    <div className="flex-col relative min-h-screen flex bg-blue-200 dark:bg-slate-800">
+      <section id="home" className = "relative flex md:flex-row flex-col items-center justify-center">
+        <div className="flex relative min-h-screen bg-no-repeat w-full bg-cover justify-center
+            ">
+            <div className="items-center relative flex justify-center ">
+            <iframe width="800" height="600" src="https://www.youtube.com/embed/wQe41Azb_0U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+      </section>
+
+      <div className="flex flex-row">
       <div className=" flex justify-center items-center h-screen w-2/3 p-20 ">
         <div className="container mx-auto bg-gray-100 dark:bg-slate-600 p-20 rounded-lg w-full">
           <h2 className="text-3xl dark:text-white font-bold mb-2">Contact Information</h2>
@@ -55,7 +65,7 @@ function SupportPage(){
           </form>
         </div>
       </div>
-    
+      </div>
     </div>
   )
 }
