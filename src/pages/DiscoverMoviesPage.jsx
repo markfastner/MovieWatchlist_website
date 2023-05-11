@@ -3,15 +3,18 @@ import MovieGenreList from '../features/watchlist/MovieGenreList';
 import MostPopularMoviesList from '../features/watchlist/MostPopularMoviesList';
 import MovieSearch from '../features/watchlist/MovieSearch2';
 import FriendsWatchingList from '../features/watchlist/FriendsWatchingList';
+
 function DiscoverMoviesPage(){
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}
+        className="bg-blue-200"
+        >
           
       
           <a href="/watchlist" 
             style={{
                 padding: '20px 40px', 
-                backgroundColor: '#FFD700', 
+                backgroundColor: '#5e76cc', 
                 color: '#fff', 
                 borderRadius: '50px', 
                 textDecoration: 'none', 
@@ -22,6 +25,7 @@ function DiscoverMoviesPage(){
                 transition: 'background-color 0.3s ease',
                 alignSelf: 'left',
                 width: '300px',
+                margin: '20px'
             }}>
             Back To Watchlist
           </a>

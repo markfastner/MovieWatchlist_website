@@ -108,7 +108,7 @@ function FriendsWatchingList() {
         <button
           onClick={handleShowFriendsWatchList}
           style={{
-            backgroundColor: "#FFD700",
+            backgroundColor: "#5e76cc",
             border: "none",
             color: "white",
             padding: "8px 16px",
@@ -121,7 +121,7 @@ function FriendsWatchingList() {
             transition: "background-color 0.3s ease",
           }}
         >
-          see what your friends are watching
+          See what your friends are watching
         </button>
       )}
       {showFriendsWatchList && (

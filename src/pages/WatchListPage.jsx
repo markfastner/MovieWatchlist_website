@@ -89,7 +89,7 @@ function WatchlistPage() {
       // the watchlist page will be a list of movies that the user has added to their watchlist
       
   
-      <div class="watchlist-container dark:bg-slate-700 bg-blue-50">
+      <div class="watchlist-container dark:bg-slate-700 bg-blue-200">
         {/* Render the friends list */}
 
         <h1 class="header">
@@ -138,7 +138,7 @@ function WatchlistPage() {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <a href="/discover Movies" style={{ 
             padding: '20px 40px', 
-            backgroundColor: '#FFD700', 
+            backgroundColor: '#5e76cc', 
             color: '#fff', 
             borderRadius: '50px', 
             textDecoration: 'none', 

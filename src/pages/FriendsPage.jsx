@@ -125,6 +125,7 @@ export default function FriendsPage() {
     };
 
     return (
+      <div className="dark:bg-slate-700 bg-blue-200">
         <div className="relative min-h-screen flex-col bg-blue-200 dark:bg-slate-700 dark:text-white">
           <h2 className="text-3xl font-bold text-center mt-8 mb-4">Friends</h2>
             <div className="flex flex-col items-center justify-end md:flex-row md:justify-between">
@@ -189,7 +190,7 @@ export default function FriendsPage() {
             </div>
           </div>
         </div>
-
+      </div>
       );
       
     }

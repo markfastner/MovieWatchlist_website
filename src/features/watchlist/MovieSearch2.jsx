@@ -39,12 +39,14 @@ function MovieSearch() {
       }>Find Movies</h1>
       <form>
       <input
-        className="rounded-full bg-yellow-400 text-black"
+        className="rounded-full text-white"
         type="text"
         placeholder="Search for a movie"
         value={query}
         onChange={handleInputChange}
         style={{
+          backgroundColor: '#5e76cc',
+          text: '#ffffff',
           width: '500px',
           height: '70px',
           fontSize: '24px',
