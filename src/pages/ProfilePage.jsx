@@ -16,6 +16,9 @@ import {
 
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 
+import { collection, query, orderBy, onSnapshot, doc, getDoc } from "firebase/firestore";
+import SetBiography from "./SetBiography";
+
 // creating the profile page where there is a card to allow the user to change their profile picture and color with the edit profile button
 
 function ProfilePage() {
@@ -40,6 +43,33 @@ function ProfilePage() {
 
   const [selectedStatus, setSelectedStatus] = useState("Online");
   const activityStatuses = ["Online", "Away", "Busy", "Offline"];
+
+  const [biography, setBiography] = useState([]);
+
+//   useEffect(() => {
+//   const biographyRef = doc(collection(database, "biography"), currentUser.uid);
+//   const unsubscribe = onSnapshot(biographyRef, (docSnapshot) => {
+//     if (docSnapshot.exists()) {
+//       setBiography(docSnapshot.data().biography);
+//     }
+//   });
+
+//   return () => {
+//     unsubscribe();
+//   };
+// }, []);
+
+  useEffect(() => {
+    const fetchUserMessage = async () => {
+      const biographyRef = doc(collection(database, "biography"), currentUser.uid);
+      const docSnapshot = await getDoc(biographyRef);
+      if (docSnapshot.exists()) {
+        setBiography(docSnapshot.data().biography);
+      }
+    };
+
+    fetchUserMessage();
+  }, []);
 
   const handleChange = (event) => {
     const newStatus = event.target.value;
@@ -153,6 +183,24 @@ function ProfilePage() {
     return <div className={`w-3 h-3 rounded-full ${color}`} />;
   };
 
+
+  useEffect(() => {
+    const biographyRef = collection(database, "biography");
+    const q = query(biographyRef, orderBy("timestamp") );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedBiography = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setBiography(fetchedBiography);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+
     return (
       <div className ="bg-blue-200 dark:bg-slate-800 flex relative min-h-screen gap-4">
         {/* Render the friends list */}
@@ -211,12 +259,15 @@ function ProfilePage() {
         </div>
 
         <div>
-          <Card className="bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-5 gap-1 mx-10 my-10 max-w-screen">
-            Biography
-            <form action="/action_page.php">
-              <textarea rows="100" cols="100" className="resize-full max-w-full w-full h-32 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-800 dark:bg-slate-700 dark:text-white dark:border-slate-400" placeholder="Enter your biography here..."></textarea>
-            </form>
-          </Card>
+          <div className="flex flex-col overflow-y-auto h-64 rounded-sm px-10 py-5 dark:text-white ">
+          {biography.map((biography, index) => (
+            <div key={index}>
+              <p>{biography.biography}</p>
+            </div>
+          ))}
+          <SetBiography />
+        </div>
+          
 
           <Card className="bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-5 gap-1 mx-10 my-10 max-w-screen">
             Status 

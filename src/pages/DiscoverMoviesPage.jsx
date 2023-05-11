@@ -7,7 +7,7 @@ import FriendsWatchingList from '../features/watchlist/FriendsWatchingList';
 function DiscoverMoviesPage(){
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}
-        className="bg-blue-200"
+        className="bg-blue-200 dark:bg-slate-800"
         >
           
       

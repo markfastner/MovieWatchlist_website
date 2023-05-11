@@ -30,16 +30,18 @@ function MovieSearch() {
   };
 
   return (
-    <div>
-      <h1
-      style={{
-        position: 'flex',
-        alignSelf: 'center',
-      }
-      }>Find Movies</h1>
+    <div className="flex-rows items-center py-10 text-center text-5xl text-blue-900 dark:text-white space-y-5">
+      <p
+      // style={{
+      //   position: 'flex',
+      //   alignSelf: 'center',
+      //   right: '300px',
+      // }
+      // }
+      >Find Movies</p>
       <form>
       <input
-        className="rounded-full text-white"
+        className="rounded-full text-white placeholder-white"
         type="text"
         placeholder="Search for a movie"
         value={query}
@@ -56,6 +58,7 @@ function MovieSearch() {
           outline: 'none',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
           alignSelf: 'left',
+          placeholderColor: '#ffffff',
         }}
       />
 
