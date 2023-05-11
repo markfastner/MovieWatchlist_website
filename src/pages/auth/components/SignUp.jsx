@@ -99,7 +99,7 @@ async function handleSubmit(e) {
                     <Form.Label>Email Address </Form.Label>
                     <br></br>                   
                     <Form.Control 
-                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 dark:border-slate-700 text-gray-700 dark:text-white dark:bg-slate-500 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none h-10 border rounded w-full py-2 px-3 dark:border-slate-700 dark:bg-slate-500 text-gray-700 dark:text-white  leading-tight focus:outline-none focus:shadow-outline"
                     type="email" 
                     name='user_email'
                     placeholder="Enter your Email Address" 
