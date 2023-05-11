@@ -132,26 +132,82 @@ function ProfilePage() {
     }
   });
 
+  const ActiveColor = ({ selectedStatus }) => {
+    const [color, setColor] = useState("bg-green-500")
+
+    const changeColor = (color) => {
+      setColor(color);
+    }
+
+    useEffect(() => {
+      const run = () => {
+        if (selectedStatus === "Online") changeColor("bg-green-500");
+        else if (selectedStatus === "Busy") changeColor("bg-red-500");
+        else if (selectedStatus === "Away") changeColor("bg-yellow-400");
+        else if (selectedStatus === "Offline") changeColor("bg-gray-400");
+      };
+
+      run();
+    }, [color]);
+
+    return <div className={`w-3 h-3 rounded-full ${color}`} />;
+  };
 
     return (
       <div className ="bg-blue-200 dark:bg-slate-800 flex relative min-h-screen gap-4">
         {/* Render the friends list */}
         <div>
-          <Card className = "relative flex-col bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-10 gap-1 mx-10 my-10 max-w-screen">
-                <div className = "">
-                    <button>
-                        <img src="" className="w-32 h-32 rounded-full object-cover mx-auto bg-gray-600"/>
-                    </button>
-                    
+          <Card className="relative w-full h-[50vh] left-8 my-8 rounded-xl shadow-md max-w-sm p-4 px-4 bg-blue-100 dark:bg-slate-600 dark:text-white sm:p-6 md:p-100">
+          <p>You are currently {selectedStatus}.</p>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <strong>Email: </strong>
+          {currentUser.email}
+          {/* <ShowFriendsList /> */}
+          <section className="bg-white dark:bg-slate-700 rounded-xl py-4 px-8">
+            <div className="text-xl">Friends Activity</div>
+            <ul className="friend-list">
+              {friends.map((friend) => (
+                <li className="flex items-center space-x-2" key={friend.id}>
+                  <span>{friend.friend}</span>
+                  <span>{getActivityIcon(friend.visibility)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <div className="absolute w-11/12 left-1/2 -translate-x-1/2 bottom-4 space-y-2">
+            <div className="flex flex-row items-center justify-between bg-white w-full dark:bg-slate-700 rounded-md p-2">
+              <div className='flex space-x-1.5 items-center '>
+                <div className='flex items-center justify-center h-10 w-10 rounded-full bg-gray-500'>
+                  <p>img</p>
                 </div>
-              {currentUser.email}
-              {userProperties(currentUser)}
-            <Link to="/set-profile">
-              <button className="bg-blue-800 text-white p-2 hover:text-blue-900 hover:bg-blue-200 dark:bg-slate-400 dark:hover:bg-blue-200 dark:text-white  dark:hover:text-blue-800 duration-300 rounded-md my-8 mx-6">
-              Edit Profile
-              </button>
-            </Link>
-          </Card>
+                
+                <div className='flex flex-col'>
+                  <p className='font-bold'>{senderUsername.length > 15 ? senderUsername.substring(0, 13) : senderUsername}</p>
+                  <ActiveColor selectedStatus={selectedStatus}z />
+                </div>
+              </div>
+
+              <div className="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-md flex flex-row gap-x-2">
+                <select
+                  className="w-20 dark:bg-slate-500"
+                  value={selectedStatus}
+                  onChange={handleChange}
+                >
+                  {activityStatuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+
+                <Link to="/set-profile">
+                  <Cog6ToothIcon className="w-7 h-7" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Card>
         </div>
 
         <div>
@@ -168,13 +224,7 @@ function ProfilePage() {
               <textarea rows="100" cols="100" className="resize-full max-w-full w-full h-32 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-800 dark:bg-slate-700 dark:text-white dark:border-slate-400" placeholder="Update your status here..."></textarea>
             </form>
           </Card>
-        </div>
-        <div>
-          <Card className="bg-white shadow-lg dark:bg-slate-700 dark:text-white rounded-md p-5 gap-1 mx-10 my-10 max-w-screen">
-            Friend's List
-          </Card>
-        </div>
-        
+        </div>    
       </div>
     );
 }
