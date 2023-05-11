@@ -22,8 +22,9 @@ const SendMessage = () => {
         setUsername(username);
     } 
 
+    queryUsername();
+
   const handleSubmit = async (e) => {
-      queryUsername();
     e.preventDefault();
     try {
       await addDoc(collection(database, "messages"), {
