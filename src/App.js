@@ -1,3 +1,86 @@
+/**
+ * {
+  "name": "runtime",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emailjs/browser": "^3.10.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@headlessui/react": "^1.7.12",
+    "@heroicons/react": "^2.0.14",
+    "@mui/material": "^5.11.15",
+    "@mui/styled-engine-sc": "^5.11.9",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "crypto-browserify": "^3.12.0",
+    "dns": "^0.2.2",
+    "emailjs-com": "^3.2.0",
+    "firebase": "^9.18.0",
+    "framer-motion": "^10.0.1",
+    "fs": "^0.0.1-security",
+    "headlessui": "^0.0.0",
+    "i18next": "^22.4.15",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-http-backend": "^2.2.0",
+    "nodemailer": "^6.9.1",
+    "openai": "^3.2.1",
+    "path": "^0.12.7",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^3.0.4",
+    "react-google-charts": "^4.0.0",
+    "react-i18next": "^12.2.1",
+    "react-icons": "^4.8.0",
+    "react-router": "^6.8.0",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "^5.0.1",
+    "react-toggle-dark-mode": "^1.1.1",
+    "semantic-ui-react": "^2.1.4",
+    "stream-browserify": "^3.0.0",
+    "styled-components": "^5.3.6",
+    "url": "^0.11.0",
+    "uuid": "^9.0.0",
+    "web-vitals": "^2.1.4",
+    "webfontloader": "^1.6.28"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "serve": "webpack serve --mode development",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.19",
+    "tailwindcss": "^3.2.7",
+    "webpack-cli": "^5.0.1"
+  }
+}
+ */
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
