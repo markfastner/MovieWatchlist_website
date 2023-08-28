@@ -1,5 +1,5 @@
 Senior Project B--
-A website that allows users to make accounts to create and share movie watchlists with their friends. The website contains many features including a Movie-Bot, an analytics page, user recommendations, and many other supportive features. The website utalizes many technologies including, React, Tailwind, openai api, TMDB api(movies database). 
+A website that allows users to make accounts to create and share movie watchlists with their friends. The website contains many features including a Movie-Bot, an analytics page, user recommendations, and many other supportive features. The website utalizes many technologies including, React, Tailwind, openai api, TMDB api(movies database). To try out our application you can go to our website and make an account: https://runtime-website.vercel.app/
 
 
 
