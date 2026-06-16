@@ -2,7 +2,7 @@
 
 ## 📽️ Project Overview
 
-Movie Watchlist is a comprehensive social platform that allows users to create, manage, and share movie watchlists with friends. Built as a full-featured web application with real-time collaboration features, the platform enables movie enthusiasts to discover recommendations, rate films, and connect with other viewers.
+Movie Watchlist is a comprehensive social platform that allows users to create, manage, and share movie watchlists with friends. Built as a full-featured web application with real-time collaboration features, the platform enables movie enthusiasts to discover recommendations, rate films, and connect with other viewers. This site also boasts a movie-bot ai assistant to help users with any movie-related questions.
 
 **Live Application:** https://runtime-website.vercel.app/
 -As of 2025 firebase license has expired and database is non functional
