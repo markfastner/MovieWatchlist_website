@@ -6,7 +6,7 @@ Movie Watchlist is a comprehensive social platform that allows users to create, 
 
 **Live Application:** https://runtime-website.vercel.app/
 -As of 2025 firebase license has expired and database is non functional
-
+<img width="2520" height="1320" alt="267135010-7fb52163-0f7c-48b7-918e-ac24802cc3f3" src="https://github.com/user-attachments/assets/94b45615-f095-469e-9141-37bcf53cb8d3" />
 ---
 
 ## ✨ Key Features
